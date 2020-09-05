@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true
+  },
+  "include": [
+    "*.ts",
+    "webgl/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}
