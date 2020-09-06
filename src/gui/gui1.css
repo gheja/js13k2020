@@ -1,0 +1,139 @@
+@font-face
+{
+    font-family: emoji;
+    src: url(twemoji.ttf);
+}
+
+::selection
+{
+    /* not pefect but at least we don't use js for it*/
+    color: none;
+    background: transparent;
+}
+
+html
+{
+    font-size: max(12px, 2.2vh);
+    font-family: "Segoe UI", serif;
+    overflow: hidden;
+    cursor: default;
+}
+
+.window
+{
+    background: rgba(255,255,255,0.5);
+    border-radius: 0.2em;
+    backdrop-filter: blur(10px);
+    width: 20em;
+    position: absolute;
+    border: 0.2em solid rgba(0,0,0,0.5);
+}
+
+.title
+{
+    background: rgba(0,0,0,0.5);
+    color: #ffffff;
+    padding: 0.1em 0.3em 0.3em 0.3em;
+}
+
+.close
+{
+    background: rgba(255,0,0,0.3);
+    color: #ffffff;
+    float: right;
+    margin-top: -1.75em;
+    padding: 0.125em 0.5em;
+    cursor: pointer;
+}
+
+.body
+{
+    padding: 0.5em;
+    color: #333;
+}
+
+.body span
+{
+    color: #000;
+}
+
+.button,
+.button-disabled
+{
+    float: left;
+    font-size: 1.5rem;
+    padding: 0.25em;
+    border: 0.2rem solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.1);
+    border-radius: 0.2em;
+    margin: 0 0 0 0.2em;
+    width: 1em;
+    height: 1em;
+    font-family: emoji;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    filter: grayscale(30%);
+}
+
+.button:hover
+{
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.5);
+    filter: grayscale(0%);
+}
+
+.button-disabled
+{
+    filter: grayscale(100%);
+    cursor: not-allowed;
+    background: rgba(255,255,255,0.3);
+}
+
+.toolbar,
+.toolbar2
+{
+    position: fixed;
+    top: 2.2rem;
+    left: 1rem;
+    right: 1rem;
+    height: 3em;
+    overflow: hidden;
+}
+
+.toolbar2
+{
+    top: 5.2rem;
+}
+
+.emoji
+{
+    font-family: emoji;
+}
+
+.statusbar
+{
+    position: fixed;
+    top: 0.2rem;
+    right: 0.2rem;
+}
+
+.status
+{
+    border-radius: 0.2rem;
+    float: right;
+    background: rgba(0,0,0,0.7);
+    margin: 0 0 0 0.5rem;
+    color: #fff;
+    padding: 0.2em 0.5em;
+    display: block;
+}
+
+.hue1
+{
+    filter: hue-rotate(120deg) !important;
+}
+
+.hue2
+{
+    filter: hue-rotate(180deg) !important;
+}
