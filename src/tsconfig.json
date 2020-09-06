@@ -6,7 +6,8 @@
   },
   "include": [
     "*.ts",
-    "webgl/*.ts"
+    "webgl/*.ts",
+    "gui/*.ts"
   ],
   "exclude": ["node_modules"]
 }
