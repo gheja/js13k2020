@@ -1,3 +1,6 @@
 .idea
 *.js
 *.js.map
+build
+tmp
+*.zip
