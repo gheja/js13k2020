@@ -1,6 +1,7 @@
 let ticks = 0;
 let _gfx: WebglGfx;
 let _gfx2: WebglGfx;
+let _roads: Network;
 
 function tick()
 {
@@ -10,11 +11,33 @@ function tick()
     _gfx.render();
     _gfx2.resize();
     _gfx2.render();
+    _roads.pickNode(_gfx.cursorWorldPosition, true);
     window.requestAnimationFrame(tick);
+}
+
+function demoNetwork()
+{
+    let p1: tNetworkNode;
+    let p2: tNetworkNode;
+    let p3: tNetworkNode;
+    let p4: tNetworkNode;
+
+    _roads = new Network();
+
+    p1 = _roads.addNode([ 0, 5, 0 ], true, true);
+    p2 = _roads.addNode([ 10, 20, 0 ], false, true);
+    p3 = _roads.addNode([ 15, 20, 0 ], false, true);
+    p4 = _roads.addNode([ 20, 10, 0 ], true, true);
+
+    _roads.addEdge(p1, p2, true);
+    _roads.addEdge(p2, p3, true);
+    _roads.addEdge(p3, p4, true);
+    // _roads.rebuild();
 }
 
 function init()
 {
+
     initTooltips();
 
     _gfx = new WebglGfx("c1");
@@ -23,6 +46,9 @@ function init()
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;
     _gfx.cam.rx = 0.9;
+
+    demoNetwork();
+
     tick();
 }
 

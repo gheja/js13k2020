@@ -62,6 +62,7 @@ class WebglGfx
         this.addShape(SHAPE_PLANE);
         this.addShape(SHAPE_TRAIN1);
         this.addShape(SHAPE_CURSOR);
+        this.addShape(SHAPE_ROAD_NODE);
 
         this.objects = [];
         this.createObject(this.shapes[0]);
