@@ -1,5 +1,6 @@
 #!/bin/bash
 
+name="js13k2020"
 tmp=`readlink -f "$0"`
 dir=`dirname $tmp`
 source_dir="${dir}/src"
@@ -8,6 +9,67 @@ target_dir="/tmp/build"
 extra_dir="/home/gheja/works/extra"
 final_dir="${dir}"
 min_dir="${dir}/tmp/min"
+csv="${final_dir}/build_stats.csv"
+
+if [ $TERM == "xterm" ] || [ $TERM == "screen" ]; then
+	color_error='\033[1;31m'
+	color_success='\033[1;32m'
+	color_title='\033[1;38m'
+	color_default='\033[0m'
+else
+	color_error=''
+	color_success=''
+	color_title=''
+	color_default=''
+fi
+
+_title()
+{
+	echo ""
+	echo -ne "${color_title}"
+	echo "$@"
+	echo -ne "${color_default}"
+}
+
+_error()
+{
+	echo -ne "${color_error}"
+	echo "$@"
+	echo -ne "${color_default}"
+}
+
+_success()
+{
+	echo -ne "${color_success}"
+	echo "$@"
+	echo -ne "${color_default}"
+}
+
+try()
+{
+	$@
+	
+	result=$?
+	if [ $result != 0 ]; then
+		_error "ERROR: \"$@\" failed with exit code $result."
+		exit 1
+	fi
+}
+
+function get_size()
+{
+	local files="$@"
+	
+	cat $files | wc -c | awk '{ print $1; }'
+}
+
+function get_lines()
+{
+	local files="$@"
+	
+	cat $files | wc -l | awk '{ print $1; }'
+}
+
 
 if [ -e "$target_dir" ]; then
 	rm -r "$target_dir"
@@ -24,34 +86,56 @@ mkdir stage1
 cd stage1
 
 now=`date +%Y%m%d_%H%M%S`
+now2=`date '+%Y-%m-%d %H:%M:%S'`
+zip_prefix="${name}_${now}"
 
-rsync -xa --exclude '*.js' --exclude '*.js.map' --exclude '*.zip' "${source_dir}/" ./
+_title "Copying files to build directory..."
 
-zip -r9 ${now}_original.zip .
+try rsync -xa --exclude '*.js' --exclude '*.js.map' --exclude '*.zip' "${source_dir}/" ./
+
+zip -r9 ${zip_prefix}_original.zip .
 
 if [ -d "${extra_dir}" ]; then
-	rsync -xa "${extra_dir}/" ./
+	try rsync -xa "${extra_dir}/" ./
 fi
 
+
+_title "Checking and installing node packages..."
+
 if [ ! -d ./node_modules/google-closure-compiler ]; then
-	npm install typescript-closure-compiler
+	try npm install typescript-closure-compiler
 fi
 
 if [ ! -d ./node_modules/typescript-closure-compiler ]; then
-	npm install google-closure-compiler
+	try npm install google-closure-compiler
 fi
 
 export PATH="${target_dir}/stage1/node_modules/.bin:${PATH}"
 
-javascript_files=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2`
-typescript_files=`echo "$javascript_files" | sed -r 's/\.js$/.ts/g'`
-css_files=`cat index.html | grep -E '<link type="text/css" rel="stylesheet" href="([^"]+)"' | grep -Eo 'href=\".*\"' | cut -d \" -f 2`
+files_html="index.html"
+files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2`
+files_typescript=`echo "$files_javascript" | sed -r 's/\.js$/.ts/g'`
+files_css=`cat index.html | grep -E '<link type="text/css" rel="stylesheet" href="([^"]+)"' | grep -Eo 'href=\".*\"' | cut -d \" -f 2`
 
 # cat ./src/$i | sed -e '/DEBUG BEGIN/,/\DEBUG END/{d}' | grep -vE '^\"use strict\";$' >> ./build/stage1/merged.js
 
-tscc $typescript_files || exit 1
+lines_html=`get_lines $files_html`
+lines_typescript=`get_lines $files_typescript`
+lines_css=`get_lines $files_css`
 
-google-closure-compiler \
+size_html=`get_size $files_html`
+size_typescript=`get_size $files_typescript`
+size_css=`get_size $files_css`
+
+
+_title "Compiling TypeScript to JavaScript..."
+
+try tscc $files_typescript
+
+
+_title "Minimizing JavaScript using Google Closure Compiler - 1/2: pretty print..."
+
+try google-closure-compiler \
 	--compilation_level ADVANCED \
 	--warning_level VERBOSE \
 	--language_in ECMASCRIPT_2018 \
@@ -59,17 +143,23 @@ google-closure-compiler \
 	--formatting PRETTY_PRINT \
 	--formatting SINGLE_QUOTES \
 	--js_output_file min_pretty.js \
-	$javascript_files || exit 1
+	$files_javascript
 
-google-closure-compiler \
+
+_title "Minimizing JavaScript using Google Closure Compiler - 2/2: whitespace removal..."
+
+try google-closure-compiler \
 	--compilation_level WHITESPACE \
 	--language_in ECMASCRIPT_2018 \
 	--language_out ECMASCRIPT_2018 \
 	--formatting SINGLE_QUOTES \
 	--js_output_file min.js \
-	min_pretty.js || exit 1
+	min_pretty.js
 
-cat $css_files | \
+
+_title "Minimizing CSS..."
+
+cat $files_css | \
 	sed -r 's/^\s+//g' | \
 	sed -r 's/\s+$//g' | \
 	tr -d '\r\n' | \
@@ -86,6 +176,9 @@ cd stage2
 
 cp ../stage1/min.css ../stage1/min.js ../stage1/index.min.html ../stage1/gui/twemoji.ttf ./
 
+
+_title "Embedding files into final HTML..."
+
 cat index.min.html | sed \
 	-e '/<!-- insert minified javascript here -->/{' \
 	-e 'i <script>' \
@@ -99,18 +192,26 @@ cat index.min.html | sed \
 	-e 'd}' \
 	> index.html
 
-zip -9 ${now}.zip index.html
-zip -9 ${now}_twemoji.zip index.html twemoji.ttf
+
+_title "Creating ZIP files..."
+
+try zip -9 ${zip_prefix}.zip index.html
+try zip -9 ${zip_prefix}_twemoji.zip index.html twemoji.ttf
+
+size2_html=`get_size index.min.html`
+size2_javascript=`get_size min.js`
+size2_css=`get_size min.css`
+size2_zip=`get_size ${zip_prefix}.zip`
 
 cd ..
 
+
+_title "Extracting ZIP file to test directory..."
 
 ### final steps
 
 cp stage1/*.zip ./
 cp stage2/*.zip ./
-
-ls -alb stage2/ *.zip
 
 cp *.zip ${final_dir}/
 
@@ -122,6 +223,41 @@ mkdir -p "${min_dir}"
 
 cd ${min_dir}
 
-cp ${final_dir}/${now}_twemoji.zip ./
-unzip ${now}_twemoji.zip
+cp ${final_dir}/${zip_prefix}_twemoji.zip ./
+unzip ${zip_prefix}_twemoji.zip
 
+
+_title "Some stats"
+
+cd "${target_dir}"
+
+ls -alb stage2/ *.zip
+
+echo ""
+echo "HTML: ${lines_html} lines, ${size_html} -> ${size2_html} bytes"
+echo "TypeScript: ${lines_typescript} lines, ${size_typescript} -> ${size2_javascript} bytes"
+echo "CSS: ${lines_css} lines, ${size_css} -> ${size2_css} bytes"
+echo "Total source: $((size_html + size_typescript + size_css)) -> ${size2_zip} bytes in final ZIP"
+
+cd "${source_dir}"
+
+git_hash=`git rev-parse HEAD 2>/dev/null`
+
+if [ ! -e "$csv" ]; then
+	echo "date_time;filename;git_hash;lines_html;size_html;size2_html;lines_typescript;size_typescript;size2_javascript;lines_css;size_css;size2_css;size2_zip" > $csv
+fi
+
+echo "${now2};${zip_prefix}.zip;${git_hash};${lines_html};${size_html};${size2_html};${lines_typescript};${size_typescript};${size2_javascript};${lines_css};${size_css};${size2_css};${size2_zip}" >> $csv
+
+
+size2_limit=13312
+percent=$((size2_zip * 100 / size2_limit))
+
+
+echo ""
+
+if [ ${size2_zip} -le ${size2_limit} ]; then
+	_success "Final ZIP file is ${size2_zip} bytes of ${size2_limit} (${percent}%)!"
+else
+	_error "Final ZIP is ${size2_zip} bytes, more than ${size2_limit}!"
+fi
