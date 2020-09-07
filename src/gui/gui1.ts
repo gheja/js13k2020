@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO: google closure compiler renames properties of domobject.dataset, now accessing it as array until fixed
+
 function getNextZIndex()
 {
     if (!getNextZIndex.n)
@@ -13,7 +15,7 @@ function getNextZIndex()
 function windowMouseDown(event: MouseEvent)
 {
     // console.log("down");
-    (this as HTMLElement).dataset.selected = "1";
+    (this as HTMLElement).dataset["selected"] = "1";
     (this as HTMLElement).style.zIndex = getNextZIndex();
 }
 
@@ -25,7 +27,7 @@ function windowMouseUp()
 
     for (a of document.querySelectorAll<HTMLElement>(".window"))
     {
-        a.dataset.selected = "0";
+        a.dataset["selected"] = "0";
     }
 }
 
@@ -38,7 +40,7 @@ function windowUpdate(dx, dy)
 
     for (a of document.querySelectorAll<HTMLElement>(".window"))
     {
-        if (a.dataset.selected == "1")
+        if (a.dataset["selected"] == "1")
         {
             b = a.getBoundingClientRect();
             a.style.top = b.top + dy + "px";
@@ -113,7 +115,7 @@ function setTooltip(s: string = "-")
 
 function showTooltip(e)
 {
-    setTooltip((this.dataset.tooltip || "") + (this.classList.contains("button-disabled") ? " (locked)" : ""));
+    setTooltip((this.dataset["tooltip"] || "") + (this.classList.contains("button-disabled") ? " (locked)" : ""));
 }
 
 function hideTooltip(e)
@@ -131,7 +133,7 @@ function initTooltips()
 
     for (a of document.querySelectorAll<HTMLElement>("*"))
     {
-        if (a.dataset.tooltip)
+        if (a.dataset["tooltip"])
         {
             a.addEventListener("mouseover", showTooltip.bind(a));
             a.addEventListener("mouseout", hideTooltip.bind(a));
