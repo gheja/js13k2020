@@ -408,10 +408,11 @@ class WebglGfx
         return [ F32A(vertices), new Uint16Array(indices), new Uint8Array(colors) ];
     }
 
-    // should be merged with addShape() but the editor needs to build a shape and
-    // not add to this.shapes
-    buildShape2(input: tShapeDefinition)
+    buildShape3(vertices: Float32Array, indices: Uint16Array, colors: Uint8Array)
     {
+        let colors2: Uint8Array;
+        let i, b;
+
         function fuzzyHsla(x: tHslaArray, y: number): tHslaArray
         {
             return [
@@ -421,14 +422,6 @@ class WebglGfx
                 x[3]
             ];
         }
-
-        let vertices: Float32Array;
-        let indices: Uint16Array;
-        let colors: Uint8Array;
-        let colors2: Uint8Array;
-        let i, b;
-
-        [ vertices, indices, colors ] = this.buildShape(input);
 
         colors2 = new Uint8Array(colors.length * 4);
 
@@ -452,6 +445,13 @@ class WebglGfx
             b_c: this.createBuffer(colors2, this.gl.ARRAY_BUFFER),
             indices_length: indices.length
         };
+    }
+
+    // should be merged with addShape() but the editor needs to build a shape and
+    // not add to this.shapes
+    buildShape2(input: tShapeDefinition)
+    {
+        return this.buildShape3(...this.buildShape(input));
     }
 
     addShape(input: tShapeDefinition)
