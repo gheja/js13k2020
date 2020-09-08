@@ -63,11 +63,13 @@ class WebglGfx
         this.addShape(SHAPE_TRAIN1);
         this.addShape(SHAPE_CURSOR);
         this.addShape(SHAPE_ROAD_NODE);
+        this.addShape(SHAPE_ROAD_NODE);
 
         this.objects = [];
         this.createObject(this.shapes[0]);
         this.createObject(this.shapes[1]);
         this.createObject(this.shapes[2]);
+        this.createObject(this.shapes[4]);
 
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
     }
