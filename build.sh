@@ -183,7 +183,7 @@ cat index.min.html | sed \
 	-e '/<!-- insert minified javascript here -->/{' \
 	-e 'i <script>' \
 	-e 'r min.js' \
-	-e 'a </script><script src="/socket.io/socket.io.js"></script>' \
+	-e 'a </script>' \
 	-e 'd}' \
 	-e '/<!-- insert minified css here -->/{' \
 	-e 'i <style>' \
