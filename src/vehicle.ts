@@ -18,6 +18,8 @@ class Vehicle
     nextNode: tNetworkNode;
     stopped: boolean; // == ordered to halt by the player
     state: number; // VEHICLE_STATE_*
+    goodOnboard: tGoodList;
+    goodCapacity: tGoodList;
     loadingDone: boolean;
 
     constructor(station)
@@ -28,6 +30,8 @@ class Vehicle
         this.webglGfxObject = _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]);
         this.stopped = false;
         this.state = VEHICLE_STATE_ARRIVED;
+        this.goodOnboard = [];
+        this.goodCapacity = [];
     }
 
     toggleStopped()
@@ -38,6 +42,33 @@ class Vehicle
     loadUnload()
     {
         // TODO: add a proper delay
+
+        let i, n;
+
+        for (i in this.goodOnboard)
+        {
+            if (this.station.goodAccepted[i] && this.goodOnboard[i] > 0)
+            {
+                // unload the goods to this station, "sell" it
+                n = this.goodOnboard[i];
+                console.log(`unloading good #${i}, count: ${n}`);
+                this.goodOnboard[i] = 0;
+            }
+        }
+
+        for (i in this.goodCapacity)
+        {
+            if (this.station.goodAvailable[i] > 0 && this.goodCapacity[i] > 0)
+            {
+                // load all the goods we can from station
+                n = Math.min(this.goodCapacity[i], (this.goodOnboard[i] || 0) + this.station.goodAvailable[i]) - (this.goodOnboard[i] || 0);
+                this.goodOnboard[i] = (this.goodOnboard[i] || 0) + n;
+                this.station.goodAvailable[i] -= n;
+
+                console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
+            }
+        }
+
         console.log("load-unload done");
         this.loadingDone = true;
     }
