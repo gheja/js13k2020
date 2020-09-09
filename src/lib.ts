@@ -17,3 +17,25 @@ function offset3D(p: tPoint3D, angle: number, distance: number, height: number):
         p[2] + height
     ]);
 }
+
+function goTowards3D(p1: tPoint3D, p2: tPoint3D, distance: number)
+{
+    function m(a, b, len)
+    {
+        if (b > a)
+        {
+            return a + Math.min(b - a, len);
+        }
+
+        return a + Math.max(b - a, -len);
+    }
+
+    // TODO: distance is travelled in _all_ directions, should be summed instead
+    // this is currently choppy
+
+    return F32A([
+        m(p1[0], p2[0], distance),
+        m(p1[1], p2[1], distance),
+        m(p1[2], p2[2], distance)
+    ]);
+}
