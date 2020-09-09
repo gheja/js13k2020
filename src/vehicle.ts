@@ -16,7 +16,9 @@ class Vehicle
     speed: number;
     webglGfxObject: any;
     nextNode: tNetworkNode;
-    stopped: boolean;
+    stopped: boolean; // == ordered to halt by the player
+    state: number; // VEHICLE_STATE_*
+    loadingDone: boolean;
 
     constructor(station)
     {
@@ -25,11 +27,19 @@ class Vehicle
         this.scheduleIndex = 0;
         this.webglGfxObject = _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]);
         this.stopped = false;
+        this.state = VEHICLE_STATE_ARRIVED;
     }
 
     toggleStopped()
     {
         this.stopped = !this.stopped;
+    }
+
+    loadUnload()
+    {
+        // TODO: add a proper delay
+        console.log("load-unload done");
+        this.loadingDone = true;
     }
 
     advanceSchedule()
@@ -97,14 +107,17 @@ class Vehicle
             if (distance3D(this.position, p) < 0.1)
             {
                 // arrived at node
-                // todo: copy this data?
                 this.position = F32A(p);
 
                 // arrived at destination
                 if (this.path.length == 0)
                 {
+                    // arrived here
+                    this.station = this.nextNode.station;
+
                     this.nextNode = null;
                     this.speed = 0; // needed?
+                    this.state = VEHICLE_STATE_ARRIVING;
                     break;
                 }
 
@@ -121,18 +134,43 @@ class Vehicle
 
     step()
     {
-        if (!this.stopped)
+        switch (this.state)
         {
-            if (!this.nextNode)
-            {
-                this.advanceSchedule();
-            }
+            case VEHICLE_STATE_TRAVELLING:
+                if (!this.stopped)
+                {
+                    if (this.nextNode)
+                    {
+                        this.move();
+                    }
+                    else
+                    {
+                        this.advanceSchedule();
+                    }
+                }
+            break;
 
-            if (this.nextNode)
-            {
-                this.move();
-            }
+            case VEHICLE_STATE_ARRIVING:
+                console.log("state: arriving");
+                this.loadingDone = false;
+                this.state = VEHICLE_STATE_ARRIVED;
+            break;
+
+            case VEHICLE_STATE_ARRIVED:
+                console.log("state: arrived");
+                this.loadUnload();
+                if (this.loadingDone)
+                {
+                    this.state = VEHICLE_STATE_LEAVING;
+                    this.advanceSchedule();
+                }
+            break;
+
+            case VEHICLE_STATE_LEAVING:
+                console.log("state: leaving");
+                this.station = null;
+                this.state = VEHICLE_STATE_TRAVELLING;
+            break;
         }
-
     }
 }
