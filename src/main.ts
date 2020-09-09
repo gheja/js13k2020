@@ -21,19 +21,28 @@ function demoNetwork()
     let p2: tNetworkNode;
     let p3: tNetworkNode;
     let p4: tNetworkNode;
+    let p5: tNetworkNode;
+    let p6: tNetworkNode;
 
     _roads = new Network();
 
     p1 = _roads.addNode([ -10, -10, 0 ], true);
     p2 = _roads.addNode([ -10, 0, 0 ], false);
     p3 = _roads.addNode([ 0, 10, 0 ], false);
-    p4 = _roads.addNode([ 10, 5, 0 ], true);
+    p4 = _roads.addNode([ 5, 5, 0 ], true);
+    p5 = _roads.addNode([ 10, 8, 0 ], true);
+    p6 = _roads.addNode([ 12, 0, 0 ], true);
 
     _roads.addEdge(p1, p2, true);
     _roads.addEdge(p2, p3, true);
     _roads.addEdge(p3, p4, true);
+    _roads.addEdge(p4, p6, true);
+    _roads.addEdge(p3, p5, true);
+    _roads.addEdge(p5, p6, true);
 
     _roads.rebuild();
+
+    console.log(_roads.getPath(p1, p6));
 }
 
 function init()
