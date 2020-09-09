@@ -96,6 +96,22 @@ class Network
         return null;
     }
 
+    getNearestNode(station: Station): tNetworkNode
+    {
+        let node: tNetworkNode;
+
+        for (node of this.nodes)
+        {
+            // TODO: not the nearest but the first in order
+            if (node.station == station)
+            {
+                return node;
+            }
+        }
+
+        return null;
+    }
+
     rebuild()
     {
         this.nodes.forEach((a) => a.angle = null);
