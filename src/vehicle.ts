@@ -44,6 +44,7 @@ class Vehicle
         {
             n = (n + 1) % this.schedule.length;
 
+            // if all entries are unreachable it loops back to start
             if (n == this.scheduleIndex)
             {
                 console.log("invalid schedule");
@@ -55,6 +56,7 @@ class Vehicle
                 _roads.getNearestNode(this.schedule[n].station)
             );
 
+            // if the station is reachable
             if (path.length != 0)
             {
                 this.scheduleIndex = n;
@@ -74,11 +76,14 @@ class Vehicle
         let steps: number;
         let p: tPoint3D;
 
+/*
+        // not needed as move() is not called when nextNode == null
         if (!this.nextNode)
         {
             this.speed = 0;
             return;
         }
+*/
 
         this.speed = 0.5;
         steps = Math.floor(this.speed / VEHICLE_STEP_SIZE); // distance to travel
