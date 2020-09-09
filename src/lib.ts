@@ -39,3 +39,10 @@ function goTowards3D(p1: tPoint3D, p2: tPoint3D, distance: number)
         m(p1[2], p2[2], distance)
     ]);
 }
+
+function createGoodList()
+{
+    // TODO: optimize for size? remove this and use "|| 0" where needed as that saves ~16 bytes from final ZIP
+    // note: this results even bigger ZIP: return new Array(GOOD_MAX).fill(0);
+    return [0,0,0,0,0,0,0,0,0,0];
+}

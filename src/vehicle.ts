@@ -30,8 +30,8 @@ class Vehicle
         this.webglGfxObject = _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]);
         this.stopped = false;
         this.state = VEHICLE_STATE_ARRIVED;
-        this.goodOnboard = [];
-        this.goodCapacity = [];
+        this.goodOnboard = createGoodList();
+        this.goodCapacity = createGoodList();
     }
 
     toggleStopped()
@@ -61,8 +61,8 @@ class Vehicle
             if (this.station.goodAvailable[i] > 0 && this.goodCapacity[i] > 0)
             {
                 // load all the goods we can from station
-                n = Math.min(this.goodCapacity[i], (this.goodOnboard[i] || 0) + this.station.goodAvailable[i]) - (this.goodOnboard[i] || 0);
-                this.goodOnboard[i] = (this.goodOnboard[i] || 0) + n;
+                n = Math.min(this.goodCapacity[i], this.goodOnboard[i] + this.station.goodAvailable[i]) - this.goodOnboard[i];
+                this.goodOnboard[i] = this.goodOnboard[i] + n;
                 this.station.goodAvailable[i] -= n;
 
                 console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);

@@ -10,10 +10,10 @@ class Station
     constructor(position)
     {
         this.position = position;
-        this.goodAvailable = [];
-        this.goodProduction = [];
-        this.goodCapacity = [];
-        this.goodAccepted = [];
+        this.goodAvailable = createGoodList();
+        this.goodProduction = createGoodList();
+        this.goodCapacity = createGoodList();
+        this.goodAccepted = createGoodList();
         this.range = 10;
     }
 
@@ -23,10 +23,10 @@ class Station
 
         for (i in this.goodProduction)
         {
-            if ((this.goodAvailable[i] || 0) < this.goodCapacity[i])
+            if (this.goodAvailable[i] < this.goodCapacity[i])
             {
-                n = Math.min((this.goodAvailable[i] || 0) + this.goodProduction[i], this.goodCapacity[i]);
-                this.goodAvailable[i] = (this.goodAvailable[i] || 0) + n;
+                n = Math.min(this.goodAvailable[i] + this.goodProduction[i], this.goodCapacity[i]);
+                this.goodAvailable[i] = this.goodAvailable[i] + n;
                 console.log(`produced good #1, count: ${n}, now available: ${this.goodAvailable[i]}`);
             }
         }
