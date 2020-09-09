@@ -1,6 +1,11 @@
 type tNetworkStop = {
 };
 
+type tNetworkNeighbour = {
+    node: any, // it is "tNetworkNode" actually but tscc overflows
+    distance: number
+};
+
 type tNetworkNode = {
     position: tPoint3D,
     locked: boolean,
@@ -8,8 +13,16 @@ type tNetworkNode = {
     highlighted: boolean,
     webglGfxObject: any,
     angle: number,
+
+    // aligned diagonally at "angle"
     edge1: tPoint3D,
-    edge2: tPoint3D
+    edge2: tPoint3D,
+
+    // for routing:
+    visited: boolean,
+    totalDistance: number,
+    neighbours: Array<tNetworkNeighbour>,
+    previousNode: any, // it is "tNetworkNode" actually but tscc overflows
 };
 
 type tNetworkEdge = {
@@ -17,6 +30,7 @@ type tNetworkEdge = {
     node2: tNetworkNode,
     locked: boolean,
     highlighted: boolean,
+    length: number,
 };
 
 class Network
@@ -41,6 +55,8 @@ class Network
             webglGfxObject: _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]),
             highlighted: false,
             angle: null,
+            visited: false,
+            totalDistance: null,
         };
 
         a.webglGfxObject.x = position[0];
@@ -58,7 +74,8 @@ class Network
             node1: node1,
             node2: node2,
             locked: locked,
-            highlighted: false
+            highlighted: false,
+            length: distance3D(node1.position, node2.position),
         });
 
         return this.edges[this.edges.length - 1];
@@ -136,5 +153,59 @@ class Network
         _gfx.objects[3].shape = _gfx.shapes[4];
 
         console.log(vertices);
+    }
+
+    // Get the shortest path using Dijkstra's algorithm.
+    // Result does not contain the starting point.
+    // Result is an empty array if target is not reachable.
+    getPath(startNode: tNetworkNode, targetNode: tNetworkNode)
+    {
+        this.nodes.forEach((node) => {
+            node.visited = false;
+            node.totalDistance = DISTANCE_MAX;
+            node.neighbours = [];
+            node.previousNode = null;
+        });
+
+        this.edges.forEach((edge) => {
+            edge.node1.neighbours.push({ node: edge.node2, distance: edge.length })
+            edge.node2.neighbours.push({ node: edge.node1, distance: edge.length })
+        });
+
+        function find(current: tNetworkNode, target: tNetworkNode)
+        {
+            current.visited = true;
+            current.neighbours.forEach((a) => {
+                if (current.totalDistance + a.distance < a.node.totalDistance)
+                {
+                    a.node.previousNode = current;
+                    a.node.totalDistance = current.totalDistance + a.distance;
+                }
+                
+                if (!a.node.visited)
+                {
+                    find(a.node, target);
+                }
+            });
+        }
+        
+        startNode.totalDistance = 0;
+        
+        find(startNode, targetNode);
+
+        let path: Array<tNetworkNode>;
+        let p: tNetworkNode;
+        
+        path = [];
+
+        p = targetNode;
+        
+        while (p.previousNode)
+        {
+            path.push(p);
+            p = p.previousNode;
+        }
+
+        return path.reverse();
     }
 }
