@@ -1,6 +1,3 @@
-type tNetworkStop = {
-};
-
 type tNetworkNeighbour = {
     node: any, // it is "tNetworkNode" actually but tscc overflows
     distance: number
@@ -9,7 +6,7 @@ type tNetworkNeighbour = {
 type tNetworkNode = {
     position: tPoint3D,
     locked: boolean,
-    stop: tNetworkStop,
+    station: Station,
     highlighted: boolean,
     webglGfxObject: any,
     angle: number,
@@ -44,14 +41,14 @@ class Network
         this.edges = [];
     }
 
-    addNode(position: tPoint3D, locked: boolean, stop: tNetworkStop=null)
+    addNode(position: tPoint3D, locked: boolean, station: Station=null)
     {
         let a: tNetworkNode;
 
         a = {
             position: position,
             locked: locked,
-            stop: stop,
+            station: station,
             webglGfxObject: _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]),
             highlighted: false,
             angle: null,
