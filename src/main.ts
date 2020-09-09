@@ -4,11 +4,22 @@ let _gfx2: WebglGfx;
 let _roads: Network;
 let _demoVehicle: Vehicle;
 
+let s1: Station;
+let s2: Station;
+
 function tick()
 {
     ticks++;
+    if (ticks % 30)
+    {
+        s1.produceGoods();
+        s2.produceGoods();
+    }
+
     _gfx.objects[1].rz += 0.01;
+
     _demoVehicle.step();
+    
     _gfx.resize();
     _gfx.render();
     _gfx2.resize();
@@ -25,9 +36,6 @@ function demoNetwork()
     let p4: tNetworkNode;
     let p5: tNetworkNode;
     let p6: tNetworkNode;
-
-    let s1: Station;
-    let s2: Station;
 
     s1 = new Station([ -10, -10, 0 ]);
     s2 = new Station([ 10, 8, 0 ]);

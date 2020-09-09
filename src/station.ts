@@ -6,4 +6,8 @@ class Station
     {
         this.position = position;
     }
+
+    produceGoods()
+    {
+    }
 }
