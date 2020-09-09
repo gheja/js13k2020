@@ -10,7 +10,7 @@ let s2: Station;
 function tick()
 {
     ticks++;
-    if (ticks % 30)
+    if (ticks % 300 == 1)
     {
         s1.produceGoods();
         s2.produceGoods();
@@ -40,6 +40,11 @@ function demoNetwork()
     s1 = new Station([ -10, -10, 0 ]);
     s2 = new Station([ 10, 8, 0 ]);
 
+    s1.goodProduction[GOOD_PASSENGER] = 5;
+    s1.goodCapacity[GOOD_PASSENGER] = 9;
+
+    s2.goodAccepted[GOOD_PASSENGER] = 1;
+
     _roads = new Network();
 
     p1 = _roads.addNode([ -10, -10, 0 ], true, s1);
@@ -63,6 +68,7 @@ function demoNetwork()
         { station: s1 },
         { station: s2 },
     ];
+    _demoVehicle.goodCapacity[GOOD_PASSENGER] = 100;
     _demoVehicle.advanceSchedule();
 
     console.log(_roads.getPath(p1, p6));
