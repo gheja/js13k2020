@@ -1,0 +1,2 @@
+const ROAD_WIDTH = 2;
+const DISTANCE_MAX = 100000;
