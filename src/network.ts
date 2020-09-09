@@ -173,6 +173,11 @@ class Network
     // Result is an empty array if target is not reachable.
     getPath(startNode: tNetworkNode, targetNode: tNetworkNode)
     {
+        if (!startNode || !targetNode)
+        {
+            return [];
+        }
+
         this.nodes.forEach((node) => {
             node.visited = false;
             node.totalDistance = DISTANCE_MAX;
