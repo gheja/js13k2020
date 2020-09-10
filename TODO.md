@@ -35,6 +35,6 @@ based on stats
 - [ ] further optimization of HTML and CSS
 
 ## webgl
-- [ ] refer to shapes by index
-- [ ] load shapes from an array (from data.ts) instead of hardcoding them
-- [ ] support for same model with different colors
+- [x] refer to shapes by index
+- [x] load shapes from an array (from data.ts) instead of hardcoding them
+- [x] support for same model with different colors
