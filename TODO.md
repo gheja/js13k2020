@@ -12,7 +12,7 @@
 - [ ] preview canvas
 
 ## vehicles
-- [ ] angle calculation
+- [x] angle calculation
 - [ ] trains
 - [ ] ships
 
