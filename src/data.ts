@@ -96,17 +96,21 @@ const SHAPE_ROAD_NODE: tShapeDefinition = [
     SHAPE_SLICE_REPEAT,
 ];
 
+const SHAPE_DUMMY: tShapeDefinition = [];
+
 const WEBGL_SHAPES_TO_LOAD: Array<tShapeDefinitionV2> = [
     [ SHAPE_PLANE ],
     [ SHAPE_TRAIN1 ],
     [ SHAPE_CURSOR ],
+    [ SHAPE_ROAD_NODE, [ 5 ] ],
     [ SHAPE_ROAD_NODE, [ 4 ] ],
-    [ SHAPE_ROAD_NODE, [ 4 ] ],
+    [ SHAPE_DUMMY ],
 ];
 
 const SHAPE_PLANE_INDEX = 0;
 const SHAPE_TRAIN1_INDEX = 1;
 const SHAPE_CURSOR_INDEX = 2;
 const SHAPE_ROAD_NODE_INDEX = 3;
-const SHAPE_ROAD_NODE2_INDEX = 4;
-const SHAPE_VEHICLE_BUS_INDEX = 3;
+const SHAPE_VEHICLE_BUS_INDEX = 4;
+const SHAPE_DYNAMIC_ROAD_INDEX = 5;
+

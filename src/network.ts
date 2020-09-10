@@ -34,11 +34,13 @@ class Network
 {
     nodes: Array<tNetworkNode>;
     edges: Array<tNetworkEdge>;
+    webglGfxObject: any;
 
     constructor()
     {
         this.nodes = [];
         this.edges = [];
+        this.webglGfxObject = _gfx.createObject(SHAPE_DYNAMIC_ROAD_INDEX);
     }
 
     addNode(position: tPoint3D, locked: boolean, station: Station=null)
@@ -160,10 +162,10 @@ class Network
             colors.push(1,1,1,1,1,1);
         });
 
-        // shape 4, object 3
-        _gfx.destroyShape(4);
-        _gfx.shapes[4] = _gfx.buildShape3(new Float32Array(vertices), new Uint16Array(indices), new Uint8Array(colors));
-        _gfx.objects[3].shape = _gfx.shapes[4];
+        // shape SHAPE_DYNAMIC_ROAD_INDEX, object 3
+        _gfx.destroyShape(SHAPE_DYNAMIC_ROAD_INDEX);
+        _gfx.shapes[SHAPE_DYNAMIC_ROAD_INDEX] = _gfx.buildShape3(new Float32Array(vertices), new Uint16Array(indices), new Uint8Array(colors));
+        this.webglGfxObject.shape = _gfx.shapes[SHAPE_DYNAMIC_ROAD_INDEX];
 
         console.log(vertices);
     }

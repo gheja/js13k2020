@@ -87,7 +87,6 @@ function init()
         a.createObject(SHAPE_PLANE_INDEX);
         a.createObject(SHAPE_TRAIN1_INDEX);
         a.createObject(SHAPE_CURSOR_INDEX);
-        a.createObject(SHAPE_ROAD_NODE2_INDEX);
     }
 
     _gfx.cam.z = 20;
