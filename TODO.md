@@ -1,37 +1,37 @@
 # js13k2020
 
 ## general
-- [_] mouse handling
-  - [_] hover over objects
-  - [_] click on objects
-  - [_] click and drag land
-- [_] popup text status (income, etc)
-- [_] lock the currently occupied NetworkEdges
-- [_] make NetworkNode clickable
-- [_] calculate edge of "roads"
-- [_] preview canvas
+- [ ] mouse handling
+  - [ ] hover over objects
+  - [ ] click on objects
+  - [ ] click and drag land
+- [ ] popup text status (income, etc)
+- [ ] lock the currently occupied NetworkEdges
+- [ ] make NetworkNode clickable
+- [ ] calculate edge of "roads"
+- [ ] preview canvas
 
 ## vehicles
-- [_] trains
-- [_] ships
+- [ ] trains
+- [ ] ships
 
 ## windows
-- [_] update
+- [ ] update
 
 ## contracts
 
 ## stats
-- [_] total distance travelled
-- [_] total goods picked up
-- [_] total people transported
-- [_] total goods transported (incl. people?)
+- [ ] total distance travelled
+- [ ] total goods picked up
+- [ ] total people transported
+- [ ] total goods transported (incl. people?)
 
 ## achievements
 based on stats
 
 ## build
-- [_] advzip
-- [_] further optimization of HTML and CSS
+- [ ] advzip
+- [ ] further optimization of HTML and CSS
 
 ## webgl
-- [_] support for same model with different colors
+- [ ] support for same model with different colors
