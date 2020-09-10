@@ -21,6 +21,7 @@ class Vehicle
     goodOnboard: tGoodList;
     goodCapacity: tGoodList;
     loadingDone: boolean;
+    lastPositions: Array<tPoint3D>;
 
     constructor(station)
     {
@@ -32,6 +33,7 @@ class Vehicle
         this.state = VEHICLE_STATE_ARRIVED;
         this.goodOnboard = createGoodList();
         this.goodCapacity = createGoodList();
+        this.lastPositions = [];
     }
 
     toggleStopped()
@@ -158,9 +160,22 @@ class Vehicle
             steps--;
         }
 
+
         this.webglGfxObject.x = this.position[0];
         this.webglGfxObject.y = this.position[1];
         this.webglGfxObject.z = this.position[2];
+
+        this.lastPositions.unshift(F32A(this.position));
+
+        if (this.lastPositions.length == 1000)
+        {
+            this.lastPositions.pop();
+        }
+
+        if (this.lastPositions.length > 5)
+        {
+            this.webglGfxObject.rz = getAngle2D(this.lastPositions[5], this.lastPositions[0]) + Math.PI/2;
+        }
     }
 
     step()
