@@ -69,18 +69,26 @@ function demoNetwork()
         { station: s2 },
     ];
     _demoVehicle.goodCapacity[GOOD_PASSENGER] = 100;
-    _demoVehicle.advanceSchedule();
 
     console.log(_roads.getPath(p1, p6));
 }
 
 function init()
 {
+    let a;
 
     initTooltips();
 
     _gfx = new WebglGfx("c1");
     _gfx2 = new WebglGfx("c2");
+
+    for (a of [ _gfx, _gfx2 ])
+    {
+        a.createObject(SHAPE_PLANE_INDEX);
+        a.createObject(SHAPE_TRAIN1_INDEX);
+        a.createObject(SHAPE_CURSOR_INDEX);
+        a.createObject(SHAPE_ROAD_NODE2_INDEX);
+    }
 
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;

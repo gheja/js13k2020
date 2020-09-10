@@ -27,7 +27,7 @@ class Vehicle
         this.station = station;
         this.position = F32A(station.position);
         this.scheduleIndex = 0;
-        this.webglGfxObject = _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]);
+        this.webglGfxObject = _gfx.createObject(SHAPE_VEHICLE_BUS_INDEX);
         this.stopped = false;
         this.state = VEHICLE_STATE_ARRIVED;
         this.goodOnboard = createGoodList();

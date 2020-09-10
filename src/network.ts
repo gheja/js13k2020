@@ -49,7 +49,7 @@ class Network
             position: position,
             locked: locked,
             station: station,
-            webglGfxObject: _gfx.createObject(_gfx.shapes[SHAPE_ROAD_NODE_INDEX]),
+            webglGfxObject: _gfx.createObject(SHAPE_ROAD_NODE_INDEX),
             highlighted: false,
             angle: null,
             visited: false,
