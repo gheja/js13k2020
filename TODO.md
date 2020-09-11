@@ -50,3 +50,4 @@ based on stats
 - [x] refer to shapes by index
 - [x] load shapes from an array (from data.ts) instead of hardcoding them
 - [x] support for same model with different colors
+- [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
