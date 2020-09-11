@@ -18,6 +18,7 @@ class WebglGfx
     viewProjectionMatrix: tMat4;
     cursorScreenPosition: Array<number>;
     cursorWorldPosition: tVec3;
+    cursorObject: any;
     program: WebGLProgram;
 
     constructor(id: string)
@@ -62,6 +63,8 @@ class WebglGfx
         WEBGL_SHAPES_TO_LOAD.forEach(x => this.addShape(x[0], x[1]));
 
         this.objects = [];
+        this.cursorObject = this.createObject(SHAPE_CURSOR_INDEX);
+        this.objects.push(this.cursorObject);
 
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
     }
@@ -141,9 +144,9 @@ class WebglGfx
 
         this.cursorWorldPosition = c;
 
-        this.objects[2].x = c[0];
-        this.objects[2].y = c[1];
-        this.objects[2].z = c[2];
+        this.cursorObject.x = c[0];
+        this.cursorObject.y = c[1];
+        this.cursorObject.z = c[2];
     }
 
     createBuffer(x: any, type: number)
