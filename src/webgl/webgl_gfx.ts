@@ -44,7 +44,7 @@ class WebglGfx
 
         this.cursorScreenPosition = [ 0, 0 ];
 
-        this.gl.clearColor(0, 0, 0.2, 1);
+        this.gl.clearColor(0.1, 0.1, 0.1, 1);
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
 
