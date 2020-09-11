@@ -49,32 +49,41 @@ class Vehicle
 
         income = 0;
 
+        // TODO: move it somewhere?
+        this.station.update();
+
         for (i in this.goodOnboard)
         {
-            if (this.station.goodAccepted[i] && this.goodOnboard[i] > 0)
+            this.station.factoriesInRange.forEach((factory) =>
             {
-                // unload the goods to this station, "sell" it
-                n = this.goodOnboard[i];
-                income += 5 * n;
+                if (factory.goodAccepted[i] && this.goodOnboard[i] > 0)
+                {
+                    // unload the goods to this station, "sell" it
+                    n = this.goodOnboard[i];
+                    income += 5 * n;
 
-                this.goodOnboard[i] = 0;
+                    this.goodOnboard[i] = 0;
 
-                console.log(`unloading good #${i}, count: ${n}`);
-                createBubble(`🔻 🧑x${n}`);
-            }
+                    console.log(`unloading good #${i}, count: ${n}`);
+                    createBubble(`🔻 ${GOOD_ICONS[i]}x${n}`);
+                }
+            });
         }
 
         for (i in this.goodCapacity)
         {
-            if (this.station.goodAvailable[i] > 0 && this.goodCapacity[i] > 0)
+            this.station.factoriesInRange.forEach((factory) =>
             {
-                // load all the goods we can from station
-                n = Math.min(this.goodCapacity[i], this.goodOnboard[i] + this.station.goodAvailable[i]) - this.goodOnboard[i];
-                this.goodOnboard[i] = this.goodOnboard[i] + n;
-                this.station.goodAvailable[i] -= n;
+                if (factory.goodAvailable[i] > 0 && this.goodCapacity[i] > 0)
+                {
+                    // load all the goods we can from station
+                    n = Math.min(this.goodCapacity[i], this.goodOnboard[i] + factory.goodAvailable[i]) - this.goodOnboard[i];
+                    this.goodOnboard[i] = this.goodOnboard[i] + n;
+                    factory.goodAvailable[i] -= n;
 
-                console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
-                createBubble(`🔺 🧑x${n}`);
+                    console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
+                    createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
+                }
             }
         }
 

@@ -6,14 +6,17 @@ let _demoVehicle: Vehicle;
 
 let s1: Station;
 let s2: Station;
+let s3: Station;
+
+let _factories: Array<Factory>;
 
 function tick()
 {
     ticks++;
+
     if (ticks % 300 == 1)
     {
-        s1.produceGoods();
-        s2.produceGoods();
+        _factories.forEach(x => x.produce());
     }
 
     _gfx.objects[1].rz += 0.01;
@@ -37,13 +40,22 @@ function demoNetwork()
     let p5: tNetworkNode;
     let p6: tNetworkNode;
 
+    let f: Factory;
+
+    _factories = [];
+
+    f = new Factory([ -13, -10, 0 ]);
+    f.goodProduction[GOOD_PASSENGER] = 5;
+    f.goodCapacity[GOOD_PASSENGER] = 9;
+    _factories.push(f);
+
+    f = new Factory([ 7, 8, 0 ]);
+    f.goodAccepted[GOOD_PASSENGER] = 1;
+    f.goodAccepted[GOOD_MAIL] = 1;
+    _factories.push(f);
+
     s1 = new Station([ -10, -10, 0 ]);
     s2 = new Station([ 10, 8, 0 ]);
-
-    s1.goodProduction[GOOD_PASSENGER] = 5;
-    s1.goodCapacity[GOOD_PASSENGER] = 9;
-
-    s2.goodAccepted[GOOD_PASSENGER] = 1;
 
     _roads = new Network();
 

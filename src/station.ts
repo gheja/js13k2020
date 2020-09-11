@@ -1,34 +1,31 @@
 class Station
 {
     position: tPoint3D;
-    goodAvailable: tGoodList;
-    goodProduction: tGoodList;
-    goodCapacity: tGoodList;
-    goodAccepted: tGoodList;
     range: number;
+    factoriesInRange: Array<Factory>;
+    webglGfxObject: any;
 
     constructor(position)
     {
         this.position = position;
-        this.goodAvailable = createGoodList();
-        this.goodProduction = createGoodList();
-        this.goodCapacity = createGoodList();
-        this.goodAccepted = createGoodList();
-        this.range = 10;
+        this.range = 5;
+
+        this.webglGfxObject = _gfx.createObject(SHAPE_STATION_INDEX),
+
+        this.webglGfxObject.x = this.position[0];
+        this.webglGfxObject.y = this.position[1];
+        this.webglGfxObject.z = this.position[2];
     }
 
-    produceGoods()
+    update()
     {
-        let i, n: number;
+        this.factoriesInRange = [];
 
-        for (i in this.goodProduction)
-        {
-            if (this.goodAvailable[i] < this.goodCapacity[i])
+        _factories.forEach(factory => {
+            if (distance3D(factory.position, this.position) <= this.range)
             {
-                n = Math.min(this.goodAvailable[i] + this.goodProduction[i], this.goodCapacity[i]);
-                this.goodAvailable[i] = this.goodAvailable[i] + n;
-                console.log(`produced good #1, count: ${n}, now available: ${this.goodAvailable[i]}`);
+                this.factoriesInRange.push(factory);
             }
-        }
+        });
     }
 }
