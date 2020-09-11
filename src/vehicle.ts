@@ -89,7 +89,7 @@ class Vehicle
                     console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
                     createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
                 }
-            }
+            });
         }
 
         if (income > 0)
