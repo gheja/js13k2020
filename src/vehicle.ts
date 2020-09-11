@@ -51,9 +51,6 @@ class Vehicle
 
         income = 0;
 
-        // TODO: move it somewhere?
-        this.station.update();
-
         for (i in this.goodOnboard)
         {
             this.station.factoriesInRange.forEach((factory) =>
