@@ -54,6 +54,11 @@ function demoNetwork()
     f.goodAccepted[GOOD_MAIL] = 1;
     _factories.push(f);
 
+    f = new Factory([ 13, 8, 0 ]);
+    f.goodProduction[GOOD_MAIL] = 10;
+    f.goodCapacity[GOOD_MAIL] = 20;
+    _factories.push(f);
+
     f = new Factory([ 22, -8, 0 ]);
     f.goodProduction[GOOD_MAIL] = 90;
     f.goodCapacity[GOOD_MAIL] = 200;
