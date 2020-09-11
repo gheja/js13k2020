@@ -5,16 +5,21 @@
   - [ ] hover over objects
   - [ ] click on objects
   - [ ] click and drag land
-- [ ] popup text status (income, etc)
+- [x] popup text status (income, etc)
 - [ ] lock the currently occupied NetworkEdges
 - [ ] make NetworkNode clickable
 - [ ] calculate edge of "roads"
 - [ ] preview canvas
+- [ ] title screen
+- [ ] cinematic mode
+- [ ] narration
 
 ## vehicles
 - [x] angle calculation
-- [ ] trains
+- [ ] schedule editor
+- [ ] trains (linked vehicles)
 - [ ] ships
+- [ ] upkeep costs
 
 ## windows
 - [ ] update
@@ -26,6 +31,7 @@
 - [ ] total goods picked up
 - [ ] total people transported
 - [ ] total goods transported (incl. people?)
+- [ ] total income
 
 ## achievements
 based on stats
