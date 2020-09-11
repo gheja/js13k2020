@@ -6,8 +6,12 @@ type tScheduleItem = {
 
 type tSchedule = Array<tScheduleItem>;
 
+let _vehicleIndexSequence = 0;
+
 class Vehicle
 {
+    vehicleIndex: number;
+    title: string;
     position: tPoint3D;
     station: Station;
     schedule: tSchedule;
@@ -26,6 +30,8 @@ class Vehicle
 
     constructor(station)
     {
+        this.vehicleIndex = (_vehicleIndexSequence++);
+        this.title = `Bus #${this.vehicleIndex}`;
         this.station = station;
         this.position = F32A(station.position);
         this.scheduleIndex = 0;
