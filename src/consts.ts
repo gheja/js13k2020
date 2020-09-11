@@ -13,3 +13,4 @@ const GOOD_MAIL = 2;
 const GOOD_WOOD = 3;
 const GOOD_COAL = 4;
 
+const GOOD_ICONS = [ "", "🧑" ];
