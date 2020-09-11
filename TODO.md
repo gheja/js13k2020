@@ -9,7 +9,7 @@
 - [ ] lock the currently occupied NetworkEdges
 - [ ] make NetworkNode clickable
 - [ ] calculate edge of "roads"
-- [ ] preview canvas
+- [x] preview canvas
 - [ ] title screen
 - [ ] cinematic mode
 - [ ] narration
@@ -24,10 +24,10 @@
 - [ ] upkeep costs
 
 ## windows
-- [ ] update an opened window periodically
-- [ ] vehicle
+- [x] update an opened window periodically
+- [x] vehicle
 - [ ] vehicle schedule
-- [ ] station
+- [x] station
 - [ ] factory?
 
 ## contracts
