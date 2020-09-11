@@ -22,6 +22,7 @@ class Vehicle
     goodCapacity: tGoodList;
     loadingDone: boolean;
     lastPositions: Array<tPoint3D>;
+    holdTime: number;
 
     constructor(station)
     {
@@ -34,6 +35,7 @@ class Vehicle
         this.goodOnboard = createGoodList();
         this.goodCapacity = createGoodList();
         this.lastPositions = [];
+        this.holdTime = 0;
     }
 
     toggleStopped()
@@ -201,6 +203,12 @@ class Vehicle
 
     step()
     {
+        if (this.holdTime > 0)
+        {
+            this.holdTime--;
+            return;
+        }
+
         switch (this.state)
         {
             case VEHICLE_STATE_TRAVELLING:
@@ -221,6 +229,8 @@ class Vehicle
                 console.log("state: arriving");
                 this.loadingDone = false;
                 this.state = VEHICLE_STATE_ARRIVED;
+                // time needed to load-unload
+                this.holdTime = 20;
             break;
 
             case VEHICLE_STATE_ARRIVED:
@@ -231,6 +241,8 @@ class Vehicle
                     this.state = VEHICLE_STATE_LEAVING;
                     this.advanceSchedule();
                 }
+                // time needed to start
+                this.holdTime = 10;
             break;
 
             case VEHICLE_STATE_LEAVING:
