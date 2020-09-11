@@ -32,6 +32,9 @@ function tick()
     _gfx2.resize();
     _gfx2.render();
     _roads.pickNode(_gfx.cursorWorldPosition, true);
+
+    windowUpdateContents();
+
     window.requestAnimationFrame(tick);
 }
 

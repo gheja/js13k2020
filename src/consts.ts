@@ -14,3 +14,6 @@ const GOOD_WOOD = 3;
 const GOOD_COAL = 4;
 
 const GOOD_ICONS = [ "", "🧑", "✉️" ];
+
+const WINDOW_TYPE_VEHICLE = 1;
+const WINDOW_TYPE_STATION = 2;

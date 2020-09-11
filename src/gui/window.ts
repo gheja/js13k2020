@@ -41,6 +41,109 @@ function windowUpdatePosition(dx, dy)
     }
 }
 
+function windowUpdateContents()
+{
+    let win: HTMLElement;
+    let bodyText: string;
+    let titleText: string;
+    let obj: any;
+    let s: string;
+    let i: any;
+    let j: any;
+
+    for (win of document.querySelectorAll<HTMLElement>(".window"))
+    {
+        bodyText = "";
+
+        switch (parseInt(win.dataset["t"]))
+        {
+            case WINDOW_TYPE_VEHICLE:
+                obj = _vehicles[win.dataset["i"]];
+                titleText = obj.title;
+
+                s = obj.schedule[obj.scheduleIndex].station.title;
+
+                switch (obj.state)
+                {
+                    case VEHICLE_STATE_TRAVELLING:
+                        bodyText += `Heading to ${s}`;
+                    break;
+
+                    case VEHICLE_STATE_ARRIVING:
+                        bodyText += `Arriving at ${s}`;
+                    break;
+
+                    case VEHICLE_STATE_LEAVING:
+                        bodyText += `Leaving ${s}`;
+                    break;
+
+                    case VEHICLE_STATE_ARRIVED:
+                        bodyText += `Loading/unloading`;
+                    break;
+                }
+
+                bodyText += "<br/>";
+
+                for (i in obj.goodCapacity)
+                {
+                    if (obj.goodCapacity[i] > 0)
+                    {
+                        bodyText += `${GOOD_ICONS[i]} ${obj.goodOnboard[i]} / ${obj.goodCapacity[i]}<br/>`;
+                    }
+                }
+
+                bodyText += "<hr/>";
+
+                obj.schedule.forEach((x, i) => {
+                    if (i == obj.scheduleIndex)
+                    {
+                        bodyText += "> ";
+                    }
+
+                    bodyText += x.station.title + "<br/>";
+                })
+            break;
+
+            case WINDOW_TYPE_STATION:
+                obj = _stations[win.dataset["i"]];
+                titleText = obj.title;
+
+                bodyText += `Waiting:<br/>`;
+
+                for (j of obj.factoriesInRange)
+                {
+                    for (i in j.goodProduction)
+                    {
+                        if (j.goodProduction[i] > 0)
+                        {
+                            bodyText += `${GOOD_ICONS[i]} ${j.goodAvailable[i]} (+${j.goodProduction[i]}/min, ${j.goodCapacity[i]} max)<br/>`;
+                        }
+                    }
+                }
+
+                bodyText += `Accepts:<br/>`;
+
+                for (j of obj.factoriesInRange)
+                {
+                    for (i in j.goodAccepted)
+                    {
+                        if (j.goodAccepted[i] > 0)
+                        {
+                            bodyText += `${GOOD_ICONS[i]} `;
+                        }
+                    }
+                }
+            break;
+        }
+
+        if (bodyText != "")
+        {
+            (win.querySelector(".title") as HTMLDivElement).innerHTML = titleText;
+            (win.querySelector(".body") as HTMLDivElement).innerHTML = bodyText;
+        }
+    }
+}
+
 function windowClose()
 {
     (this as HTMLElement).parentNode.removeChild((this as HTMLElement));
@@ -64,7 +167,6 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
 
     a = document.createElement("div");
     a.className = "title";
-    a.innerHTML = "Choo-choo train";
     win.appendChild(a);
 
     a = document.createElement("div");
@@ -75,7 +177,6 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
 
     a = document.createElement("div");
     a.className = "body";
-    a.innerHTML = "Class: <span>Loremipsu</span><br/>Capacity: <span>1300</span><br/>Cargo: <span>150</span><br/>Running cost: <span>$" + (Math.floor(Math.random() * 20 + 2) * 100) + "/year</span>";
     win.appendChild(a);
 
     document.body.appendChild(win);
