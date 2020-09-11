@@ -2,21 +2,13 @@
 
 // TODO: google closure compiler renames properties of domobject.dataset, now accessing it as array until fixed
 
-function getNextZIndex()
-{
-    if (!getNextZIndex.n)
-    {
-        getNextZIndex.n = 9000;
-    }
-    getNextZIndex.n++;
-    return getNextZIndex.n + "";
-}
+let _windowZIndexSequence = 9000;
 
 function windowMouseDown(event: MouseEvent)
 {
     // console.log("down");
     (this as HTMLElement).dataset["selected"] = "1";
-    (this as HTMLElement).style.zIndex = getNextZIndex();
+    (this as HTMLElement).style.zIndex = "" + (_windowZIndexSequence++);
 }
 
 function windowMouseUp()
@@ -31,7 +23,7 @@ function windowMouseUp()
     }
 }
 
-function windowUpdate(dx, dy)
+function windowUpdatePosition(dx, dy)
 {
     let a: HTMLElement;
     let b: DOMRect;
@@ -49,12 +41,12 @@ function windowUpdate(dx, dy)
     }
 }
 
-function closeWindow()
+function windowClose()
 {
     (this as HTMLElement).parentNode.removeChild((this as HTMLElement));
 }
 
-function createWindow()
+function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
 {
     let win: HTMLDivElement;
     let a: HTMLDivElement;
@@ -65,7 +57,10 @@ function createWindow()
     win.addEventListener("touchstart", windowMouseDown.bind(win));
     win.addEventListener("mouseup", windowMouseUp.bind(win));
     win.addEventListener("touchend" , windowMouseUp.bind(win));
-    win.style.zIndex = getNextZIndex();
+    win.dataset["t"] = "" + windowType;
+    win.dataset["i"] = "" + objectIndex;
+    win.dataset["u"] = "" + tabIndex;
+    win.style.zIndex = "" + (_windowZIndexSequence++);
 
     a = document.createElement("div");
     a.className = "title";
@@ -75,7 +70,7 @@ function createWindow()
     a = document.createElement("div");
     a.className = "close";
     a.innerHTML = "X";
-    a.addEventListener("click", closeWindow.bind(win));
+    a.addEventListener("click", windowClose.bind(win));
     win.appendChild(a);
 
     a = document.createElement("div");
@@ -103,24 +98,26 @@ function onMouseMove(event: MouseEvent|TouchEvent)
         event.screenY = event.touches[0].screenY;
     }
 
-    windowUpdate(event.screenX - _mouseX, event.screenY - _mouseY)
+    windowUpdatePosition(event.screenX - _mouseX, event.screenY - _mouseY)
     _mouseX = event.screenX;
     _mouseY = event.screenY;
 }
 
-function setTooltip(s: string = "-")
+
+
+function tooltipSet(s: string = "-")
 {
     document.getElementById("tooltip").innerHTML = s ? s : "-";
 }
 
-function showTooltip(e)
+function tooltipShow(e)
 {
-    setTooltip((this.dataset["tooltip"] || "") + (this.classList.contains("button-disabled") ? " (locked)" : ""));
+    tooltipSet((this.dataset["tooltip"] || "") + (this.classList.contains("button-disabled") ? " (locked)" : ""));
 }
 
-function hideTooltip(e)
+function tooltipHide(e)
 {
-    setTooltip();
+    tooltipSet();
 }
 
 function initTooltips()
@@ -135,8 +132,8 @@ function initTooltips()
     {
         if (a.dataset["tooltip"])
         {
-            a.addEventListener("mouseover", showTooltip.bind(a));
-            a.addEventListener("mouseout", hideTooltip.bind(a));
+            a.addEventListener("mouseover", tooltipShow.bind(a));
+            a.addEventListener("mouseout", tooltipHide.bind(a));
         }
     }
 }
