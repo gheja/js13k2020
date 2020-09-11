@@ -102,8 +102,6 @@ function init()
 {
     let a;
 
-    initTooltips();
-
     _gfx = new WebglGfx("c1");
     _gfx2 = new WebglGfx("c2");
 
@@ -117,6 +115,9 @@ function init()
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;
     _gfx.cam.rx = 0.9;
+
+    initGui();
+    initTooltip();
 
     demoNetwork();
 
