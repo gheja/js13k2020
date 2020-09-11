@@ -13,6 +13,8 @@
 - [ ] title screen
 - [ ] cinematic mode
 - [ ] narration
+- [ ] GUI zoom
+- [ ] navigation
 
 ## vehicles
 - [x] angle calculation
@@ -22,7 +24,11 @@
 - [ ] upkeep costs
 
 ## windows
-- [ ] update
+- [ ] update an opened window periodically
+- [ ] vehicle
+- [ ] vehicle schedule
+- [ ] station
+- [ ] factory?
 
 ## contracts
 
