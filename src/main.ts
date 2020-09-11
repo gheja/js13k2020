@@ -2,13 +2,11 @@ let ticks = 0;
 let _gfx: WebglGfx;
 let _gfx2: WebglGfx;
 let _roads: Network;
-let _demoVehicle: Vehicle;
-
-let s1: Station;
-let s2: Station;
-let s3: Station;
+let _previewObject: any;
 
 let _factories: Array<Factory>;
+let _vehicles: Array<Vehicle>;
+let _stations: Array<Station>;
 
 function tick()
 {
@@ -21,8 +19,14 @@ function tick()
 
     _gfx.objects[1].rz += 0.01;
 
-    _demoVehicle.step();
-    
+    _vehicles.forEach(x => x.step());
+
+    if (_previewObject)
+    {
+       _previewObject.rz += 0.03;
+    }
+
+
     _gfx.resize();
     _gfx.render();
     _gfx2.resize();
@@ -41,8 +45,12 @@ function demoNetwork()
     let p6: tNetworkNode;
 
     let f: Factory;
+    let v: Vehicle;
+    let s: Station;
 
     _factories = [];
+    _vehicles = [];
+    _stations = [];
 
     f = new Factory([ -13, -10, 0 ]);
     f.goodProduction[GOOD_PASSENGER] = 5;
@@ -64,18 +72,18 @@ function demoNetwork()
     f.goodCapacity[GOOD_MAIL] = 200;
     _factories.push(f);
 
-    s1 = new Station([ -10, -10, 0 ]);
-    s2 = new Station([ 10, 8, 0 ]);
-    s3 = new Station([ 22, -6, 0 ]);
+    _stations.push(new Station([ -10, -10, 0 ]));
+    _stations.push(new Station([ 10, 8, 0 ]));
+    _stations.push(new Station([ 22, -6, 0 ]));
 
     _roads = new Network();
 
-    p1 = _roads.addNode([ -10, -10, 0 ], true, s1);
+    p1 = _roads.addNode([ -10, -10, 0 ], true, _stations[0]);
     p2 = _roads.addNode([ -10, 0, 0 ], false);
     p3 = _roads.addNode([ 0, 10, 0 ], false);
     p4 = _roads.addNode([ 5, 5, 0 ], true);
-    p5 = _roads.addNode([ 10, 8, 0 ], true, s2);
-    p6 = _roads.addNode([ 22, -6, 0 ], true, s3);
+    p5 = _roads.addNode([ 10, 8, 0 ], true, _stations[1]);
+    p6 = _roads.addNode([ 22, -6, 0 ], true, _stations[2]);
 
     _roads.addEdge(p1, p2, true);
     _roads.addEdge(p2, p3, true);
@@ -86,35 +94,57 @@ function demoNetwork()
 
     _roads.rebuild();
 
-    _demoVehicle = new Vehicle(s1);
-    _demoVehicle.schedule = [
-        { station: s1 },
-        { station: s2 },
-        { station: s3 },
+    v = new Vehicle(_stations[0]);
+
+    v.schedule = [
+        { station: _stations[0] },
+        { station: _stations[1] },
+        { station: _stations[2] },
     ];
-    _demoVehicle.goodCapacity[GOOD_PASSENGER] = 10;
-    _demoVehicle.goodCapacity[GOOD_MAIL] = 100;
+
+    v.goodCapacity[GOOD_PASSENGER] = 10;
+    v.goodCapacity[GOOD_MAIL] = 100;
+
+    _vehicles.push(v);
 
     console.log(_roads.getPath(p1, p6));
 }
 
-function init()
+function initGfx()
 {
-    let a;
-
     _gfx = new WebglGfx("c1");
-    _gfx2 = new WebglGfx("c2");
-
-    for (a of [ _gfx, _gfx2 ])
-    {
-        a.createObject(SHAPE_PLANE_INDEX);
-        a.createObject(SHAPE_TRAIN1_INDEX);
-        a.createObject(SHAPE_CURSOR_INDEX);
-    }
-
+    _gfx.createObject(SHAPE_PLANE_INDEX);
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;
     _gfx.cam.rx = 0.9;
+}
+
+function initGfx2()
+{
+    let x, y, a;
+
+    _gfx2 = new WebglGfx("c2");
+    _gfx2.cam.z = 5;
+    _gfx2.cam.y = -10
+    _gfx2.cam.rx = 1.2;
+
+    for (x=-20; x<20; x++)
+    {
+        for (y=-20; y<20; y++)
+        {
+            a = _gfx2.createObject(((x + y) % 2) ? SHAPE_PLANE_SMALL1_INDEX : SHAPE_PLANE_SMALL2_INDEX);
+            a.x = x;
+            a.y = y;
+        }
+    }
+
+    _previewObject = _gfx2.createObject(SHAPE_VEHICLE_BUS_YELLOW_INDEX);
+}
+
+function init()
+{
+    initGfx();
+    initGfx2();
 
     initGui();
     initTooltip();
