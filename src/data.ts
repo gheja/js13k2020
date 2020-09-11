@@ -73,7 +73,7 @@ const SHAPE_TRAIN1: tShapeDefinition = [
 const SHAPE_CURSOR: tShapeDefinition = [
     SHAPE_SET_SCALE, 1,
     SHAPE_SLICE_SET_HEIGHT, 0.5,
-    SHAPE_SET_COLOR, 3,
+    SHAPE_SET_COLOR_LOCAL, 0,
     SHAPE_SLICE_CIRCLE, 13, 2,
     SHAPE_SLICE_REPEAT,
     SHAPE_SET_SCALE, 0.8,
@@ -160,10 +160,12 @@ const SHAPE_DUMMY: tShapeDefinition = [];
 const WEBGL_SHAPES_TO_LOAD: Array<tShapeDefinitionV2> = [
     [ SHAPE_PLANE ],
     [ SHAPE_TRAIN1 ],
-    [ SHAPE_CURSOR ],
+    [ SHAPE_CURSOR, [ 3 ] ],
     [ SHAPE_ROAD_NODE, [ 5 ] ],
     [ SHAPE_BUS ],
     [ SHAPE_DUMMY ],
+    [ SHAPE_CURSOR, [ 8 ] ],
+    [ SHAPE_CURSOR, [ 7 ] ],
 ];
 
 const SHAPE_PLANE_INDEX = 0;
@@ -172,4 +174,6 @@ const SHAPE_CURSOR_INDEX = 2;
 const SHAPE_ROAD_NODE_INDEX = 3;
 const SHAPE_VEHICLE_BUS_INDEX = 4;
 const SHAPE_DYNAMIC_ROAD_INDEX = 5;
+const SHAPE_FACTORY_INDEX = 6;
+const SHAPE_STATION_INDEX = 7;
 
