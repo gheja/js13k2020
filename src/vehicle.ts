@@ -45,7 +45,9 @@ class Vehicle
     {
         // TODO: add a proper delay
 
-        let i, n;
+        let i, n, income;
+
+        income = 0;
 
         for (i in this.goodOnboard)
         {
@@ -53,8 +55,12 @@ class Vehicle
             {
                 // unload the goods to this station, "sell" it
                 n = this.goodOnboard[i];
-                console.log(`unloading good #${i}, count: ${n}`);
+                income += 5 * n;
+
                 this.goodOnboard[i] = 0;
+
+                console.log(`unloading good #${i}, count: ${n}`);
+                createBubble(`🔻 🧑x${n}`);
             }
         }
 
@@ -68,7 +74,13 @@ class Vehicle
                 this.station.goodAvailable[i] -= n;
 
                 console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
+                createBubble(`🔺 🧑x${n}`);
             }
+        }
+
+        if (income > 0)
+        {
+            createBubble(`💵 \$${income}`);
         }
 
         console.log("load-unload done");
