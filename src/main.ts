@@ -54,8 +54,14 @@ function demoNetwork()
     f.goodAccepted[GOOD_MAIL] = 1;
     _factories.push(f);
 
+    f = new Factory([ 22, -8, 0 ]);
+    f.goodProduction[GOOD_MAIL] = 90;
+    f.goodCapacity[GOOD_MAIL] = 200;
+    _factories.push(f);
+
     s1 = new Station([ -10, -10, 0 ]);
     s2 = new Station([ 10, 8, 0 ]);
+    s3 = new Station([ 22, -6, 0 ]);
 
     _roads = new Network();
 
@@ -64,7 +70,7 @@ function demoNetwork()
     p3 = _roads.addNode([ 0, 10, 0 ], false);
     p4 = _roads.addNode([ 5, 5, 0 ], true);
     p5 = _roads.addNode([ 10, 8, 0 ], true, s2);
-    p6 = _roads.addNode([ 12, 0, 0 ], true);
+    p6 = _roads.addNode([ 22, -6, 0 ], true, s3);
 
     _roads.addEdge(p1, p2, true);
     _roads.addEdge(p2, p3, true);
@@ -79,8 +85,10 @@ function demoNetwork()
     _demoVehicle.schedule = [
         { station: s1 },
         { station: s2 },
+        { station: s3 },
     ];
-    _demoVehicle.goodCapacity[GOOD_PASSENGER] = 100;
+    _demoVehicle.goodCapacity[GOOD_PASSENGER] = 10;
+    _demoVehicle.goodCapacity[GOOD_MAIL] = 100;
 
     console.log(_roads.getPath(p1, p6));
 }
