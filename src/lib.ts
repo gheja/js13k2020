@@ -46,3 +46,19 @@ function createGoodList()
     // note: this results even bigger ZIP: return new Array(GOOD_MAX).fill(0);
     return [0,0,0,0,0,0,0,0,0,0];
 }
+
+function destroyThis()
+{
+    (this as HTMLDivElement).parentNode.removeChild(this);
+}
+
+function createBubble(text: string)
+{
+    let a;
+
+    a = document.createElement("div");
+    a.className = "bubble";
+    a.innerHTML = text;
+    window.setTimeout(destroyThis.bind(a), 5000);
+    document.getElementById("bubbles").appendChild(a);
+}
