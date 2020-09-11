@@ -108,6 +108,9 @@ function demoNetwork()
     v.goodCapacity[GOOD_PASSENGER] = 10;
     v.goodCapacity[GOOD_MAIL] = 100;
 
+    windowCreate(WINDOW_TYPE_VEHICLE, v.vehicleIndex, 0);
+    windowCreate(WINDOW_TYPE_STATION, _stations[1].stationIndex, 0);
+
     _vehicles.push(v);
 
     console.log(_roads.getPath(p1, p6));
