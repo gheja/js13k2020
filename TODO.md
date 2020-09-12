@@ -10,6 +10,7 @@
 - [ ] make NetworkNode clickable
 - [ ] calculate edge of "roads"
 - [x] preview canvas
+- [ ] preview canvas hidden until needed
 - [ ] title screen
 - [ ] cinematic mode
 - [ ] narration
@@ -22,6 +23,10 @@
 - [ ] current tool icon highlight
 - [ ] build preview
 - [x] update statuses (credits, date, etc.)
+- [ ] depot
+- [ ] implement destroy tool
+- [ ] implement road placement
+  - [ ] limit angles
 
 ## vehicles
 - [x] angle calculation
@@ -29,6 +34,7 @@
 - [ ] trains (linked vehicles)
 - [ ] ships
 - [ ] upkeep costs
+- [ ] make load and unload separate steps
 
 ## windows
 - [x] update an opened window periodically
@@ -53,6 +59,16 @@
 ## achievements
 based on stats
 
+## map
+- [ ] some kind of generator
+- [ ] object types
+  - [ ] tree
+  - [ ] rock
+  - [ ] village
+  - [ ] city
+  - [ ] water
+- [ ] demo place initialization
+
 ## build
 - [ ] advzip
 - [ ] further optimization of HTML and CSS
@@ -62,6 +78,7 @@ based on stats
 - [x] load shapes from an array (from data.ts) instead of hardcoding them
 - [x] support for same model with different colors
 - [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
+- [ ] hide cursor in preview window
 
 ## bugs
 - [ ] roads are lame
