@@ -58,6 +58,18 @@ html
     color: #000;
 }
 
+.body a,
+.body a:visited,
+.body a:active
+{
+    color: #038;
+}
+
+.body a:hover
+{
+    color: #fff;
+}
+
 .button,
 .button-disabled
 {
