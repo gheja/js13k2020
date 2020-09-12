@@ -9,6 +9,7 @@ let _vehicles: Array<Vehicle>;
 let _stations: Array<Station>;
 
 let _creditsLoanMax;
+let _creditsBalance;
 
 function loan1(x)
 {
@@ -18,6 +19,22 @@ function loan1(x)
 function loan2(x)
 {
     _stats[STAT_LOAN_REPAID] += x;
+}
+
+function updateStatuses()
+{
+    _creditsBalance =
+        + _stats[STAT_LOAN_TAKEN]
+        - _stats[STAT_LOAN_REPAID]
+        - _stats[STAT_LOAN_INTEREST_PAID]
+        + _stats[STAT_CREDITS]
+        - _stats[STAT_SPENT_BUILDING]
+        - _stats[STAT_SPENT_UPKEEP]
+        - _stats[STAT_SPENT_OTHER];
+
+    updateInnerHTML(document.getElementById("credits"), moneyFormat(_creditsBalance));
+    updateInnerHTML(document.getElementById("time"), getTime(_stats[STAT_TICKS]));
+
 }
 
 function openBank()
@@ -58,6 +75,7 @@ function tick()
     _gfx2.render();
     _roads.pickNode(_gfx.cursorWorldPosition, true);
 
+    updateStatuses();
     windowUpdateContents();
 
     window.requestAnimationFrame(tick);

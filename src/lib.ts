@@ -80,6 +80,21 @@ function updateInnerHTML(obj: HTMLElement, text: string)
     }
 }
 
+function getTime(ticks)
+{
+    let x, d, h, m;
+
+    // 2.5 sec = 1 day;
+
+    x = ticks * (1440 / (2.5 / (1 / 60)));
+
+    d = Math.floor(x / (60 * 24)) + 1;
+    h = Math.floor((x % (60 * 24)) / 60);
+    m = 0;
+
+    return `Day ${d} ${h}:00`;
+}
+
 function moneyFormat(x)
 {
     return "$" + x.toLocaleString("en-US");
