@@ -48,22 +48,43 @@ function onMouseClick()
 {
     let x: any;
 
-    for (x of _vehicles)
+    switch (_activeTool)
     {
-        if (distance3D(x.position, _gfx.cursorWorldPosition) < 3)
-        {
-            windowCreate(WINDOW_TYPE_VEHICLE, x.vehicleIndex, 0);
-            return;
-        }
-    }
+        case TOOL_INFO:
+            for (x of _vehicles)
+            {
+                if (distance3D(x.position, _gfx.cursorWorldPosition) < 3)
+                {
+                    windowCreate(WINDOW_TYPE_VEHICLE, x.vehicleIndex, 0);
+                    return;
+                }
+            }
 
-    for (x of _stations)
-    {
-        if (distance3D(x.position, _gfx.cursorWorldPosition) < 1)
-        {
-            windowCreate(WINDOW_TYPE_STATION, x.stationIndex, 0);
-            return;
-        }
+            for (x of _stations)
+            {
+                if (distance3D(x.position, _gfx.cursorWorldPosition) < 1)
+                {
+                    windowCreate(WINDOW_TYPE_STATION, x.stationIndex, 0);
+                    return;
+                }
+            }
+        break;
+
+        case TOOL_ROAD_BEGIN:
+            x = _roads.pickNode(_gfx.cursorWorldPosition);
+
+            if (x)
+            {
+                _roads.editPick(x);
+                _activeTool = TOOL_ROAD_END;
+            }
+        break;
+
+        case TOOL_ROAD_END:
+            _roads.editFinish();
+            _activeTool = TOOL_ROAD_BEGIN;
+            _roads.editStart();
+        break;
     }
 }
 

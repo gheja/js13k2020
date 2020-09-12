@@ -12,6 +12,8 @@ let _creditsBalance;
 let _creditsLoanMax;
 let _creditsLoanInterestPerDay;
 
+let _activeTool;
+
 function updateStatuses()
 {
     _creditsBalance =
@@ -45,6 +47,24 @@ function openStats()
     windowCreate(WINDOW_TYPE_STATS, 0, 0);
 }
 
+function setToolInfo()
+{
+    _activeTool = TOOL_INFO;
+    // in case TOOL_ROAD_* was the previous one
+    _roads.editCancel();
+    _roads.rebuildGfx();
+}
+
+function setToolDelete()
+{
+}
+
+function setToolRoad()
+{
+    _activeTool = TOOL_ROAD_BEGIN;
+    _roads.editStart();
+}
+
 function tick()
 {
     ticks++;
@@ -65,13 +85,17 @@ function tick()
        _previewObject.rz += 0.03;
     }
 
+    if (_activeTool == TOOL_ROAD_END)
+    {
+        _roads.editUpdate();
+    }
+
     updateView();
 
     _gfx.resize();
     _gfx.render();
     _gfx2.resize();
     _gfx2.render();
-    _roads.pickNode(_gfx.cursorWorldPosition, true);
 
     updateStatuses();
     windowUpdateContents();
@@ -136,7 +160,7 @@ function demoNetwork()
     _roads.addEdge(p3, p5, true);
     _roads.addEdge(p5, p6, true);
 
-    _roads.rebuild();
+    _roads.rebuildGfx();
 
     v = new Vehicle(_stations[0]);
 
