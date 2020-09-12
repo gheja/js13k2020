@@ -35,9 +35,10 @@
 - [ ] vehicle schedule
 - [x] station
 - [ ] factory?
-- [ ] stats
+- [x] stats
 - [ ] research
 - [ ] loans
+- [ ] contracts
 
 ## contracts
 
