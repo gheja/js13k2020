@@ -31,37 +31,20 @@
 		<canvas id="c1"></canvas>
 		<canvas id="c2"></canvas>
 		
-		<button onclick="createWindow();">Add</button>
 		<div class="statusbar">
-			<div class="status"><span class="emoji">🧪</span> 5</div>
-			<div class="status"><span class="emoji">💵</span> $12,345</div>
-			<div class="status" data-tooltip="Current date"><span class="emoji">🕑</span> Day 1, 12:33</div>
+			<div class="status"><span class="emoji">🕑</span> <span id="time">Day 123, 12:12</span></div>
+			<div class="status"><span class="emoji">💵</span> <span id="credits">$0,000,000</span></div>
 			<div class="status" id="tooltip">Tooltip willappear here.</div>
 		</div>
 		<div class="toolbar">
+			<div class="button" data-tooltip="Info">💭</div>
 			<div class="button" data-tooltip="Delete">🧨</div>
-			<div class="button" data-tooltip="Construction menu">🏗</div>
-			<div class="button" data-tooltip="Land vehicles menu">🚛</div>
-			<div class="button" data-tooltip="?">🚜</div>
-			<div class="button" data-tooltip="?">🚚</div>
-			<div class="button" data-tooltip="Trains menu">🚂</div>
-			<div class="button button-disabled" data-tooltip="Another trains menu">🚊</div>
-			<div class="button button-disabled" data-tooltip="Ships menu">⛴</div>
-			<div class="button button-disabled">✈️</div>
-			<div class="button button-disabled">🛣</div>
-			<div class="button">💵</div>
-			<div class="button">📜</div>
-			<div class="button">💡</div>
-			<div class="button">🧪</div>
-			<div class="button">🚜</div>
-			<div class="button hue1">🚜</div>
-			<div class="button hue2 ">🚜</div>
-		</div>
-		<div class="toolbar2">
-			<div class="button" data-c="Delete">🛣</div>
-			<div class="button">⛽️</div>
-			<div class="button">🔁</div>
-			<div class="button">📦</div>
+			<div class="button" data-tooltip="Road construction">🛣</div>
+			<div class="button" data-tooltip="Depot">⛽️</div>
+			<div class="button" data-tooltip="Station">🔁</div>
+			<div class="button" data-tooltip="Contracts">📜</div>
+			<div class="button" data-tooltip="Research">🧪</div>
+			<div class="button" data-tooltip="Loans">💵</div>
 		</div>
 		<div id="bubbles">
 		</div>
