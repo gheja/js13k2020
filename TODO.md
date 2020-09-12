@@ -18,6 +18,9 @@
   - [x] mouse
   - [ ] keys
   - [ ] touch
+- [x] clean up unused tool icons
+- [ ] current tool icon highlight
+- [ ] build preview
 
 ## vehicles
 - [x] angle calculation
@@ -32,6 +35,9 @@
 - [ ] vehicle schedule
 - [x] station
 - [ ] factory?
+- [ ] stats
+- [ ] research
+- [ ] loans
 
 ## contracts
 
