@@ -109,3 +109,16 @@ function moneyFormat(x)
 {
     return "$" + x.toLocaleString("en-US");
 }
+
+function removeFromArray(array: Array<any>, item: any)
+{
+    let i;
+
+    for (i=array.length-1; i>= 0; i--)
+    {
+        if (array[i] === item)
+        {
+            array.splice(i, 1);
+        }
+    }
+}
