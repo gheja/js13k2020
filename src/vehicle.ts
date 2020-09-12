@@ -265,8 +265,12 @@ class Vehicle
 
             case VEHICLE_STATE_ARRIVED:
                 console.log("state: arrived");
-                this.loadUnload();
-                if (this.loadingDone)
+                // TODO: station might be null if schedule was altered
+                if (this.station != null)
+                {
+                    this.loadUnload();
+                }
+                if (this.loadingDone || this.station == null)
                 {
                     this.state = VEHICLE_STATE_LEAVING;
                     this.advanceSchedule();
