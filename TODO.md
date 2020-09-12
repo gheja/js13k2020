@@ -1,7 +1,7 @@
 # js13k2020
 
 ## general
-- [ ] mouse handling
+- mouse handling
   - [ ] hover over objects
   - [x] click on objects
   - [x] click and drag land
@@ -15,7 +15,7 @@
 - [ ] cinematic mode
 - [ ] narration
 - [ ] GUI zoom
-- [ ] navigation
+- navigation
   - [x] mouse
   - [ ] keys
   - [ ] touch
@@ -60,7 +60,7 @@ based on stats
 
 ## map
 - [ ] some kind of generator
-- [ ] object types
+- object types
   - [ ] tree
   - [ ] rock
   - [ ] village
@@ -69,9 +69,10 @@ based on stats
 - [ ] demo place initialization
 
 ## network
-- [ ] implement road building
+- road building
+  - [x] implement
   - [ ] limit angles
-  - [ ] highlight correct section
+  - [x] highlight correct section
   - [ ] highlight invalid section
 
 ## build
