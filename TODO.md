@@ -82,3 +82,4 @@ based on stats
 
 ## bugs
 - [ ] roads are lame
+- [ ] goTowards3D() is buggy
