@@ -8,18 +8,9 @@ let _factories: Array<Factory>;
 let _vehicles: Array<Vehicle>;
 let _stations: Array<Station>;
 
-let _creditsLoanMax;
 let _creditsBalance;
-
-function loan1(x)
-{
-    _stats[STAT_LOAN_TAKEN] += x;
-}
-
-function loan2(x)
-{
-    _stats[STAT_LOAN_REPAID] += x;
-}
+let _creditsLoanMax;
+let _creditsLoanInterestPerDay;
 
 function updateStatuses()
 {
@@ -32,9 +23,16 @@ function updateStatuses()
         - _stats[STAT_SPENT_UPKEEP]
         - _stats[STAT_SPENT_OTHER];
 
+    _creditsLoanInterestPerDay = (_stats[STAT_LOAN_TAKEN] - _stats[STAT_LOAN_REPAID]) * LOAN_INTEREST_PER_DAY;
+
     updateInnerHTML(document.getElementById("credits"), moneyFormat(_creditsBalance));
     updateInnerHTML(document.getElementById("time"), getTime(_stats[STAT_TICKS]));
 
+}
+
+function onDayPassed()
+{
+    // TODO: subtract loan interest
 }
 
 function openBank()

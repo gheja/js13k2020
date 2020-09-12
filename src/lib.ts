@@ -95,6 +95,16 @@ function getTime(ticks)
     return `Day ${d} ${h}:00`;
 }
 
+function loan1(x)
+{
+    _stats[STAT_LOAN_TAKEN] += x;
+}
+
+function loan2(x)
+{
+    _stats[STAT_LOAN_REPAID] += x;
+}
+
 function moneyFormat(x)
 {
     return "$" + x.toLocaleString("en-US");

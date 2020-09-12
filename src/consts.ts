@@ -20,6 +20,8 @@ const WINDOW_TYPE_STATION = 2;
 const WINDOW_TYPE_STATS = 3;
 const WINDOW_TYPE_BANK = 4;
 
+const LOAN_INTEREST_PER_DAY = 0.1/400; // 10% in 400 days
+
 const STAT_CREDITS = 0;
 const STAT_SPENT_BUILDING = 1;
 const STAT_SPENT_UPKEEP = 2;

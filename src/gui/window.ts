@@ -153,6 +153,8 @@ function windowUpdateContents()
                 i = _stats[STAT_LOAN_TAKEN] - _stats[STAT_LOAN_REPAID];
 
                 bodyText += `Total loan: ${moneyFormat(i)}<br/>`;
+                // TODO: implement it actually
+                bodyText += `Total interest: ${moneyFormat(_creditsLoanInterestPerDay)}/day<br/>`;
                 bodyText += `Loan limit: ${moneyFormat(_creditsLoanMax)}<br/>`;
 
                 if (i < _creditsLoanMax)
