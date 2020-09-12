@@ -25,13 +25,12 @@
 - [x] update statuses (credits, date, etc.)
 - [ ] depot
 - [ ] implement destroy tool
-- [ ] implement road placement
-  - [ ] limit angles
 
 ## vehicles
 - [x] angle calculation
 - [ ] schedule editor
-- [ ] trains (linked vehicles)
+- [ ] linked vehicles
+- [ ] trains
 - [ ] ships
 - [ ] upkeep costs
 - [ ] make load and unload separate steps
@@ -68,6 +67,12 @@ based on stats
   - [ ] city
   - [ ] water
 - [ ] demo place initialization
+
+## network
+- [ ] implement road building
+  - [ ] limit angles
+  - [ ] highlight correct section
+  - [ ] highlight invalid section
 
 ## build
 - [ ] advzip
