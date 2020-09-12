@@ -230,3 +230,12 @@ function init()
 }
 
 window.addEventListener("load", init);
+
+// "exports" so google closure compiler won't break JS access from HTML
+window["setToolInfo"] = setToolInfo;
+window["setToolDelete"] = setToolDelete;
+window["setToolRoad"] = setToolRoad;
+window["openBank"] = openBank;
+window["openStats"] = openStats;
+window["loan1"] = loan1;
+window["loan2"] = loan2;
