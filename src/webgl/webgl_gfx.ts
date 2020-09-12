@@ -21,7 +21,7 @@ class WebglGfx
     cursorObject: any;
     program: WebGLProgram;
 
-    constructor(id: string)
+    constructor(id: string, handleCursor: boolean)
     {
         let vshader: string;
         let fshader: string;
@@ -63,8 +63,11 @@ class WebglGfx
         WEBGL_SHAPES_TO_LOAD.forEach(x => this.addShape(x[0], x[1]));
 
         this.objects = [];
-        this.cursorObject = this.createObject(SHAPE_CURSOR_INDEX);
-        this.objects.push(this.cursorObject);
+        if (handleCursor)
+        {
+            this.cursorObject = this.createObject(SHAPE_CURSOR_INDEX);
+            this.objects.push(this.cursorObject);
+        }
 
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
     }
@@ -144,9 +147,12 @@ class WebglGfx
 
         this.cursorWorldPosition = c;
 
-        this.cursorObject.x = c[0];
-        this.cursorObject.y = c[1];
-        this.cursorObject.z = c[2];
+        if (this.cursorObject)
+        {
+            this.cursorObject.x = c[0];
+            this.cursorObject.y = c[1];
+            this.cursorObject.z = c[2];
+        }
     }
 
     createBuffer(x: any, type: number)
