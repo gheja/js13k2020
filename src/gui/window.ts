@@ -61,26 +61,38 @@ function windowUpdateContents()
                 obj = _vehicles[win.dataset["i"]];
                 titleText = obj.title;
 
-                s = obj.schedule[obj.scheduleIndex].station.title;
-
-                switch (obj.state)
+                if (obj.schedule.length == 0)
                 {
-                    case VEHICLE_STATE_TRAVELLING:
-                        bodyText += `Heading to ${s}`;
-                    break;
-
-                    case VEHICLE_STATE_ARRIVING:
-                        bodyText += `Arriving at ${s}`;
-                    break;
-
-                    case VEHICLE_STATE_LEAVING:
-                        bodyText += `Leaving ${s}`;
-                    break;
-
-                    case VEHICLE_STATE_ARRIVED:
-                        bodyText += `Loading/unloading`;
-                    break;
+                    s = "nowhere";
                 }
+                else
+                {
+                    s = obj.schedule[obj.scheduleIndex].station.title;
+                }
+
+                if (obj.stopped)
+                {
+                    bodyText += "Stopped."
+                }
+                else
+                {
+                    switch (obj.state)
+                    {
+                        case VEHICLE_STATE_TRAVELLING:
+                        case VEHICLE_STATE_LEAVING:
+                            bodyText += `Heading to ${s}`;
+                        break;
+
+                        case VEHICLE_STATE_ARRIVING:
+                            bodyText += `Arriving at ${s}`;
+                        break;
+
+                        case VEHICLE_STATE_ARRIVED:
+                            bodyText += `Loading/unloading`;
+                        break;
+                    }
+                }
+
 
                 bodyText += "<br/>";
 
@@ -93,15 +105,25 @@ function windowUpdateContents()
                 }
 
                 bodyText += "<hr/>";
-
-                obj.schedule.forEach((x, i) => {
-                    if (i == obj.scheduleIndex)
+                if (obj.schedule.length == 0)
+                {
+                    bodyText += "(Schedule is empty.)<br/>";
+                }
+                else
+                {
+                    obj.schedule.forEach((x, i) =>
                     {
-                        bodyText += "> ";
-                    }
+                        bodyText +=
+                            ((i == obj.scheduleIndex) ? "&raquo; " : "") +
+                            `${x.station.title} [<a href="#" onclick="scheduleDelete(${obj.vehicleIndex}, ${i});">del</a>] <br/>`;
+                    });
+                }
 
-                    bodyText += x.station.title + "<br/>";
-                });
+                bodyText += `<a href="#" onclick="scheduleAppend(${obj.vehicleIndex});">Add</a> | `;
+                bodyText += `<a href="#" onclick="scheduleSkip(${obj.vehicleIndex});">Skip</a> | `;
+                bodyText += `<a href="#" onclick="vehiclePause(${obj.vehicleIndex});">` + (obj.stopped ? "Start" : "Stop") + `</a> | `;
+                bodyText += `<a href="#" onclick="vehicleDepot(${obj.vehicleIndex});">Depot`;
+
             break;
 
             case WINDOW_TYPE_STATION:
