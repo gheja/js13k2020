@@ -71,6 +71,15 @@ class Vehicle
 
                     console.log(`unloading good #${i}, count: ${n}`);
                     createBubble(`🔻 ${GOOD_ICONS[i]}x${n}`);
+
+                    if (i == GOOD_PASSENGER)
+                    {
+                        increaseStat(STAT_PASSENGER_DELIVERED, n);
+                    }
+                    else
+                    {
+                        increaseStat(STAT_GOOD_DELIVERED, n);
+                    }
                 }
             });
         }
@@ -88,12 +97,22 @@ class Vehicle
 
                     console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
                     createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
+
+                    if (i == GOOD_PASSENGER)
+                    {
+                        increaseStat(STAT_PASSENGER_PICKED_UP, n);
+                    }
+                    else
+                    {
+                        increaseStat(STAT_GOOD_PICKED_UP, n);
+                    }
                 }
             });
         }
 
         if (income > 0)
         {
+            increaseStat(STAT_CREDITS, income);
             createBubble(`💵 \$${income}`);
         }
 

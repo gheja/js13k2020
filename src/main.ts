@@ -12,6 +12,8 @@ function tick()
 {
     ticks++;
 
+    increaseStat(STAT_TICKS, 1);
+
     if (ticks % 300 == 1)
     {
         _factories.forEach(x => x.produce());
@@ -153,6 +155,7 @@ function init()
     initGfx();
     initGfx2();
 
+    initStats();
     initGui();
     initTooltip();
 

@@ -17,3 +17,10 @@ const GOOD_ICONS = [ "", "🧑", "✉️" ];
 
 const WINDOW_TYPE_VEHICLE = 1;
 const WINDOW_TYPE_STATION = 2;
+
+const STAT_CREDITS = 0;
+const STAT_TICKS = 1;
+const STAT_PASSENGER_PICKED_UP = 2;
+const STAT_PASSENGER_DELIVERED = 3;
+const STAT_GOOD_PICKED_UP = 4;
+const STAT_GOOD_DELIVERED = 5;
