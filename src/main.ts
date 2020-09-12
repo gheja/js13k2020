@@ -8,6 +8,23 @@ let _factories: Array<Factory>;
 let _vehicles: Array<Vehicle>;
 let _stations: Array<Station>;
 
+let _creditsLoanMax;
+
+function loan1(x)
+{
+    _stats[STAT_LOAN_TAKEN] += x;
+}
+
+function loan2(x)
+{
+    _stats[STAT_LOAN_REPAID] += x;
+}
+
+function openBank()
+{
+    windowCreate(WINDOW_TYPE_BANK, 0, 0);
+}
+
 function openStats()
 {
     windowCreate(WINDOW_TYPE_STATS, 0, 0);
@@ -152,6 +169,11 @@ function initGfx2()
     _previewObject = _gfx2.createObject(SHAPE_VEHICLE_BUS_YELLOW_INDEX);
 }
 
+function initLoan()
+{
+    _creditsLoanMax = 50000;
+}
+
 function init()
 {
     initGfx();
@@ -160,6 +182,7 @@ function init()
     initStats();
     initGui();
     initTooltip();
+    initLoan();
 
     demoNetwork();
 

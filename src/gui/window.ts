@@ -146,6 +146,25 @@ function windowUpdateContents()
                     }
                 }
             break;
+
+            case WINDOW_TYPE_BANK:
+                titleText = "Bank";
+
+                i = _stats[STAT_LOAN_TAKEN] - _stats[STAT_LOAN_REPAID];
+
+                bodyText += `Total loan: ${moneyFormat(i)}<br/>`;
+                bodyText += `Loan limit: ${moneyFormat(_creditsLoanMax)}<br/>`;
+
+                if (i < _creditsLoanMax)
+                {
+                    bodyText += `<a href="#" onclick="loan1(10000)">Borrow ${moneyFormat(10000)}</a><br/>`
+                }
+
+                if (_creditsBalance > 10000)
+                {
+                    bodyText += `<a href="#" onclick="loan2(10000)">Repay ${moneyFormat(10000)}<a><br/>`
+                }
+            break;
         }
 
         if (bodyText != "")

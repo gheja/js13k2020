@@ -79,3 +79,8 @@ function updateInnerHTML(obj: HTMLElement, text: string)
         obj.innerHTML = text;
     }
 }
+
+function moneyFormat(x)
+{
+    return "$" + x.toLocaleString("en-US");
+}
