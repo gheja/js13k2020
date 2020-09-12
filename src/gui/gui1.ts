@@ -31,37 +31,48 @@ function onTouchStart(event: TouchEvent)
     _mouseY = event.touches[0].screenY;
 }
 
-function highlightAny()
+function highlightClear()
+{
+    _highlightedObject = null;
+    _highlightedObjectType = HOT_NONE;
+}
+
+function highlightThese(networkNode: boolean, station: boolean)
 {
     let x: any;
 
-    _highlightedObjectType = HOT_NONE;
+    highlightClear();
 
-    _roads.highlight(null);
-    highlightStaion(null);
-
-    x = _roads.pickNode(_gfx.cursorWorldPosition, false);
-
-    if (x)
+    if (networkNode)
     {
-        if (!x.locked)
-        {
-            _roads.highlight(x, NETWORK_NODE_HIGHLIGHT_INVALID);
+        _roads.highlight(null);
+        highlightStaion(null);
 
-            _highlightedObjectType = HOT_NODE;
-            _highlightedObject = x;
-            return;
+        x = _roads.pickNode(_gfx.cursorWorldPosition, false);
+
+        if (x)
+        {
+            if (!x.locked)
+            {
+                _roads.highlight(x, NETWORK_NODE_HIGHLIGHT_INVALID);
+
+                _highlightedObjectType = HOT_NODE;
+                _highlightedObject = x;
+                return;
+            }
         }
     }
 
-    _highlightedObject = pickStation(_gfx.cursorWorldPosition);
-    if (_highlightedObject)
+    if (station)
     {
-        _highlightedObjectType = HOT_STATION;
-        // highlightStation(_highlightedObject);
-        return;
+        _highlightedObject = pickStation(_gfx.cursorWorldPosition);
+        if (_highlightedObject)
+        {
+            _highlightedObjectType = HOT_STATION;
+            // highlightStation(_highlightedObject);
+            return;
+        }
     }
-
 }
 
 function onMouseMove(event: MouseEvent|TouchEvent)
@@ -82,7 +93,7 @@ function onMouseMove(event: MouseEvent|TouchEvent)
 
     if (_activeTool == TOOL_DELETE)
     {
-        highlightAny();
+        highlightThese(true, true);
     }
 
     _mouseX = event.screenX;
