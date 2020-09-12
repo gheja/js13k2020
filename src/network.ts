@@ -38,12 +38,16 @@ class Network
     nodes: Array<tNetworkNode>;
     edges: Array<tNetworkEdge>;
     webglGfxObject: any;
+    editedNode1: tNetworkNode;
+    editedNode2: tNetworkNode;
+    showNodes: boolean;
 
     constructor()
     {
         this.nodes = [];
         this.edges = [];
         this.webglGfxObject = _gfx.createObject(SHAPE_DYNAMIC_ROAD_INDEX);
+        this.showNodes = false;
     }
 
     addNode(position: tPoint3D, locked: boolean, station: Station=null)
@@ -82,14 +86,43 @@ class Network
         return this.edges[this.edges.length - 1];
     }
 
+    deleteEdge(edge: tNetworkEdge)
+    {
+        removeFromArray(this.edges, edge);
+    }
+
+    deleteNode(node: tNetworkNode)
+    {
+        let i;
+
+        if (node)
+        {
+            // TODO: delete the webgl object
+            node.webglGfxObject.visible = false;
+
+            for (i = this.edges.length - 1; i >= 0; i--)
+            {
+                if (this.edges[i].node1 === node || this.edges[i].node2 === node)
+                {
+                    this.deleteEdge(this.edges[i]);
+                }
+            }
+
+            removeFromArray(this.nodes, node);
+        }
+    }
+
     pickNode(position: tPoint3D)
     {
-        this.nodes.forEach((node) => {
-            if (distance3D(node.position, position) < 0.5)
+        let a;
+
+        for (a of this.nodes)
+        {
+            if (a !== this.editedNode2 && distance3D(a.position, position) < 2)
             {
-                return node;
+                return a;
             }
-        });
+        }
 
         return null;
     }
@@ -110,9 +143,68 @@ class Network
         return null;
     }
 
-    rebuild()
+    editStart()
     {
-        this.nodes.forEach((a) => a.angle = null);
+        this.showNodes = true;
+        this.editedNode1 = null;
+        this.editedNode2 = null;
+        this.rebuildGfx();
+    }
+
+    editPick(x: tNetworkNode)
+    {
+        this.editedNode1 = x;
+        this.editedNode2 = this.addNode(x.position, false, null);
+        this.editedNode2.highlight = NETWORK_NODE_HIGHLIGHT_EDITED;
+        this.addEdge(this.editedNode1, this.editedNode2, false);
+    }
+
+    editUpdate()
+    {
+        let x: tNetworkNode;
+
+        this.editedNode2.position = F32A(_gfx.cursorWorldPosition);
+
+        if ((x = this.pickNode(this.editedNode2.position)))
+        {
+            this.editedNode2.position = F32A(x.position);
+        }
+
+        this.rebuildGfx();
+    }
+
+    editCancel()
+    {
+        this.showNodes = false;
+        this.deleteNode(this.editedNode2);
+    }
+
+    editFinish()
+    {
+        let x: tNetworkNode;
+
+        this.showNodes = false;
+
+        if ((x = this.pickNode(this.editedNode2.position)))
+        {
+            this.deleteNode(this.editedNode2);
+            this.editedNode2 = x;
+            this.addEdge(this.editedNode1, x, false);
+        }
+
+        this.editedNode2.highlight = NETWORK_NODE_HIGHLIGHT_NONE;
+        this.rebuildGfx();
+    }
+
+    rebuildGfx()
+    {
+        this.nodes.forEach((a) => {
+            a.angle = null;
+            a.webglGfxObject.x = a.position[0];
+            a.webglGfxObject.y = a.position[1];
+            a.webglGfxObject.z = a.position[2];
+            a.webglGfxObject.visible = this.showNodes;
+        });
 
         this.edges.forEach((edge) => {
             if (edge.node2.angle === null)
