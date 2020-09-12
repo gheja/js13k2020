@@ -174,6 +174,45 @@ class Network
             this.editedNode2.position = F32A(x.position);
         }
 
+/*
+        // check for valid angle for this new edge
+
+        let angle: number;
+
+        let ok, a;
+        ok = true;
+        angle = getAngle2D(this.editedNode1.position, this.editedNode2.position);
+
+        this.edges.forEach(edge => {
+            if (edge.node1 == this.editedNode1)
+            {
+                a = getAngle2D(edge.node1.position, edge.node2.position);
+                if (Math.abs(a - angle + Math.PI) < Math.PI/2)
+                {
+                    ok = false;
+                }
+            }
+            if (edge.node2 == this.editedNode1)
+            {
+                a = getAngle2D(edge.node2.position, edge.node1.position);
+                if (Math.abs(a - angle) > Math.PI/2)
+                {
+                    ok = false;
+                }
+            }
+        });
+
+        if (ok)
+        {
+            this.editedNode2.highlight = NETWORK_NODE_HIGHLIGHT_EDITED;
+        }
+        else
+        {
+            this.editedNode2.highlight = NETWORK_NODE_HIGHLIGHT_INVALID;
+        }
+*/
+
+
         this.rebuildGfx();
     }
 
