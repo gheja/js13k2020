@@ -275,3 +275,61 @@ class Vehicle
         }
     }
 }
+
+function getVehicleByIndex(vehicleIndex: number): Vehicle
+{
+    let a;
+
+    for (a of _vehicles)
+    {
+        if (a.vehicleIndex == vehicleIndex)
+        {
+            return a
+        }
+    }
+
+    return null;
+}
+
+let _vehicleEdited: Vehicle;
+
+function scheduleDelete(vehicleIndex: number, scheduleIndex: number)
+{
+    let v;
+
+    v = getVehicleByIndex(vehicleIndex);
+
+    v.schedule.splice(scheduleIndex, 1);
+
+    if (v.scheduleIndex == scheduleIndex)
+    {
+        // TODO: this resets the schedule pointer, it is a bit complicated to handle it nicely
+        v.scheduleIndex = 0;
+        v.advanceSchedule();
+    }
+    else if (v.scheduleIndex > scheduleIndex)
+    {
+        v.scheduleIndex--;
+    }
+}
+
+function scheduleAppend(vehicleIndex: number)
+{
+    _vehicleEdited = getVehicleByIndex(vehicleIndex);
+    setToolScheduleAppend();
+}
+
+function scheduleSkip(vehicleIndex: number)
+{
+    getVehicleByIndex(vehicleIndex).advanceSchedule();
+}
+
+function vehiclePause(vehicleIndex: number)
+{
+    getVehicleByIndex(vehicleIndex).toggleStopped();
+}
+
+function vehicleDepot(vehicleIndex: number)
+{
+    // getVehicleByIndex(vehicleIndex).gotoDepot();
+}

@@ -75,6 +75,13 @@ function setToolRoad()
     _roads.editStart();
 }
 
+function setToolScheduleAppend()
+{
+    toolChanging();
+    _activeTool = TOOL_VEHICLE_SCHEDULE_APPEND;
+}
+
+
 function tryToDeleteStation(station: Station)
 {
     let ok;

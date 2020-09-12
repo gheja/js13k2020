@@ -96,6 +96,11 @@ function onMouseMove(event: MouseEvent|TouchEvent)
         highlightThese(true, true);
     }
 
+    if (_activeTool == TOOL_VEHICLE_SCHEDULE_APPEND)
+    {
+        highlightThese(false, true);
+    }
+
     _mouseX = event.screenX;
     _mouseY = event.screenY;
 }
@@ -162,6 +167,14 @@ function onMouseClick()
             if (_highlightedObjectType == HOT_STATION)
             {
                 tryToDeleteStation(_highlightedObject);
+            }
+        break;
+
+        case TOOL_VEHICLE_SCHEDULE_APPEND:
+            if (_highlightedObject)
+            {
+                _vehicleEdited.schedule.push({station: _highlightedObject});
+                setToolInfo();
             }
         break;
     }
