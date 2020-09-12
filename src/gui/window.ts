@@ -101,7 +101,7 @@ function windowUpdateContents()
                     }
 
                     bodyText += x.station.title + "<br/>";
-                })
+                });
             break;
 
             case WINDOW_TYPE_STATION:
@@ -144,9 +144,27 @@ function windowUpdateContents()
     }
 }
 
+function destroyDomObject(x)
+{
+    (x as HTMLElement).parentNode.removeChild((x as HTMLElement));
+}
+
 function windowClose()
 {
-    (this as HTMLElement).parentNode.removeChild((this as HTMLElement));
+    destroyDomObject(this);
+}
+
+function destroyWindow(windowType: number, objectIndex: number, tabIndex: number)
+{
+    let win: HTMLElement;
+
+    for (win of document.querySelectorAll<HTMLElement>(".window"))
+    {
+        if (win.dataset["t"] == windowType && win.dataset["i"] == objectIndex && win.dataset["u"] == tabIndex)
+        {
+            destroyDomObject(win);
+        }
+    }
 }
 
 function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
@@ -154,12 +172,16 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
     let win: HTMLDivElement;
     let a: HTMLDivElement;
 
+    destroyWindow(windowType, objectIndex, tabIndex);
+
     win = document.createElement("div");
     win.className = "window";
     win.addEventListener("mousedown", windowMouseDown.bind(win));
     win.addEventListener("touchstart", windowMouseDown.bind(win));
     win.addEventListener("mouseup", windowMouseUp.bind(win));
     win.addEventListener("touchend" , windowMouseUp.bind(win));
+    win.style.left = (_mouseX + 30) + "px";
+    win.style.top = (_mouseY - 200) + "px";
     win.dataset["t"] = "" + windowType;
     win.dataset["i"] = "" + objectIndex;
     win.dataset["u"] = "" + tabIndex;
