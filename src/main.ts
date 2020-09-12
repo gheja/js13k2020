@@ -158,7 +158,7 @@ function demoNetwork()
 
 function initGfx()
 {
-    _gfx = new WebglGfx("c1");
+    _gfx = new WebglGfx("c1", true);
     _gfx.createObject(SHAPE_PLANE_INDEX);
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;
@@ -169,7 +169,7 @@ function initGfx2()
 {
     let x, y, a;
 
-    _gfx2 = new WebglGfx("c2");
+    _gfx2 = new WebglGfx("c2", false);
     _gfx2.cam.z = 5;
     _gfx2.cam.y = -10
     _gfx2.cam.rx = 1.2;
