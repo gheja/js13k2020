@@ -3,8 +3,8 @@
 ## general
 - [ ] mouse handling
   - [ ] hover over objects
-  - [ ] click on objects
-  - [ ] click and drag land
+  - [x] click on objects
+  - [x] click and drag land
 - [x] popup text status (income, etc)
 - [ ] lock the currently occupied NetworkEdges
 - [ ] make NetworkNode clickable
@@ -15,6 +15,9 @@
 - [ ] narration
 - [ ] GUI zoom
 - [ ] navigation
+  - [x] mouse
+  - [ ] keys
+  - [ ] touch
 
 ## vehicles
 - [x] angle calculation
@@ -34,10 +37,10 @@
 
 ## stats
 - [ ] total distance travelled
-- [ ] total goods picked up
-- [ ] total people transported
-- [ ] total goods transported (incl. people?)
-- [ ] total income
+- [x] total goods picked up
+- [x] total people transported
+- [x] total goods transported (incl. people?)
+- [x] total income
 
 ## achievements
 based on stats
@@ -51,3 +54,6 @@ based on stats
 - [x] load shapes from an array (from data.ts) instead of hardcoding them
 - [x] support for same model with different colors
 - [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
+
+## bugs
+- [ ] roads are lame
