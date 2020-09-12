@@ -46,22 +46,31 @@ function openStats()
     windowCreate(WINDOW_TYPE_STATS, 0, 0);
 }
 
-function setToolInfo()
+function toolChanging()
 {
-    _activeTool = TOOL_INFO;
+    highlightClear();
+
     // in case TOOL_ROAD_* was the previous one
     _roads.editCancel();
     _roads.rebuildGfx();
 }
 
+function setToolInfo()
+{
+    toolChanging();
+    _activeTool = TOOL_INFO;
+}
+
 function setToolDelete()
 {
+    toolChanging();
     _activeTool = TOOL_DELETE;
     _roads.editStart();
 }
 
 function setToolRoad()
 {
+    toolChanging();
     _activeTool = TOOL_ROAD_BEGIN;
     _roads.editStart();
 }
@@ -250,6 +259,8 @@ function init()
     initLoan();
 
     demoNetwork();
+
+    setToolInfo();
 
     tick();
 }
