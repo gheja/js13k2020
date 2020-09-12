@@ -46,41 +46,41 @@ function openStats()
     windowCreate(WINDOW_TYPE_STATS, 0, 0);
 }
 
-function toolChanging()
+function setTool(tool: number)
 {
     highlightClear();
+
+    _activeTool = tool;
 
     // in case TOOL_ROAD_* was the previous one
     _roads.editCancel();
     _roads.rebuildGfx();
+
+    if (tool == TOOL_DELETE || tool == TOOL_ROAD_BEGIN)
+    {
+        _roads.editStart();
+    }
 }
 
 function setToolInfo()
 {
-    toolChanging();
-    _activeTool = TOOL_INFO;
+    setTool(TOOL_INFO);
 }
 
 function setToolDelete()
 {
-    toolChanging();
-    _activeTool = TOOL_DELETE;
-    _roads.editStart();
+    setTool(TOOL_DELETE);
 }
 
 function setToolRoad()
 {
-    toolChanging();
-    _activeTool = TOOL_ROAD_BEGIN;
-    _roads.editStart();
+    setTool(TOOL_ROAD_BEGIN);
 }
 
 function setToolScheduleAppend()
 {
-    toolChanging();
-    _activeTool = TOOL_VEHICLE_SCHEDULE_APPEND;
+    setTool(TOOL_VEHICLE_SCHEDULE_APPEND);
 }
-
 
 function tryToDeleteStation(station: Station)
 {
