@@ -179,12 +179,10 @@ function destroyWindow(windowType: number, objectIndex: number, tabIndex: number
     }
 }
 
-function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
+function windowCreateGeneric(title: string, body: string)
 {
     let win: HTMLDivElement;
     let a: HTMLDivElement;
-
-    destroyWindow(windowType, objectIndex, tabIndex);
 
     win = document.createElement("div");
     win.className = "window";
@@ -192,15 +190,13 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
     win.addEventListener("touchstart", windowMouseDown.bind(win));
     win.addEventListener("mouseup", windowMouseUp.bind(win));
     win.addEventListener("touchend" , windowMouseUp.bind(win));
-    win.style.left = (_mouseX + 30) + "px";
-    win.style.top = (_mouseY - 200) + "px";
-    win.dataset["t"] = "" + windowType;
-    win.dataset["i"] = "" + objectIndex;
-    win.dataset["u"] = "" + tabIndex;
+    win.style.left = (document.body.clientWidth / 2 - 300) + "px";
+    win.style.top = (100) + "px";
     win.style.zIndex = "" + (_windowZIndexSequence++);
 
     a = document.createElement("div");
     a.className = "title";
+    updateInnerHtml(a, title);
     win.appendChild(a);
 
     a = document.createElement("div");
@@ -211,7 +207,25 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
 
     a = document.createElement("div");
     a.className = "body";
+    updateInnerHtml(a, body);
     win.appendChild(a);
 
     document.body.appendChild(win);
+
+    return win;
+}
+
+function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
+{
+    let win;
+
+    destroyWindow(windowType, objectIndex, tabIndex);
+
+    win = windowCreateGeneric("", "");
+
+    win.dataset["t"] = "" + windowType;
+    win.dataset["i"] = "" + objectIndex;
+    win.dataset["u"] = "" + tabIndex;
+    win.style.left = (_mouseX + 30) + "px";
+    win.style.top = (_mouseY - 200) + "px";
 }
