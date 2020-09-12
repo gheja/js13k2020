@@ -1,3 +1,7 @@
+const NETWORK_NODE_STATUS_OK = 0;
+const NETWORK_NODE_STATUS_BUILDING = 1;
+const NETWORK_NODE_STATUS_BUILDING_INVALID = 2;
+
 type tNetworkNeighbour = {
     node: any, // it is "tNetworkNode" actually but tscc overflows
     distance: number
@@ -10,6 +14,7 @@ type tNetworkNode = {
     highlighted: boolean,
     webglGfxObject: any,
     angle: number,
+    status: number,
 
     // aligned diagonally at "angle"
     edge1: tPoint3D,
@@ -56,6 +61,7 @@ class Network
             angle: null,
             visited: false,
             totalDistance: null,
+            status: NETWORK_NODE_STATUS_OK,
         };
 
         a.webglGfxObject.x = position[0];
@@ -150,6 +156,7 @@ class Network
         let indices: Array<number>;
         let colors: Array<number>;
         let i: number;
+        let c: number;
 
         vertices = [];
         indices = [];
@@ -159,7 +166,17 @@ class Network
         this.edges.forEach((edge) => {
             vertices.push(...edge.node2.edge2, ...edge.node1.edge2, ...edge.node1.edge1, ...edge.node2.edge2, ...edge.node1.edge1, ...edge.node2.edge1);
             indices.push(i++, i++, i++, i++, i++, i++);
-            colors.push(1,1,1,1,1,1);
+            c = 1;
+            if (edge.node1.status == NETWORK_NODE_STATUS_BUILDING_INVALID || edge.node2.status == NETWORK_NODE_STATUS_BUILDING_INVALID)
+            {
+                c = 8;
+            }
+            else if (edge.node1.status == NETWORK_NODE_STATUS_BUILDING || edge.node2.status == NETWORK_NODE_STATUS_BUILDING)
+            {
+                c = 3;
+            }
+
+            colors.push(c,c,c,c,c,c);
         });
 
         // shape SHAPE_DYNAMIC_ROAD_INDEX, object 3
