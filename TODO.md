@@ -78,7 +78,7 @@ based on stats
 - [x] load shapes from an array (from data.ts) instead of hardcoding them
 - [x] support for same model with different colors
 - [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
-- [ ] hide cursor in preview window
+- [x] hide cursor in preview window
 
 ## bugs
 - [ ] roads are lame
