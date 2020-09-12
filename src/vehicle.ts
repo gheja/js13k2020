@@ -128,6 +128,14 @@ class Vehicle
         n = this.scheduleIndex;
         this.path = [];
 
+        if (this.schedule.length == 0)
+        {
+            this.scheduleIndex = 0;
+            this.path = [];
+            // console.log("empty schedule");
+            return;
+        }
+
         while (1)
         {
             n = (n + 1) % this.schedule.length;
