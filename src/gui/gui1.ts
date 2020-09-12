@@ -71,7 +71,7 @@ function onMouseClick()
         break;
 
         case TOOL_ROAD_BEGIN:
-            x = _roads.pickNode(_gfx.cursorWorldPosition);
+            x = _roads.pickNode(_gfx.cursorWorldPosition, false);
 
             if (x)
             {

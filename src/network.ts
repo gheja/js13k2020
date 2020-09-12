@@ -112,15 +112,18 @@ class Network
         }
     }
 
-    pickNode(position: tPoint3D)
+    pickNode(position: tPoint3D, skipLocked: boolean)
     {
         let a;
 
         for (a of this.nodes)
         {
-            if (a !== this.editedNode2 && distance3D(a.position, position) < 2)
+            if (!(skipLocked && a.locked))
             {
-                return a;
+                if (a !== this.editedNode2 && distance3D(a.position, position) < 2)
+                {
+                    return a;
+                }
             }
         }
 
@@ -185,7 +188,8 @@ class Network
 
         this.showNodes = false;
 
-        if ((x = this.pickNode(this.editedNode2.position)))
+
+        if ((x = this.pickNode(this.editedNode2.position, false)))
         {
             this.deleteNode(this.editedNode2);
             this.editedNode2 = x;
