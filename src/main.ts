@@ -26,6 +26,7 @@ function tick()
        _previewObject.rz += 0.03;
     }
 
+    updateView();
 
     _gfx.resize();
     _gfx.render();

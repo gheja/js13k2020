@@ -62,3 +62,8 @@ function createBubble(text: string)
     window.setTimeout(destroyThis.bind(a), 5000);
     document.getElementById("bubbles").appendChild(a);
 }
+
+function clamp(x, min, max)
+{
+    return Math.min(Math.max(x, min), max);
+}
