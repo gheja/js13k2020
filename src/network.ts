@@ -1,6 +1,6 @@
-const NETWORK_NODE_STATUS_OK = 0;
-const NETWORK_NODE_STATUS_BUILDING = 1;
-const NETWORK_NODE_STATUS_BUILDING_INVALID = 2;
+const NETWORK_NODE_HIGHLIGHT_NONE = 0;
+const NETWORK_NODE_HIGHLIGHT_EDITED = 1;
+const NETWORK_NODE_HIGHLIGHT_INVALID = 2;
 
 type tNetworkNeighbour = {
     node: any, // it is "tNetworkNode" actually but tscc overflows
@@ -11,10 +11,9 @@ type tNetworkNode = {
     position: tPoint3D,
     locked: boolean,
     station: Station,
-    highlighted: boolean,
     webglGfxObject: any,
     angle: number,
-    status: number,
+    highlight: number,
 
     // aligned diagonally at "angle"
     edge1: tPoint3D,
@@ -31,7 +30,6 @@ type tNetworkEdge = {
     node1: tNetworkNode,
     node2: tNetworkNode,
     locked: boolean,
-    highlighted: boolean,
     length: number,
 };
 
@@ -57,11 +55,10 @@ class Network
             locked: locked,
             station: station,
             webglGfxObject: _gfx.createObject(SHAPE_ROAD_NODE_INDEX),
-            highlighted: false,
             angle: null,
             visited: false,
             totalDistance: null,
-            status: NETWORK_NODE_STATUS_OK,
+            highlight: NETWORK_NODE_HIGHLIGHT_NONE,
         };
 
         a.webglGfxObject.x = position[0];
@@ -79,24 +76,17 @@ class Network
             node1: node1,
             node2: node2,
             locked: locked,
-            highlighted: false,
             length: distance3D(node1.position, node2.position),
         });
 
         return this.edges[this.edges.length - 1];
     }
 
-    pickNode(position: tPoint3D, highlight: boolean)
+    pickNode(position: tPoint3D)
     {
-        if (highlight)
-        {
-            this.nodes.forEach((node) => node.highlighted = false);
-        }
-
         this.nodes.forEach((node) => {
             if (distance3D(node.position, position) < 0.5)
             {
-                node.highlighted = true;
                 return node;
             }
         });
@@ -167,11 +157,11 @@ class Network
             vertices.push(...edge.node2.edge2, ...edge.node1.edge2, ...edge.node1.edge1, ...edge.node2.edge2, ...edge.node1.edge1, ...edge.node2.edge1);
             indices.push(i++, i++, i++, i++, i++, i++);
             c = 1;
-            if (edge.node1.status == NETWORK_NODE_STATUS_BUILDING_INVALID || edge.node2.status == NETWORK_NODE_STATUS_BUILDING_INVALID)
+            if (edge.node1.highlight == NETWORK_NODE_HIGHLIGHT_INVALID || edge.node2.highlight == NETWORK_NODE_HIGHLIGHT_INVALID)
             {
                 c = 8;
             }
-            else if (edge.node1.status == NETWORK_NODE_STATUS_BUILDING || edge.node2.status == NETWORK_NODE_STATUS_BUILDING)
+            else if (edge.node1.highlight == NETWORK_NODE_HIGHLIGHT_EDITED || edge.node2.highlight == NETWORK_NODE_HIGHLIGHT_EDITED)
             {
                 c = 3;
             }
