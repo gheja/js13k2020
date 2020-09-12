@@ -21,6 +21,7 @@
 - [x] clean up unused tool icons
 - [ ] current tool icon highlight
 - [ ] build preview
+- [x] update statuses (credits, date, etc.)
 
 ## vehicles
 - [x] angle calculation
@@ -37,7 +38,7 @@
 - [ ] factory?
 - [x] stats
 - [ ] research
-- [ ] loans
+- [x] loans
 - [ ] contracts
 
 ## contracts
