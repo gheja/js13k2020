@@ -166,6 +166,8 @@ class Network
     {
         let x: tNetworkNode;
 
+        this.highlight(this.editedNode2, NETWORK_NODE_HIGHLIGHT_EDITED);
+
         this.editedNode2.position = F32A(_gfx.cursorWorldPosition);
 
         if ((x = this.pickNode(this.editedNode2.position)))
@@ -197,6 +199,22 @@ class Network
         }
 
         this.editedNode2.highlight = NETWORK_NODE_HIGHLIGHT_NONE;
+        this.rebuildGfx();
+    }
+
+    highlight(node: tNetworkNode, value: number)
+    {
+        this.nodes.forEach(x => {
+           if (x == node)
+           {
+               x.highlight = value;
+           }
+           else
+           {
+               x.highlight = NETWORK_NODE_HIGHLIGHT_NONE;
+           }
+        });
+
         this.rebuildGfx();
     }
 
