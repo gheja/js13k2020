@@ -18,10 +18,50 @@ let _viewZoomMax = 10;
 
 let _keys: Array<boolean>;
 
+let _highlightedObject: any;
+let _highlightedObjectType: number;
+
+const HOT_NONE = 0;
+const HOT_NODE = 1;
+const HOT_STATION = 2;
+
 function onTouchStart(event: TouchEvent)
 {
     _mouseX = event.touches[0].screenX;
     _mouseY = event.touches[0].screenY;
+}
+
+function highlightAny()
+{
+    let x: any;
+
+    _highlightedObjectType = HOT_NONE;
+
+    _roads.highlight(null);
+    highlightStaion(null);
+
+    x = _roads.pickNode(_gfx.cursorWorldPosition, false);
+
+    if (x)
+    {
+        if (!x.locked)
+        {
+            _roads.highlight(x, NETWORK_NODE_HIGHLIGHT_INVALID);
+
+            _highlightedObjectType = HOT_NODE;
+            _highlightedObject = x;
+            return;
+        }
+    }
+
+    _highlightedObject = pickStation(_gfx.cursorWorldPosition);
+    if (_highlightedObject)
+    {
+        _highlightedObjectType = HOT_STATION;
+        // highlightStation(_highlightedObject);
+        return;
+    }
+
 }
 
 function onMouseMove(event: MouseEvent|TouchEvent)
@@ -38,6 +78,11 @@ function onMouseMove(event: MouseEvent|TouchEvent)
     {
         _viewX += (event.screenX - _mouseX) * (_gfx.cam.z / 800);
         _viewY += (event.screenY - _mouseY) * (_gfx.cam.z / 800);
+    }
+
+    if (_activeTool == TOOL_DELETE)
+    {
+        highlightAny();
     }
 
     _mouseX = event.screenX;
@@ -84,6 +129,29 @@ function onMouseClick()
             _roads.editFinish();
             _activeTool = TOOL_ROAD_BEGIN;
             _roads.editStart();
+        break;
+
+        case TOOL_DELETE:
+            if (_highlightedObjectType == HOT_NODE)
+            {
+/*
+                // taken care of earlier
+
+                if (_highlightedObject.locked)
+                {
+                    windowCreateGeneric("Cannot delete road", "It is locked.");
+                    return;
+                }
+*/
+                _roads.deleteNode(_highlightedObject);
+                _roads.rebuildGfx();
+                return;
+            }
+
+            if (_highlightedObjectType == HOT_STATION)
+            {
+                tryToDeleteStation(_highlightedObject);
+            }
         break;
     }
 }

@@ -122,3 +122,22 @@ function removeFromArray(array: Array<any>, item: any)
         }
     }
 }
+
+function pickStation(position: tPoint3D)
+{
+    let a;
+
+    for (a of _stations)
+    {
+        if (distance3D(a.position, position) < 2)
+        {
+            return a;
+        }
+    }
+
+    return null;
+}
+
+function highlightStaion(x)
+{
+}

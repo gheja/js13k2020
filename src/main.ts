@@ -57,12 +57,38 @@ function setToolInfo()
 
 function setToolDelete()
 {
+    _activeTool = TOOL_DELETE;
+    _roads.editStart();
 }
 
 function setToolRoad()
 {
     _activeTool = TOOL_ROAD_BEGIN;
     _roads.editStart();
+}
+
+function tryToDeleteStation(station: Station)
+{
+    let ok;
+
+    ok = true;
+
+    _vehicles.forEach(vehicle => {
+       vehicle.schedule.forEach(schedule => {
+          if (schedule.station === station)
+          {
+              windowCreateGeneric("Cannot delete station", vehicle.title + " has this as destination.");
+              ok = false;
+          }
+       });
+    });
+
+    if (ok)
+    {
+        // should be handled by Station
+        station.webglGfxObject.visible = false;
+        removeFromArray(_stations, station);
+    }
 }
 
 function tick()

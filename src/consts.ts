@@ -5,6 +5,7 @@ const VEHICLE_STEP_SIZE = 0.05;
 const TOOL_INFO = 1;
 const TOOL_ROAD_BEGIN = 2;
 const TOOL_ROAD_END = 3;
+const TOOL_DELETE = 4;
 
 // const VEHICLE_STATE_STOPPED = 0;
 const VEHICLE_STATE_LEAVING = 1;
