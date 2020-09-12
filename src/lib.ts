@@ -67,3 +67,15 @@ function clamp(x, min, max)
 {
     return Math.min(Math.max(x, min), max);
 }
+
+// only updates the innerHTML of "obj" if "text" is different
+function updateInnerHTML(obj: HTMLElement, text: string)
+{
+    // as browsers parse and change the innerHTML we store it in an extra parameter
+    // so we can prevent unneeded updates
+    if (obj.dataset["_x"] != text)
+    {
+        obj.dataset["_x"] = text;
+        obj.innerHTML = text;
+    }
+}

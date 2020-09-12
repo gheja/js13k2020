@@ -150,8 +150,8 @@ function windowUpdateContents()
 
         if (bodyText != "")
         {
-            (win.querySelector(".title") as HTMLDivElement).innerHTML = titleText;
-            (win.querySelector(".body") as HTMLDivElement).innerHTML = bodyText;
+            updateInnerHTML(win.querySelector(".title") as HTMLDivElement, titleText);
+            updateInnerHTML(win.querySelector(".body") as HTMLDivElement, bodyText);
         }
     }
 }
@@ -196,7 +196,7 @@ function windowCreateGeneric(title: string, body: string)
 
     a = document.createElement("div");
     a.className = "title";
-    updateInnerHtml(a, title);
+    updateInnerHTML(a, title);
     win.appendChild(a);
 
     a = document.createElement("div");
@@ -207,7 +207,7 @@ function windowCreateGeneric(title: string, body: string)
 
     a = document.createElement("div");
     a.className = "body";
-    updateInnerHtml(a, body);
+    updateInnerHTML(a, body);
     win.appendChild(a);
 
     document.body.appendChild(win);
