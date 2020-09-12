@@ -134,6 +134,18 @@ function windowUpdateContents()
                     }
                 }
             break;
+
+            case WINDOW_TYPE_STATS:
+                titleText = "Statistics";
+
+                for (i in STAT_TEXTS)
+                {
+                    if (STAT_TEXTS[i] != "")
+                    {
+                        bodyText += `${STAT_TEXTS[i]}: <b>${_stats[i]}</b><br/>`;
+                    }
+                }
+            break;
         }
 
         if (bodyText != "")

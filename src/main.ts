@@ -8,6 +8,11 @@ let _factories: Array<Factory>;
 let _vehicles: Array<Vehicle>;
 let _stations: Array<Station>;
 
+function openStats()
+{
+    windowCreate(WINDOW_TYPE_STATS, 0, 0);
+}
+
 function tick()
 {
     ticks++;
