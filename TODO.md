@@ -7,7 +7,7 @@
   - [x] click and drag land
 - [x] popup text status (income, etc)
 - [ ] lock the currently occupied NetworkEdges
-- [ ] make NetworkNode clickable
+- [x] make NetworkNode clickable
 - [ ] calculate edge of "roads"
 - [x] preview canvas
 - [ ] preview canvas hidden until needed
@@ -24,11 +24,11 @@
 - [ ] build preview
 - [x] update statuses (credits, date, etc.)
 - [ ] depot
-- [ ] implement destroy tool
+- [x] implement destroy tool
 
 ## vehicles
 - [x] angle calculation
-- [ ] schedule editor
+- [x] schedule editor
 - [ ] linked vehicles
 - [ ] trains
 - [ ] ships
@@ -38,7 +38,7 @@
 ## windows
 - [x] update an opened window periodically
 - [x] vehicle
-- [ ] vehicle schedule
+- [x] vehicle schedule
 - [x] station
 - [ ] factory?
 - [x] stats
@@ -89,3 +89,5 @@ based on stats
 ## bugs
 - [ ] roads are lame
 - [ ] goTowards3D() is buggy
+- [ ] vehicle: when removing the active schedule item schedule gets reset
+- [ ] vehicle: when schedule is empty, adding one item
