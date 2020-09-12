@@ -158,7 +158,6 @@ class Network
     {
         this.editedNode1 = x;
         this.editedNode2 = this.addNode(x.position, false, null);
-        this.editedNode2.highlight = NETWORK_NODE_HIGHLIGHT_EDITED;
         this.addEdge(this.editedNode1, this.editedNode2, false);
     }
 

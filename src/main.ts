@@ -29,7 +29,6 @@ function updateStatuses()
 
     updateInnerHTML(document.getElementById("credits"), moneyFormat(_creditsBalance));
     updateInnerHTML(document.getElementById("time"), getTime(_stats[STAT_TICKS]));
-
 }
 
 function onDayPassed()

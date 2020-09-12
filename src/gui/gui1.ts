@@ -160,7 +160,6 @@ function onMouseDown(event: MouseEvent)
 {
     if (event.target == _gfx.canvas)
     {
-
         _mouseDownPosition = F32A(_gfx.cursorWorldPosition);
         _mouseDownCameraPosition = F32A([_gfx.cam.x, _gfx.cam.y, _gfx.cam.z]);
         _mouseDown = true;
