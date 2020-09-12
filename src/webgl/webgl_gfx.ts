@@ -490,7 +490,8 @@ class WebglGfx
             rz: 0,
             x: 0,
             y: 0,
-            z: 0
+            z: 0,
+            visible: true
         });
 
         return this.objects[this.objects.length - 1];
@@ -535,31 +536,34 @@ class WebglGfx
 
         for (obj of this.objects)
         {
-            modelMatrix = mat4Identity();
-            // obj has x, y, z, rx, ry, rz just like transform() requires in options
-            modelMatrix = mat4Transform2(modelMatrix, obj);
-            this.gl.uniformMatrix4fv(u_model, false, modelMatrix);
+            if (obj.visible)
+            {
+                modelMatrix = mat4Identity();
+                // obj has x, y, z, rx, ry, rz just like transform() requires in options
+                modelMatrix = mat4Transform2(modelMatrix, obj);
+                this.gl.uniformMatrix4fv(u_model, false, modelMatrix);
 
-            mvpMatrix = mat4MulMat4(this.viewProjectionMatrix, modelMatrix);
-            this.gl.uniformMatrix4fv(u_mvp, false, mvpMatrix);
+                mvpMatrix = mat4MulMat4(this.viewProjectionMatrix, modelMatrix);
+                this.gl.uniformMatrix4fv(u_mvp, false, mvpMatrix);
 
-            inverseTransposeMatrix = mat4Transpose(mat4Inverse(modelMatrix));
-            this.gl.uniformMatrix4fv(u_inverseTranspose, false, inverseTransposeMatrix);
+                inverseTransposeMatrix = mat4Transpose(mat4Inverse(modelMatrix));
+                this.gl.uniformMatrix4fv(u_inverseTranspose, false, inverseTransposeMatrix);
 
-            this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_p);
-            this.gl.vertexAttribPointer(a_position, 3, this.gl.FLOAT, false, 0, 0);
-            this.gl.enableVertexAttribArray(a_position);
+                this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_p);
+                this.gl.vertexAttribPointer(a_position, 3, this.gl.FLOAT, false, 0, 0);
+                this.gl.enableVertexAttribArray(a_position);
 
-            this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_n);
-            this.gl.vertexAttribPointer(a_normal, 3, this.gl.FLOAT, false, 0, 0);
-            this.gl.enableVertexAttribArray(a_normal);
+                this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_n);
+                this.gl.vertexAttribPointer(a_normal, 3, this.gl.FLOAT, false, 0, 0);
+                this.gl.enableVertexAttribArray(a_normal);
 
-            this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_c);
-            this.gl.vertexAttribPointer(a_color, 4, this.gl.UNSIGNED_BYTE, true, 0, 0);
-            this.gl.enableVertexAttribArray(a_color);
+                this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_c);
+                this.gl.vertexAttribPointer(a_color, 4, this.gl.UNSIGNED_BYTE, true, 0, 0);
+                this.gl.enableVertexAttribArray(a_color);
 
-            this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, obj.shape.b_i);
-            this.gl.drawElements(this.gl.TRIANGLES, obj.shape.indices_length, this.gl.UNSIGNED_SHORT, 0);
+                this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, obj.shape.b_i);
+                this.gl.drawElements(this.gl.TRIANGLES, obj.shape.indices_length, this.gl.UNSIGNED_SHORT, 0);
+            }
         }
     }
 
