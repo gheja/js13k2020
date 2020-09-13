@@ -82,6 +82,16 @@ function setToolScheduleAppend()
     setTool(TOOL_VEHICLE_SCHEDULE_APPEND);
 }
 
+function setToolDepot()
+{
+    setTool(TOOL_ROAD_DEPOT);
+}
+
+function setToolStation()
+{
+    setTool(TOOL_ROAD_STATION);
+}
+
 function tryToDeleteStation(station: Station)
 {
     let ok;

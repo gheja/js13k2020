@@ -343,5 +343,5 @@ function vehiclePause(vehicleIndex: number)
 
 function vehicleDepot(vehicleIndex: number)
 {
-    // getVehicleByIndex(vehicleIndex).gotoDepot();
+    getVehicleByIndex(vehicleIndex).goToDepot();
 }

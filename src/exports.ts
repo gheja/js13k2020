@@ -11,3 +11,5 @@ window["scheduleAppend"] = scheduleAppend;
 window["scheduleSkip"] = scheduleSkip;
 window["vehiclePause"] = vehiclePause;
 window["vehicleDepot"] = vehicleDepot;
+window["setToolDepot"] = setToolDepot;
+window["setToolStation"] = setToolStation;
