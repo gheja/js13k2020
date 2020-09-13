@@ -129,7 +129,7 @@ function pickStation(position: tPoint3D)
 
     for (a of _stations)
     {
-        if (distance3D(a.position, position) < 2)
+        if (distance3D(a.position, position) < 5)
         {
             return a;
         }
