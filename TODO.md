@@ -24,7 +24,15 @@
 - [ ] build preview
 - [x] update statuses (credits, date, etc.)
 - [ ] depot
+- [ ] station creation
 - [x] implement destroy tool
+- costs
+  - [ ] building
+  - [ ] destroying
+  - [ ] vehicle purchase
+- [ ] spend checks
+- [ ] spend notifications
+- [ ] highlight objects instead of cursor
 
 ## vehicles
 - [x] angle calculation
@@ -85,9 +93,11 @@ based on stats
 - [x] support for same model with different colors
 - [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
 - [x] hide cursor in preview window
+- [ ] add highlight color scheme
 
 ## bugs
-- [ ] roads are lame
+- [x] roads are lame
+- [ ] roads are still lame but better
 - [ ] goTowards3D() is buggy
 - [ ] vehicle: when removing the active schedule item schedule gets reset
 - [ ] vehicle: when schedule is empty, adding one item
