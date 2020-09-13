@@ -156,3 +156,9 @@ function tryToSpend(amount: number, category: number)
 
     return true;
 }
+
+function newIncome(amount: number)
+{
+    increaseStat(STAT_CREDITS, amount);
+    createBubble(`💵 ${moneyFormat(amount)}`);
+}
