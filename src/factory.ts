@@ -15,7 +15,7 @@ class Factory
         this.goodCapacity = createGoodList();
         this.goodAccepted = createGoodList();
 
-        this.webglGfxObject = _gfx.createObject(SHAPE_FACTORY_INDEX),
+        this.webglGfxObject = _gfx.createObject(SHAPE_RANGE_INDEX);
 
         this.webglGfxObject.x = this.position[0];
         this.webglGfxObject.y = this.position[1];
