@@ -12,12 +12,7 @@ type tNetworkNode = {
     locked: boolean,
     station: Station,
     webglGfxObject: any,
-    angle: number,
     highlight: number,
-
-    // aligned diagonally at "angle"
-    edge1: tPoint3D,
-    edge2: tPoint3D,
 
     // for routing:
     visited: boolean,
@@ -59,7 +54,6 @@ class Network
             locked: locked,
             station: station,
             webglGfxObject: _gfx.createObject(SHAPE_ROAD_NODE_INDEX),
-            angle: null,
             visited: false,
             totalDistance: null,
             highlight: NETWORK_NODE_HIGHLIGHT_NONE,
@@ -259,40 +253,11 @@ class Network
     rebuildGfx()
     {
         this.nodes.forEach((a) => {
-            a.angle = null;
             a.webglGfxObject.x = a.position[0];
             a.webglGfxObject.y = a.position[1];
             a.webglGfxObject.z = a.position[2];
             a.webglGfxObject.visible = this.showNodes;
         });
-
-        this.edges.forEach((edge) => {
-            if (edge.node2.angle === null)
-            {
-                edge.node2.angle = getAngle2D(edge.node1.position, edge.node2.position);
-            }
-        });
-
-        this.edges.forEach((edge) => {
-            if (edge.node1.angle === null)
-            {
-                edge.node1.angle = edge.node2.angle;
-            }
-        });
-
-        this.nodes.forEach((node) => {
-            node.edge1 = [
-                node.position[0] + Math.cos(node.angle - Math.PI/2) * ROAD_WIDTH / 2,
-                node.position[1] + Math.sin(node.angle - Math.PI/2) * ROAD_WIDTH / 2,
-                node.position[2] + 0.1
-            ];
-
-            node.edge2 = [
-                node.position[0] + Math.cos(node.angle + Math.PI/2) * ROAD_WIDTH / 2,
-                node.position[1] + Math.sin(node.angle + Math.PI/2) * ROAD_WIDTH / 2,
-                node.position[2] + 0.1
-            ];
-        })
 
         let vertices: Array<number>;
         let indices: Array<number>;
@@ -306,8 +271,24 @@ class Network
         i = 0;
 
         this.edges.forEach((edge) => {
-            vertices.push(...edge.node2.edge2, ...edge.node1.edge2, ...edge.node1.edge1, ...edge.node2.edge2, ...edge.node1.edge1, ...edge.node2.edge1);
-            indices.push(i++, i++, i++, i++, i++, i++);
+            let angle, p1, p2, p3, p4;
+
+            angle = getAngle2D(edge.node1.position, edge.node2.position);
+            p1 = offset3D(edge.node1.position, angle, ROAD_WIDTH / 2, 0.2);
+            p2 = offset3D(edge.node1.position, angle, - ROAD_WIDTH / 2, 0.2);
+            p3 = offset3D(edge.node2.position, angle, ROAD_WIDTH / 2, 0.2);
+            p4 = offset3D(edge.node2.position, angle, - ROAD_WIDTH / 2, 0.2);
+
+            vertices.push(
+                ...p4, ...p3, ...p1,
+                ...p2, ...p4, ...p1
+            );
+
+            indices.push(
+                i++, i++, i++,
+                i++, i++, i++
+            );
+
             c = 1;
             if (edge.node1.highlight == NETWORK_NODE_HIGHLIGHT_INVALID || edge.node2.highlight == NETWORK_NODE_HIGHLIGHT_INVALID)
             {
@@ -318,7 +299,10 @@ class Network
                 c = 3;
             }
 
-            colors.push(c,c,c,c,c,c);
+            colors.push(
+                c,c,c,
+                c,c,c
+            );
         });
 
         // shape SHAPE_DYNAMIC_ROAD_INDEX, object 3
