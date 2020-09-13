@@ -279,3 +279,14 @@ const SHAPE_RANGE_INDEX = 13;
 const SHAPE_VEHICLE_BUS_WHITE_INDEX = 14;
 const SHAPE_VEHICLE_BUS_RED_INDEX = 15;
 
+const VD_NAME = 0;
+const VD_COST = 1;
+const VD_GOODS = 2;
+const VD_SHAPE = 3;
+
+const VEHICLE_DEFINITIONS: Array<any> = [
+    [ "Basic blue bus", 4000, [ , 20, 0 ], SHAPE_VEHICLE_BUS_INDEX ],
+    [ "Red bus", 12000, [ , 60, 60 ], SHAPE_VEHICLE_BUS_RED_INDEX ],
+    [ "Yellow bus", 20000, [ , 40, 20 ], SHAPE_VEHICLE_BUS_YELLOW_INDEX ],
+    [ "White bus", 50000, [ , 100, 60 ], SHAPE_VEHICLE_BUS_WHITE_INDEX ],
+];

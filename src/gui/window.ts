@@ -41,6 +41,32 @@ function windowUpdatePosition(dx, dy)
     }
 }
 
+
+let _vehicleIndexBuy = 0;
+let _buyStation: Station;
+
+function buyShift(n)
+{
+    _vehicleIndexBuy = (_vehicleIndexBuy + n + VEHICLE_DEFINITIONS.length) % VEHICLE_DEFINITIONS.length;
+    _previewObject.shape = _gfx2.shapes[VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_SHAPE]];
+}
+
+function buyBuy()
+{
+    let v: Vehicle;
+
+    if (tryToSpend(VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_COST], STAT_SPENT_OTHER))
+    {
+        v = new Vehicle(_buyStation);
+
+        v.goodCapacity = VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_GOODS].slice();
+        v.webglGfxObject.shape = _gfx.shapes[VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_SHAPE]];
+        v.webglGfxObject.rz = _buyStation.webglGfxObject.rz;
+        v.value = VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_COST] * 0.7;
+        _vehicles.push(v);
+    }
+}
+
 function windowUpdateContents()
 {
     let win: HTMLElement;
@@ -212,8 +238,19 @@ function windowUpdateContents()
 
             case WINDOW_TYPE_BUY:
                 titleText = "Buy a new vehicle";
-                bodyText = "asdf";
-            break;
+                bodyText += `<a href="#" onclick="buyShift(-1);">&laquo;</a> | <a href="#" onclick="buyBuy();">Buy</a> | <a href="#" onclick="buyShift(1);">&raquo;</a><br/>
+${VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_NAME]} (${VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_COST]})<br/>
+Capacity:<br/>`;
+
+                for (i in VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_GOODS])
+                {
+                    if (VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_GOODS][i] > 0)
+                    {
+                        bodyText += `${GOOD_ICONS[i]} ${VEHICLE_DEFINITIONS[_vehicleIndexBuy][VD_GOODS][i]}<br/>`;
+                    }
+                }
+
+                break;
         }
 
         if (bodyText != "")
@@ -312,6 +349,9 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
 
         // moving over here, sorry
         win.insertBefore(_gfx2.canvas, win.querySelector(".body"));
+        _vehicleIndexBuy = 0;
+        buyShift(0);
+        _stations.forEach(x => { if (x.stationIndex == objectIndex) { _buyStation = x; } })
     }
 
     win.dataset["t"] = "" + windowType;
