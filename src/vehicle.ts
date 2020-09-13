@@ -363,6 +363,23 @@ class Vehicle
     }
 }
 
+// TODO: have "index" instead of "*Index", have one function to search
+
+function getStationByIndex(index: number): Station
+{
+    let a: Station;
+
+    for (a of _stations)
+    {
+        if (a.stationIndex == index)
+        {
+            return a
+        }
+    }
+
+    return null;
+}
+
 function getVehicleByIndex(vehicleIndex: number): Vehicle
 {
     let a;

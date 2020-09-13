@@ -84,7 +84,7 @@ function windowUpdateContents()
         switch (parseInt(win.dataset["t"]))
         {
             case WINDOW_TYPE_VEHICLE:
-                obj = _vehicles[win.dataset["i"]];
+                obj = getVehicleByIndex(win.dataset["i"]);
                 titleText = obj.title;
 
                 if (obj.schedule.length == 0)
@@ -159,7 +159,7 @@ function windowUpdateContents()
             break;
 
             case WINDOW_TYPE_STATION:
-                obj = _stations[win.dataset["i"]];
+                obj = getStationByIndex(win.dataset["i"]]);
                 titleText = obj.title;
 
                 bodyText += `Waiting:<br/>`;
