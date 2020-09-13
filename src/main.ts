@@ -110,8 +110,7 @@ function tryToDeleteStation(station: Station)
 
     if (ok)
     {
-        // should be handled by Station
-        station.webglGfxObject.visible = false;
+        station.destroy();
         removeFromArray(_stations, station);
     }
 }

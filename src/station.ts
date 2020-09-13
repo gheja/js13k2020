@@ -68,4 +68,10 @@ class Station
             }
         });
     }
+
+    destroy()
+    {
+        this.webglGfxObject.visible = false;
+        this.roadParts.forEach(x => _roads.deleteNode(x));
+    }
 }
