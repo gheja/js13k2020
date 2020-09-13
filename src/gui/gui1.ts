@@ -69,9 +69,25 @@ function highlightThese(networkNode: boolean, station: boolean)
         if (_highlightedObject)
         {
             _highlightedObjectType = HOT_STATION;
-            // highlightStation(_highlightedObject);
             return;
         }
+    }
+}
+
+function objectSetHighlight(value)
+{
+    if (!value || _highlightedObjectType == HOT_NONE)
+    {
+        _gfx.canvas.classList.remove("clickable");
+    }
+    else
+    {
+        _gfx.canvas.classList.add("clickable");
+    }
+
+    if (_highlightedObjectType == HOT_VEHICLE || _highlightedObjectType == HOT_STATION)
+    {
+        _highlightedObject.setHighlight(value);
     }
 }
 
