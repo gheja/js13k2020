@@ -109,11 +109,16 @@ function objectSetHighlight(value)
 
 function onMouseMove(event: MouseEvent|TouchEvent)
 {
-    if (event instanceof TouchEvent)
+    try
     {
-        event.screenX = event.touches[0].screenX;
-        event.screenY = event.touches[0].screenY;
+        if (event instanceof TouchEvent)
+        {
+            event.screenX = event.touches[0].screenX;
+            event.screenY = event.touches[0].screenY;
+        }
     }
+    catch (e) {}
+
 
     windowUpdatePosition(event.screenX - _mouseX, event.screenY - _mouseY)
 
