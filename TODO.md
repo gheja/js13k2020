@@ -93,7 +93,7 @@ based on stats
 - [x] support for same model with different colors
 - [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
 - [x] hide cursor in preview window
-- [ ] add highlight color scheme
+- [x] add highlight color scheme
 
 ## bugs
 - [x] roads are lame
