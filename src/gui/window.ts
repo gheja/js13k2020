@@ -161,6 +161,20 @@ function windowUpdateContents()
                         }
                     }
                 }
+
+                if (obj.isDepot)
+                {
+                    obj.update();
+                    if (obj.vehiclesHere.length != 0)
+                    {
+                        bodyText += "Vehicles in this depot:<br/>";
+                        for (j of obj.vehiclesHere)
+                        {
+                            bodyText += `<a href="#" onclick="windowCreate(${WINDOW_TYPE_VEHICLE}, ${j.vehicleIndex}, 0);">${j.title}</a><br/>`;
+                        }
+                    }
+                    bodyText += `<a href="#" onclick="windowCreate(${WINDOW_TYPE_BUY}, ${obj.stationIndex}, 0);\">Buy a new vehicle</a><br/>`;
+                }
             break;
 
             case WINDOW_TYPE_STATS:

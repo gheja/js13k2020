@@ -6,6 +6,7 @@ class Station
     stationIndex: number;
     range: number;
     factoriesInRange: Array<Factory>;
+    vehiclesHere: Array<Vehicle>;
     webglGfxObject: any;
     title: string;
     isDepot: boolean;
@@ -63,6 +64,7 @@ class Station
     update()
     {
         this.factoriesInRange = [];
+        this.vehiclesHere = [];
 
         _factories.forEach(factory => {
             if (distance3D(factory.position, this.position) <= this.range)
@@ -70,6 +72,13 @@ class Station
                 this.factoriesInRange.push(factory);
             }
         });
+
+        _vehicles.forEach(vehicle => {
+            if (vehicle.station == this)
+            {
+                this.vehiclesHere.push(vehicle);
+            }
+        })
     }
 
     destroy()
