@@ -310,7 +310,7 @@ class Network
         _gfx.shapes[SHAPE_DYNAMIC_ROAD_INDEX] = _gfx.buildShape3(new Float32Array(vertices), new Uint16Array(indices), new Uint8Array(colors));
         this.webglGfxObject.shape = _gfx.shapes[SHAPE_DYNAMIC_ROAD_INDEX];
 
-        console.log(vertices);
+        // console.log(vertices);
     }
 
     // Get the shortest path using Dijkstra's algorithm.

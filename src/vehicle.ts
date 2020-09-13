@@ -334,7 +334,7 @@ class Vehicle
             break;
 
             case VEHICLE_STATE_DEPOT:
-                console.log("state: servicing");
+                // console.log("state: servicing");
 
                 if (this.stayInDepot)
                 {
