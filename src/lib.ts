@@ -82,17 +82,19 @@ function updateInnerHTML(obj: HTMLElement, text: string)
 
 function getTime(ticks)
 {
-    let x, d, h, m;
+    let x, d, h, m, s;
 
     // 2.5 sec = 1 day;
 
-    x = ticks * (1440 / (2.5 / (1 / 60)));
+    x = ticks; // * (1440 / (2.5 / (1 / 60)));
 
     d = Math.floor(x / (60 * 24)) + 1;
     h = Math.floor((x % (60 * 24)) / 60);
     m = 0;
 
-    return `Day ${d} ${h}:00`;
+    s = Math.floor(_time / 1000);
+
+    return `Day ${d} ${h}:00 [${s} s]`;
 }
 
 function loan1(x)
@@ -146,7 +148,7 @@ function tryToSpend(amount: number, category: number)
 {
     if (_creditsBalance < amount)
     {
-        windowCreateGeneric("Not enogh money", `It'd cost ${moneyFormat(amount)} but you can't afford that. Check with the bank for loans.`);
+        windowCreateGeneric("Not enough money", `It'd cost ${moneyFormat(amount)} but you can't afford that. Check with the Bank for loans.`);
         return false;
     }
 

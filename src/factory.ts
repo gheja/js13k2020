@@ -30,7 +30,14 @@ class Factory
         {
             if (this.goodAvailable[i] < this.goodCapacity[i])
             {
-                n = Math.min(this.goodAvailable[i] + this.goodProduction[i], this.goodCapacity[i]);
+                if (this.goodAvailable[i] + this.goodProduction[i] <= this.goodCapacity[i])
+                {
+                    n = this.goodProduction[i];
+                }
+                else
+                {
+                    n = this.goodCapacity[i] - this.goodAvailable[i];
+                }
                 this.goodAvailable[i] = this.goodAvailable[i] + n;
                 console.log(`produced good #${i}, count: ${n}, now available: ${this.goodAvailable[i]}`);
             }

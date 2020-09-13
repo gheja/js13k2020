@@ -104,19 +104,22 @@ class Vehicle
                 {
                     // load all the goods we can from station
                     n = Math.min(this.goodCapacity[i], this.goodOnboard[i] + factory.goodAvailable[i]) - this.goodOnboard[i];
-                    this.goodOnboard[i] = this.goodOnboard[i] + n;
-                    factory.goodAvailable[i] -= n;
-
-                    console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
-                    createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
-
-                    if (i == GOOD_PASSENGER)
+                    if (n > 0)
                     {
-                        increaseStat(STAT_PASSENGER_PICKED_UP, n);
-                    }
-                    else
-                    {
-                        increaseStat(STAT_GOOD_PICKED_UP, n);
+                        this.goodOnboard[i] = this.goodOnboard[i] + n;
+                        factory.goodAvailable[i] -= n;
+
+                        console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
+                        createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
+
+                        if (i == GOOD_PASSENGER)
+                        {
+                            increaseStat(STAT_PASSENGER_PICKED_UP, n);
+                        }
+                        else
+                        {
+                            increaseStat(STAT_GOOD_PICKED_UP, n);
+                        }
                     }
                 }
             });
@@ -457,5 +460,9 @@ function vehicleSell(vehicleIndex: number)
         newIncome(v.value);
         v.destroy();
         removeFromArray(_vehicles, v);
+    }
+    else
+    {
+        windowCreateGeneric("Cannot sell this vehicle", "You need to direct it to a depot first.");
     }
 }
