@@ -85,6 +85,27 @@ class Network
         removeFromArray(this.edges, edge);
     }
 
+    tryToDeleteNode(node: tNetworkNode)
+    {
+        let v:Vehicle;
+
+        if (node)
+        {
+            for (v of _vehicles)
+            {
+                if (v.nextNode == node)
+                {
+                    windowCreateGeneric("Cannot delete this", "A vehicle is heading this way.");
+                    return false;
+                }
+            }
+
+            this.deleteNode(node);
+        }
+
+        return true;
+    }
+
     deleteNode(node: tNetworkNode)
     {
         let i;
