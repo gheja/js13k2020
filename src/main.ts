@@ -155,20 +155,14 @@ function tick()
 
 function demoNetwork()
 {
-    let p1: tNetworkNode;
-    let p2: tNetworkNode;
-    let p3: tNetworkNode;
-    let p4: tNetworkNode;
-    let p5: tNetworkNode;
-    let p6: tNetworkNode;
-
     let f: Factory;
     let v: Vehicle;
-    let s: Station;
 
     _factories = [];
     _vehicles = [];
     _stations = [];
+
+    _roads = new Network();
 
     f = new Factory([ -13, -10, 0 ]);
     f.goodProduction[GOOD_PASSENGER] = 5;
@@ -190,29 +184,14 @@ function demoNetwork()
     f.goodCapacity[GOOD_MAIL] = 200;
     _factories.push(f);
 
-    _stations.push(new Station([ -10, -10, 0 ]));
-    _stations.push(new Station([ 10, 8, 0 ]));
-    _stations.push(new Station([ 22, -6, 0 ]));
 
-    _roads = new Network();
+    _stations.push(new Station([ -10, -10, 0 ], false));
+    _stations.push(new Station([ 10, 8, 0 ], false));
+    _stations.push(new Station([ 22, -6, 0 ], false));
+    _stations.push(new Station([ 0, 30, 0 ], true));
 
-    p1 = _roads.addNode([ -10, -10, 0 ], true, _stations[0]);
-    p2 = _roads.addNode([ -10, 0, 0 ], false);
-    p3 = _roads.addNode([ 0, 10, 0 ], false);
-    p4 = _roads.addNode([ 5, 5, 0 ], true);
-    p5 = _roads.addNode([ 10, 8, 0 ], true, _stations[1]);
-    p6 = _roads.addNode([ 22, -6, 0 ], true, _stations[2]);
 
-    _roads.addEdge(p1, p2, true);
-    _roads.addEdge(p2, p3, true);
-    _roads.addEdge(p3, p4, true);
-    _roads.addEdge(p4, p6, true);
-    _roads.addEdge(p3, p5, true);
-    _roads.addEdge(p5, p6, true);
-
-    _roads.rebuildGfx();
-
-    v = new Vehicle(_stations[0]);
+    v = new Vehicle(_stations[3]);
 
     v.schedule = [
         { station: _stations[0] },
@@ -224,8 +203,6 @@ function demoNetwork()
     v.goodCapacity[GOOD_MAIL] = 100;
 
     _vehicles.push(v);
-
-    console.log(_roads.getPath(p1, p6));
 }
 
 function initGfx()
