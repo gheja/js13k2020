@@ -153,16 +153,20 @@ function tick()
     window.requestAnimationFrame(tick);
 }
 
-function demoNetwork()
+function initMap()
 {
-    let f: Factory;
-    let v: Vehicle;
-
     _factories = [];
     _vehicles = [];
     _stations = [];
 
     _roads = new Network();
+}
+
+function demoNetwork()
+{
+    let f: Factory;
+    let v: Vehicle;
+
 
     f = new Factory([ -13, -10, 0 ]);
     f.goodProduction[GOOD_PASSENGER] = 5;
@@ -250,6 +254,7 @@ function init()
     initGui();
     initTooltip();
     initLoan();
+    initMap();
 
     demoNetwork();
 
