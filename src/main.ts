@@ -60,6 +60,8 @@ function setTool(tool: number)
     {
         _roads.editStart();
     }
+
+    _gfx.cursorObject.visible = (tool == TOOL_ROAD_DEPOT || tool == TOOL_ROAD_STATION);
 }
 
 function setToolInfo()
@@ -212,11 +214,12 @@ function demoNetwork()
 
 function initGfx()
 {
-    _gfx = new WebglGfx("c1", false);
+    _gfx = new WebglGfx("c1", true);
     _gfx.createObject(SHAPE_PLANE_INDEX);
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;
     _gfx.cam.rx = 0.9;
+    _gfx.cursorObject.visible = false;
 }
 
 function initGfx2()
