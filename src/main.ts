@@ -129,8 +129,6 @@ function tick()
         _factories.forEach(x => x.produce());
     }
 
-    _gfx.objects[1].rz += 0.01;
-
     _vehicles.forEach(x => x.step());
 
     if (_previewObject)
@@ -214,7 +212,7 @@ function demoNetwork()
 
 function initGfx()
 {
-    _gfx = new WebglGfx("c1", true);
+    _gfx = new WebglGfx("c1", false);
     _gfx.createObject(SHAPE_PLANE_INDEX);
     _gfx.cam.z = 20;
     _gfx.cam.y = -20;
