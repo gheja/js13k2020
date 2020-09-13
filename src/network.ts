@@ -271,7 +271,11 @@ class Network
         i = 0;
 
         this.edges.forEach((edge) => {
-            let angle, p1, p2, p3, p4;
+            let angle:number;
+            let p1: Float32Array;
+            let p2: Float32Array;
+            let p3: Float32Array;
+            let p4: Float32Array;
 
             angle = getAngle2D(edge.node1.position, edge.node2.position);
             p1 = offset3D(edge.node1.position, angle, ROAD_WIDTH / 2, 0.2);
@@ -279,9 +283,24 @@ class Network
             p3 = offset3D(edge.node2.position, angle, ROAD_WIDTH / 2, 0.2);
             p4 = offset3D(edge.node2.position, angle, - ROAD_WIDTH / 2, 0.2);
 
+/*
             vertices.push(
                 ...p4, ...p3, ...p1,
                 ...p2, ...p4, ...p1
+            );
+
+            // google closure compiler screws this up somehow
+            // tries a concat on Float32Array
+            //
+            // becomes this:
+            // c: vertices; l-n-t-h: p1-p4
+            //  c.push.apply(c, h.concat(t, l, n, h, l));
+            //
+            // the push()es are +28 bytes of final zip
+*/
+            vertices.push(
+                p4[0],p4[1],p4[2], p3[0],p3[1],p3[2], p1[0],p1[1],p1[2],
+                p2[0],p2[1],p2[2], p4[0],p4[1],p4[2], p1[0],p1[1],p1[2],
             );
 
             indices.push(
