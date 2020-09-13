@@ -29,7 +29,7 @@ class Station
         }
         else
         {
-            this.range = 5;
+            this.range = 25;
             this.title = `Station ${this.stationIndex}`;
             this.webglGfxObject = _gfx.createObject(SHAPE_ROAD_BUS_STOP_INDEX);
         }
