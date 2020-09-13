@@ -149,8 +149,12 @@ function tick()
 
     _gfx.resize();
     _gfx.render();
-    _gfx2.resize();
-    _gfx2.render();
+
+    if (_gfx2.canvas.getBoundingClientRect().width != 0)
+    {
+        _gfx2.resize();
+        _gfx2.render();
+    }
 
     updateStatuses();
     windowUpdateContents();
