@@ -15,6 +15,8 @@ const COLOR_PALETTE: tColorPalette = [
     [ 0.0, 0, 0.8 ],
 ];
 
+const COLOR_HIGHLIGHT_INDEX = 13;
+
 const SHAPE_TEST1: tShapeDefinition = [
     SHAPE_SET_SIDES, 4,
     SHAPE_SET_COLOR, 0,

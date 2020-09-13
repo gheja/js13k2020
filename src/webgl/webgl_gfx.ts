@@ -418,6 +418,7 @@ class WebglGfx
     buildShape3(vertices: Float32Array, indices: Uint16Array, colors: Uint8Array)
     {
         let colors2: Uint8Array;
+        let colors3: Uint8Array;
         let i, b;
 
         function fuzzyHsla(x: tHslaArray, y: number): tHslaArray
@@ -431,6 +432,7 @@ class WebglGfx
         }
 
         colors2 = new Uint8Array(colors.length * 4);
+        colors3 = new Uint8Array(colors.length * 4);
 
         // per face
         for (i = 0; i < colors.length; i += 6)
@@ -443,6 +445,14 @@ class WebglGfx
             colors2.set(b, (i + 3) * 4);
             colors2.set(b, (i + 4) * 4);
             colors2.set(b, (i + 5) * 4);
+
+            b = hsla2rgba(...COLOR_PALETTE[COLOR_HIGHLIGHT_INDEX], 1);
+            colors3.set(b, i * 4);
+            colors3.set(b, (i + 1) * 4);
+            colors3.set(b, (i + 2) * 4);
+            colors3.set(b, (i + 3) * 4);
+            colors3.set(b, (i + 4) * 4);
+            colors3.set(b, (i + 5) * 4);
         }
 
         return {
@@ -450,6 +460,7 @@ class WebglGfx
             b_i: this.createBuffer(indices, this.gl.ELEMENT_ARRAY_BUFFER),
             b_n: this.createBuffer(this.calculateNormals(vertices, indices), this.gl.ARRAY_BUFFER),
             b_c: this.createBuffer(colors2, this.gl.ARRAY_BUFFER),
+            b_d: this.createBuffer(colors3, this.gl.ARRAY_BUFFER),
             indices_length: indices.length
         };
     }
@@ -491,7 +502,8 @@ class WebglGfx
             x: 0,
             y: 0,
             z: 0,
-            visible: true
+            visible: true,
+            highlighted: false,
         });
 
         return this.objects[this.objects.length - 1];
@@ -557,7 +569,14 @@ class WebglGfx
                 this.gl.vertexAttribPointer(a_normal, 3, this.gl.FLOAT, false, 0, 0);
                 this.gl.enableVertexAttribArray(a_normal);
 
-                this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_c);
+                if (obj.highlighted)
+                {
+                    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_d);
+                }
+                else
+                {
+                    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, obj.shape.b_c);
+                }
                 this.gl.vertexAttribPointer(a_color, 4, this.gl.UNSIGNED_BYTE, true, 0, 0);
                 this.gl.enableVertexAttribArray(a_color);
 
