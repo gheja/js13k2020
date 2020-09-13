@@ -20,41 +20,44 @@ class Station
 
         let p1, p2, p3;
 
-        p2 = _roads.addNode([ this.position[0], this.position[1], this.position[2] ], true, this);
-
         if (isDepot)
         {
             this.range = 0;
             this.title = `Depot ${this.stationIndex}`;
             this.webglGfxObject = _gfx.createObject(SHAPE_ROAD_DEPOT_INDEX);
-
-            p1 = _roads.addNode([ this.position[0], this.position[1] + 2, this.position[2] ], true);
-            p3 = _roads.addNode([ this.position[0], this.position[1] - 10, this.position[2] ], true);
-
         }
         else
         {
             this.range = 5;
             this.title = `Station ${this.stationIndex}`;
             this.webglGfxObject = _gfx.createObject(SHAPE_ROAD_BUS_STOP_INDEX);
-
-            p1 = _roads.addNode([ this.position[0], this.position[1] + 8, this.position[2] ], true);
-            p3 = _roads.addNode([ this.position[0], this.position[1] - 8, this.position[2] ], true);
         }
 
+        p1 = _roads.addNode(this.position, true);
+        p2 = _roads.addNode(this.position, true, this);
+        p3 = _roads.addNode(this.position, true);
 
-        _roads.addEdge(p1, p2);
-        _roads.addEdge(p2, p3);
+        _roads.addEdge(p1, p2, true);
+        _roads.addEdge(p2, p3, true);
 
         this.roadParts.push(p1, p2, p3);
-
-        _roads.rebuildGfx();
 
         this.webglGfxObject.x = this.position[0];
         this.webglGfxObject.y = this.position[1];
         this.webglGfxObject.z = this.position[2];
 
+        this.setAngle(0);
         this.update();
+    }
+
+    setAngle(angle: number)
+    {
+        this.webglGfxObject.rz = angle;
+
+        this.roadParts[0].position = F32A(offset3D(this.position, angle, (this.isDepot ? 2 : 8), 0))
+        this.roadParts[2].position = F32A(offset3D(this.position, angle, (this.isDepot ? -10 : -8), 0))
+
+        _roads.rebuildGfx();
     }
 
     update()
