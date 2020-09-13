@@ -249,6 +249,35 @@ function initLoan()
     _creditsLoanMax = 50000;
 }
 
+/*
+// I started to rewrite toolbar construction but meh
+function toolbarAdd(title: string, emoji: string, callback: any)
+{
+    let a;
+
+    a = document.createElement("div");
+    a.className = "button";
+    a.dataset["tooltip"] = title;
+    a.innerHTML = emoji;
+    a.addEventListener("click", (event) => { event.stopPropagation(); callback; }, true);
+
+    document.getElementById("toolbar").appendChild(a);
+}
+
+function initToolbar()
+{
+    toolbarAdd("Info", "💭", setToolInfo);
+    toolbarAdd("Delete", "", setToolDelete);
+    toolbarAdd("Road construction", "", setToolRoad);
+    toolbarAdd("Depot", "", setToolDepot);
+    toolbarAdd("Station", "🔁", setToolStation);
+    toolbarAdd("Contracts", "📜", null);
+    toolbarAdd("Research", "🧪", null);
+    toolbarAdd("Bank", "💵", openBank);
+    toolbarAdd("Statistics", "📊", openStats);
+}
+*/
+
 function init()
 {
     initGfx();
