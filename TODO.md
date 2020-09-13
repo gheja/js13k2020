@@ -27,11 +27,13 @@
 - [ ] station creation
 - [x] implement destroy tool
 - costs
-  - [ ] building
-  - [ ] destroying
+  - [x] building
+  - [x] destroying
   - [ ] vehicle purchase
-- [ ] spend checks
-- [ ] spend notifications
+  - [ ] vehicle upkeep
+  - [ ] loan interest
+- [x] spend checks
+- [x] spend notifications
 - [ ] highlight objects instead of cursor
 
 ## vehicles
@@ -41,7 +43,7 @@
 - [ ] trains
 - [ ] ships
 - [ ] upkeep costs
-- [ ] make load and unload separate steps
+- [x] make load and unload separate steps
 
 ## windows
 - [x] update an opened window periodically
@@ -49,6 +51,7 @@
 - [x] vehicle schedule
 - [x] station
 - [ ] factory?
+- [ ] depot
 - [x] stats
 - [ ] research
 - [x] loans
