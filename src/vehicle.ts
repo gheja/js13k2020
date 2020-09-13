@@ -27,6 +27,7 @@ class Vehicle
     lastPositions: Array<tPoint3D>;
     holdTime: number;
     stayInDepot: boolean;
+    value: number;
 
     constructor(station)
     {
@@ -43,6 +44,8 @@ class Vehicle
         this.lastPositions = [];
         this.holdTime = 0;
         this.stayInDepot = true;
+        this.schedule = [];
+        this.scheduleIndex = 0;
     }
 
     toggleStopped()
