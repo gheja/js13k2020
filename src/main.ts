@@ -38,11 +38,13 @@ function onDayPassed()
 
 function openBank()
 {
+    setToolInfo();
     windowCreate(WINDOW_TYPE_BANK, 0, 0);
 }
 
 function openStats()
 {
+    setToolInfo();
     windowCreate(WINDOW_TYPE_STATS, 0, 0);
 }
 
