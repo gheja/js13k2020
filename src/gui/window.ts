@@ -195,6 +195,11 @@ function windowUpdateContents()
                     bodyText += `<a href="#" onclick="loan2(10000)">Repay ${moneyFormat(10000)}<a><br/>`
                 }
             break;
+
+            case WINDOW_TYPE_BUY:
+                titleText = "Buy a new vehicle";
+                bodyText = "asdf";
+            break;
         }
 
         if (bodyText != "")
@@ -227,6 +232,20 @@ function destroyWindow(windowType: number, objectIndex: number, tabIndex: number
         }
     }
 }
+
+function destroyAllWindowsByType(windowType: number)
+{
+    let win: HTMLElement;
+
+    for (win of document.querySelectorAll<HTMLElement>(".window"))
+    {
+        if (win.dataset["t"] == windowType)
+        {
+            destroyDomObject(win);
+        }
+    }
+}
+
 
 function windowCreateGeneric(title: string, body: string)
 {
@@ -271,6 +290,15 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
     destroyWindow(windowType, objectIndex, tabIndex);
 
     win = windowCreateGeneric("", "");
+
+    if (windowType == WINDOW_TYPE_BUY)
+    {
+        // right before setting type
+        destroyAllWindowsByType(WINDOW_TYPE_BUY);
+
+        // moving over here, sorry
+        win.insertBefore(_gfx2.canvas, win.querySelector(".body"));
+    }
 
     win.dataset["t"] = "" + windowType;
     win.dataset["i"] = "" + objectIndex;

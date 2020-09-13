@@ -31,6 +31,7 @@ const WINDOW_TYPE_VEHICLE = 1;
 const WINDOW_TYPE_STATION = 2;
 const WINDOW_TYPE_STATS = 3;
 const WINDOW_TYPE_BANK = 4;
+const WINDOW_TYPE_BUY = 5;
 
 const LOAN_INTEREST_PER_DAY = 0.1/400; // 10% in 400 days
 
