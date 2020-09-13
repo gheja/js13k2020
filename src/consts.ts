@@ -25,10 +25,9 @@ const VEHICLE_STATE_DEPOT = 7;
 
 const GOOD_PASSENGER = 1;
 const GOOD_MAIL = 2;
-const GOOD_WOOD = 3;
-const GOOD_COAL = 4;
+const GOOD_PACKAGE = 3;
 
-const GOOD_ICONS = [ "", "🧑", "✉️" ];
+const GOOD_ICONS = [ "", "🧑", "✉️", "📦" ];
 
 const WINDOW_TYPE_VEHICLE = 1;
 const WINDOW_TYPE_STATION = 2;
@@ -55,13 +54,13 @@ const STAT_TEXTS = [
     "Credits earned",
     "Credits spent on construction",
     "Credits spent on upkeep",
-    "Credits spent other",
+    "Credits spent on other",
     "",
     "Passengers picked up",
-    "Passengers delivered",
+    "Passengers transported",
     "Goods picked up",
     "Goods delivered",
-    "Loan x",
+    "Loan borrowed",
     "Loan repaid",
     "Loan interest paid",
 ];

@@ -61,7 +61,7 @@ const SHAPE_TEST2: tShapeDefinition = [
 const SHAPE_PLANE: tShapeDefinition = [
     SHAPE_SET_SIDES, 4,
     SHAPE_SLICE_SET_HEIGHT, 0,
-    SHAPE_SET_SCALE, 50,
+    SHAPE_SET_SCALE, 200,
     SHAPE_SET_COLOR, 0,
     SHAPE_SLICE_POINTS, -1, -1, 1, -1, 1, 1, -1, 1,
     SHAPE_SLICE_POINTS, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -100,12 +100,12 @@ const SHAPE_CURSOR: tShapeDefinition = [
 ];
 
 const SHAPE_RANGE: tShapeDefinition = [
-    SHAPE_SET_SCALE, 12.5,
+    SHAPE_SET_SCALE, 8,
     SHAPE_SLICE_SET_HEIGHT, 0.5,
     SHAPE_SET_COLOR_LOCAL, 0,
     SHAPE_SLICE_CIRCLE, 33, 2,
     SHAPE_SLICE_REPEAT,
-    SHAPE_SET_SCALE, 12.3,
+    SHAPE_SET_SCALE, 7.8,
     SHAPE_SLICE_SET_HEIGHT, 0,
     SHAPE_SLICE_REPEAT,
     SHAPE_SLICE_SET_HEIGHT, -0.5,
@@ -285,8 +285,8 @@ const VD_GOODS = 2;
 const VD_SHAPE = 3;
 
 const VEHICLE_DEFINITIONS: Array<any> = [
-    [ "Basic blue bus", 4000, [ , 20, 0 ], SHAPE_VEHICLE_BUS_INDEX ],
-    [ "Red bus", 12000, [ , 60, 60 ], SHAPE_VEHICLE_BUS_RED_INDEX ],
-    [ "Yellow bus", 20000, [ , 40, 20 ], SHAPE_VEHICLE_BUS_YELLOW_INDEX ],
-    [ "White bus", 50000, [ , 100, 60 ], SHAPE_VEHICLE_BUS_WHITE_INDEX ],
+    [ "Basic blue bus", 4000, [ , 20, ], SHAPE_VEHICLE_BUS_INDEX ],
+    [ "Red bus", 12000, [ , 40, 20 ], SHAPE_VEHICLE_BUS_RED_INDEX ],
+    [ "Yellow bus", 20000, [ , 60, 60, 2 ], SHAPE_VEHICLE_BUS_YELLOW_INDEX ],
+    [ "White bus", 50000, [ , 100, 60, 10 ], SHAPE_VEHICLE_BUS_WHITE_INDEX ],
 ];
