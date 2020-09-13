@@ -20,6 +20,7 @@ let _keys: Array<boolean>;
 
 let _highlightedObject: any;
 let _highlightedObjectType: number;
+let _stationBeingPlaced: Station;
 
 const HOT_NONE = 0;
 const HOT_NODE = 1;
@@ -136,6 +137,10 @@ function onMouseMove(event: MouseEvent|TouchEvent)
     {
         highlightThese(false, true, false);
     }
+    else if (_activeTool == TOOL_DIRECTION)
+    {
+        _stationBeingPlaced.setAngle(getAngle2D(_stationBeingPlaced.position, _gfx.cursorWorldPosition) + Math.PI / 2);
+    }
 /*
     // TODO: highlight is a bit different here, see onMouseClick...
     else if (_activeTool == TOOL_ROAD_BEGIN || _activeTool == TOOL_ROAD_END)
@@ -227,6 +232,28 @@ function onMouseClick(event)
                 _vehicleEdited.schedule.push({station: _highlightedObject});
                 setToolInfo();
             }
+        break;
+
+        case TOOL_ROAD_DEPOT:
+            if (tryToSpend(5000, STAT_SPENT_BUILDING))
+            {
+                _stationBeingPlaced = new Station(_gfx.cursorWorldPosition, true);
+                _activeTool = TOOL_DIRECTION;
+                _stations.push(_stationBeingPlaced);
+            }
+        break;
+
+        case TOOL_ROAD_STATION:
+            if (tryToSpend(2000, STAT_SPENT_BUILDING))
+            {
+                _stationBeingPlaced = new Station(_gfx.cursorWorldPosition, false);
+                _activeTool = TOOL_DIRECTION;
+                _stations.push(_stationBeingPlaced);
+            }
+        break;
+
+        case TOOL_DIRECTION:
+            setToolInfo();
         break;
     }
 }
