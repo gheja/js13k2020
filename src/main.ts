@@ -1,4 +1,6 @@
 let ticks = 0;
+let _timeStarted;
+let _time;
 let _gfx: WebglGfx;
 let _gfx2: WebglGfx;
 let _roads: Network;
@@ -13,6 +15,7 @@ let _creditsLoanMax;
 let _creditsLoanInterestPerDay;
 
 let _activeTool;
+let _gameState;
 
 function updateStatuses()
 {
@@ -122,9 +125,30 @@ function tryToDeleteStation(station: Station)
     }
 }
 
+function checkWin()
+{
+    if (
+        _stats[STAT_LOAN_TAKEN] == _stats[STAT_LOAN_REPAID] &&
+        _stats[STAT_PASSENGER_DELIVERED] >= 404
+    )
+    {
+        windowCreateGeneric("You won!", "Congratulations, you've completed the objectives and won!<br/><br/>Thanks for playing! Feel free to continue.");
+    }
+    else
+    {
+        windowCreateGeneric("Oh no!", "You could not finish the objectives in time.<br/><br/>Don't worry, feel free to keep playing or start again by reloading the page.");
+    }
+}
+
 function tick()
 {
     ticks++;
+    _time = (new Date().getTime()) - _timeStarted;
+
+    if (_time > 404000 && _gameState == GAME_STATE_RUNNING)
+    {
+        checkWin();
+    }
 
     increaseStat(STAT_TICKS, 1);
 
@@ -264,6 +288,9 @@ function initToolbar()
 
 function init()
 {
+    _timeStarted = new Date().getTime();
+    _gameState = GAME_STATE_RUNNING;
+
     initGfx();
     initGfx2();
 

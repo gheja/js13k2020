@@ -2,6 +2,9 @@ const ROAD_WIDTH = 5;
 const DISTANCE_MAX = 100000;
 const VEHICLE_STEP_SIZE = 0.05;
 
+const GAME_STATE_RUNNING = 0;
+const GAME_STATE_FINISHED = 1;
+
 const TOOL_INFO = 1;
 const TOOL_ROAD_BEGIN = 2;
 const TOOL_ROAD_END = 3;
