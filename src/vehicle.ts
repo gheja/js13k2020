@@ -86,7 +86,7 @@ class Vehicle
         if (income > 0)
         {
             increaseStat(STAT_CREDITS, income);
-            createBubble(`💵 \$${income}`);
+            createBubble(`💵 ${moneyFormat(income)}`);
         }
     }
 

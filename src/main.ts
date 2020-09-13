@@ -110,8 +110,11 @@ function tryToDeleteStation(station: Station)
 
     if (ok)
     {
-        station.destroy();
-        removeFromArray(_stations, station);
+        if (tryToSpend(500, STAT_SPENT_BUILDING))
+        {
+            station.destroy();
+            removeFromArray(_stations, station);
+        }
     }
 }
 

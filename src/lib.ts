@@ -141,3 +141,18 @@ function pickStation(position: tPoint3D)
 function highlightStaion(x)
 {
 }
+
+function tryToSpend(amount: number, category: number)
+{
+    if (_creditsBalance < amount)
+    {
+        windowCreateGeneric("Not enogh money", `It'd cost ${moneyFormat(amount)} but you can't afford that. Check with the bank for loans.`);
+        return false;
+    }
+
+    _stats[category] += amount;
+
+    createBubble(`💵 ${moneyFormat(-amount)}`);
+
+    return true;
+}

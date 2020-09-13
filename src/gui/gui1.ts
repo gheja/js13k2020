@@ -142,9 +142,12 @@ function onMouseClick()
         break;
 
         case TOOL_ROAD_END:
-            _roads.editFinish();
-            _activeTool = TOOL_ROAD_BEGIN;
-            _roads.editStart();
+            if (tryToSpend(100, STAT_SPENT_BUILDING))
+            {
+                _roads.editFinish();
+                _activeTool = TOOL_ROAD_BEGIN;
+                _roads.editStart();
+            }
         break;
 
         case TOOL_DELETE:
@@ -159,8 +162,11 @@ function onMouseClick()
                     return;
                 }
 */
-                _roads.deleteNode(_highlightedObject);
-                _roads.rebuildGfx();
+                if (tryToSpend(50, STAT_SPENT_BUILDING))
+                {
+                    _roads.deleteNode(_highlightedObject);
+                    _roads.rebuildGfx();
+                }
                 return;
             }
 
