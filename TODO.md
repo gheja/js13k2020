@@ -21,10 +21,10 @@
   - [ ] touch
 - [x] clean up unused tool icons
 - [ ] current tool icon highlight
-- [ ] build preview
+- [x] build preview
 - [x] update statuses (credits, date, etc.)
-- [ ] depot
-- [ ] station creation
+- [x] depot
+- [x] station creation
 - [x] implement destroy tool
 - costs
   - [x] building
@@ -34,7 +34,7 @@
   - [ ] loan interest
 - [x] spend checks
 - [x] spend notifications
-- [ ] highlight objects instead of cursor
+- [x] highlight objects instead of cursor
 
 ## vehicles
 - [x] angle calculation
@@ -44,6 +44,9 @@
 - [ ] ships
 - [ ] upkeep costs
 - [x] make load and unload separate steps
+- [ ] create definitions
+- [ ] buy
+- [ ] sell
 
 ## windows
 - [x] update an opened window periodically
@@ -56,6 +59,7 @@
 - [ ] research
 - [x] loans
 - [ ] contracts
+- [ ] buy
 
 ## contracts
 
