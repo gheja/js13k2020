@@ -174,8 +174,6 @@ function initMap()
 function demoNetwork()
 {
     let f: Factory;
-    let v: Vehicle;
-
 
     f = new Factory([ -13, -10, 0 ]);
     f.goodProduction[GOOD_PASSENGER] = 5;
@@ -196,26 +194,6 @@ function demoNetwork()
     f.goodProduction[GOOD_MAIL] = 90;
     f.goodCapacity[GOOD_MAIL] = 200;
     _factories.push(f);
-
-
-    _stations.push(new Station([ -10, -10, 0 ], false));
-    _stations.push(new Station([ 10, 8, 0 ], false));
-    _stations.push(new Station([ 22, -6, 0 ], false));
-    _stations.push(new Station([ 0, 30, 0 ], true));
-
-
-    v = new Vehicle(_stations[3]);
-
-    v.schedule = [
-        { station: _stations[0] },
-        { station: _stations[1] },
-        { station: _stations[2] },
-    ];
-
-    v.goodCapacity[GOOD_PASSENGER] = 10;
-    v.goodCapacity[GOOD_MAIL] = 100;
-
-    _vehicles.push(v);
 }
 
 function initGfx()

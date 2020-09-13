@@ -13,3 +13,7 @@ window["vehiclePause"] = vehiclePause;
 window["vehicleDepot"] = vehicleDepot;
 window["setToolDepot"] = setToolDepot;
 window["setToolStation"] = setToolStation;
+window["buyShift"] = buyShift;
+window["buyBuy"] = buyBuy;
+window["vehicleSell"] = vehicleSell;
+window["windowCreate"] = windowCreate;
