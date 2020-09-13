@@ -355,6 +355,12 @@ class Vehicle
         this.webglGfxObject.y = this.position[1];
         this.webglGfxObject.z = this.position[2];
     }
+
+
+    setHighlight(value: boolean)
+    {
+        this.webglGfxObject.highlighted = value;
+    }
 }
 
 function getVehicleByIndex(vehicleIndex: number): Vehicle

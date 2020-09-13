@@ -74,4 +74,9 @@ class Station
         this.webglGfxObject.visible = false;
         this.roadParts.forEach(x => _roads.deleteNode(x));
     }
+
+    setHighlight(value: boolean)
+    {
+        this.webglGfxObject.highlighted = value;
+    }
 }

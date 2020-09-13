@@ -257,6 +257,7 @@ class Network
             a.webglGfxObject.y = a.position[1];
             a.webglGfxObject.z = a.position[2];
             a.webglGfxObject.visible = this.showNodes;
+            a.webglGfxObject.highlighted = (a.highlight != NETWORK_NODE_HIGHLIGHT_NONE);
         });
 
         let vertices: Array<number>;
