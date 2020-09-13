@@ -1,7 +1,7 @@
 @font-face
 {
     font-family: emoji;
-    src: url(twemoji.ttf);
+    src: url(https://gheja.github.io/static/twemoji.ttf);
 }
 
 ::selection
