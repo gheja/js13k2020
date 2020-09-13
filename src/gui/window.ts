@@ -204,7 +204,7 @@ function windowUpdateContents()
                     bodyText += `<a href="#" onclick="loan1(10000)">Borrow ${moneyFormat(10000)}</a><br/>`
                 }
 
-                if (i > 0 && _creditsBalance > 10000)
+                if (i > 0 && _creditsBalance >= 10000)
                 {
                     bodyText += `<a href="#" onclick="loan2(10000)">Repay ${moneyFormat(10000)}<a><br/>`
                 }
