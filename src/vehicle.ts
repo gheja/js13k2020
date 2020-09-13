@@ -445,3 +445,17 @@ function vehicleDepot(vehicleIndex: number)
 {
     getVehicleByIndex(vehicleIndex).goToDepot();
 }
+
+function vehicleSell(vehicleIndex: number)
+{
+    let v: Vehicle;
+
+    v = getVehicleByIndex(vehicleIndex);
+
+    if (v.station && v.station.isDepot)
+    {
+        newIncome(v.value);
+        v.destroy();
+        removeFromArray(_vehicles, v);
+    }
+}

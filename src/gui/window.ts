@@ -151,10 +151,11 @@ function windowUpdateContents()
                     });
                 }
 
-                bodyText += `<a href="#" onclick="scheduleAppend(${obj.vehicleIndex});">Add</a> | `;
+                bodyText += `<a href="#" onclick="scheduleAppend(${obj.vehicleIndex});">Add station</a> | `;
                 bodyText += `<a href="#" onclick="scheduleSkip(${obj.vehicleIndex});">Skip</a> | `;
                 bodyText += `<a href="#" onclick="vehiclePause(${obj.vehicleIndex});">` + (obj.stopped ? "Start" : "Stop") + `</a> | `;
-                bodyText += `<a href="#" onclick="vehicleDepot(${obj.vehicleIndex});">Depot`;
+                bodyText += `<a href="#" onclick="vehicleDepot(${obj.vehicleIndex});">Depot</a> | `;
+                bodyText += `<a href="#" onclick="vehicleSell(${obj.vehicleIndex});">Sell</a>`;
 
             break;
 
