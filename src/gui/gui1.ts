@@ -151,9 +151,14 @@ function onMouseMove(event: MouseEvent|TouchEvent)
     _mouseY = event.screenY;
 }
 
-function onMouseClick()
+function onMouseClick(event)
 {
     let x: any;
+
+    if (event.target != _gfx.canvas)
+    {
+        return;
+    }
 
     // TODO: there are several highliht methods, merge them...
 
