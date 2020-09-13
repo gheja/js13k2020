@@ -248,16 +248,18 @@ const WEBGL_SHAPES_TO_LOAD: Array<tShapeDefinitionV2> = [
     [ SHAPE_TRAIN1 ],
     [ SHAPE_CURSOR, [ 3 ] ],
     [ SHAPE_ROAD_NODE, [ 5 ] ],
-    [ SHAPE_BUS, [ 1, 8, 2, 5, 8, 5, 8, 8, 8, 4 ] ],
+    [ SHAPE_BUS, [ 1, 5, 5, 5, 5, 5, 5, 5, 1, 4 ] ],
     [ SHAPE_DUMMY ],
     [ SHAPE_CURSOR, [ 8 ] ],
     [ SHAPE_CURSOR, [ 7 ] ],
     [ SHAPE_PLANE_SMALL, [ 9 ] ],
     [ SHAPE_PLANE_SMALL, [ 10 ] ],
-    [ SHAPE_BUS, [ 1, 11, 11, 11, 1, 11, 11, 11, 11, 4 ] ],
+    [ SHAPE_BUS, [ 1, 11, 11, 11, 11, 11, 11, 11, 11, 4 ] ],
     [ SHAPE_ROAD_DEPOT ],
     [ SHAPE_ROAD_BUS_STOP ],
-    [ SHAPE_RANGE, [ 8 ]]
+    [ SHAPE_RANGE, [ 8 ]],
+    [ SHAPE_BUS, [ 11, 13, 13, 13, 11, 13, 13, 11, 11, 4 ] ],
+    [ SHAPE_BUS, [ 1, 8, 8, 8, 1, 8, 8, 8, 8, 4 ] ],
 ];
 
 const SHAPE_PLANE_INDEX = 0;
@@ -274,3 +276,6 @@ const SHAPE_VEHICLE_BUS_YELLOW_INDEX = 10;
 const SHAPE_ROAD_DEPOT_INDEX = 11;
 const SHAPE_ROAD_BUS_STOP_INDEX = 12;
 const SHAPE_RANGE_INDEX = 13;
+const SHAPE_VEHICLE_BUS_WHITE_INDEX = 14;
+const SHAPE_VEHICLE_BUS_RED_INDEX = 15;
+
