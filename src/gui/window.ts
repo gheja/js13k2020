@@ -80,15 +80,21 @@ function windowUpdateContents()
                     {
                         case VEHICLE_STATE_TRAVELLING:
                         case VEHICLE_STATE_LEAVING:
+                        case VEHICLE_STATE_ARRIVING:
+                        case VEHICLE_STATE_ARRIVED:
                             bodyText += `Heading to ${s}`;
                         break;
 
-                        case VEHICLE_STATE_ARRIVING:
-                            bodyText += `Arriving at ${s}`;
+                        case VEHICLE_STATE_UNLOADING:
+                            bodyText += `Unloading`;
                         break;
 
-                        case VEHICLE_STATE_ARRIVED:
-                            bodyText += `Loading/unloading`;
+                        case VEHICLE_STATE_LOADING:
+                            bodyText += `Loading`;
+                        break;
+
+                        case VEHICLE_STATE_DEPOT:
+                            bodyText += `Servicing`;
                         break;
                     }
                 }

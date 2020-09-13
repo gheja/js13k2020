@@ -24,9 +24,9 @@ class Vehicle
     state: number; // VEHICLE_STATE_*
     goodOnboard: tGoodList;
     goodCapacity: tGoodList;
-    loadingDone: boolean;
     lastPositions: Array<tPoint3D>;
     holdTime: number;
+    stayInDepot: boolean;
 
     constructor(station)
     {
@@ -37,11 +37,12 @@ class Vehicle
         this.scheduleIndex = 0;
         this.webglGfxObject = _gfx.createObject(SHAPE_VEHICLE_BUS_INDEX);
         this.stopped = false;
-        this.state = VEHICLE_STATE_ARRIVED;
+        this.state = VEHICLE_STATE_DEPOT;
         this.goodOnboard = createGoodList();
         this.goodCapacity = createGoodList();
         this.lastPositions = [];
         this.holdTime = 0;
+        this.stayInDepot = true;
     }
 
     toggleStopped()
@@ -49,10 +50,8 @@ class Vehicle
         this.stopped = !this.stopped;
     }
 
-    loadUnload()
+    unload()
     {
-        // TODO: add a proper delay
-
         let i, n, income;
 
         income = 0;
@@ -84,6 +83,17 @@ class Vehicle
             });
         }
 
+        if (income > 0)
+        {
+            increaseStat(STAT_CREDITS, income);
+            createBubble(`💵 \$${income}`);
+        }
+    }
+
+    load()
+    {
+        let i, n;
+
         for (i in this.goodCapacity)
         {
             this.station.factoriesInRange.forEach((factory) =>
@@ -109,21 +119,15 @@ class Vehicle
                 }
             });
         }
-
-        if (income > 0)
-        {
-            increaseStat(STAT_CREDITS, income);
-            createBubble(`💵 \$${income}`);
-        }
-
-        console.log("load-unload done");
-        this.loadingDone = true;
+        console.log("load done");
     }
 
     advanceSchedule()
     {
         let n;
         let path: Array<tNetworkNode>;
+
+        console.log("advancing schedule...");
 
         n = this.scheduleIndex;
         this.path = [];
@@ -161,10 +165,44 @@ class Vehicle
             }
         }
 
+        console.log(`... next stop: ${this.schedule[n].station.title}`);
+
         this.nextNode = this.path.shift();
 
         // TODO: (where?) lock the networkNodes and networkEdges on this path to make sure
         // this does not get invalidated (by deleting). Maybe only lock the current segment?
+    }
+
+    goToDepot()
+    {
+        let a: Station;
+        let path: Array<tNetworkNode>;
+
+        // TODO: find the _nearest_ depot
+
+        for (a of _stations)
+        {
+            if (a.isDepot)
+            {
+                path = _roads.getPath(
+                    _roads.getNearestNode(this.station),
+                    _roads.getNearestNode(a)
+                );
+
+                // if the station is reachable
+                if (path.length != 0)
+                {
+                    this.path = path;
+                    this.nextNode = this.path.shift();
+                    this.stayInDepot = true;
+                    this.state = VEHICLE_STATE_TRAVELLING;
+                    console.log("Going to depot...");
+                    return;
+                }
+            }
+        }
+
+        windowCreateGeneric("Cannot go to depot", "No reachable depots found.");
     }
 
     move()
@@ -213,11 +251,6 @@ class Vehicle
             steps--;
         }
 
-
-        this.webglGfxObject.x = this.position[0];
-        this.webglGfxObject.y = this.position[1];
-        this.webglGfxObject.z = this.position[2];
-
         this.lastPositions.unshift(F32A(this.position));
 
         if (this.lastPositions.length == 1000)
@@ -257,34 +290,70 @@ class Vehicle
 
             case VEHICLE_STATE_ARRIVING:
                 console.log("state: arriving");
-                this.loadingDone = false;
-                this.state = VEHICLE_STATE_ARRIVED;
-                // time needed to load-unload
+                this.state = VEHICLE_STATE_UNLOADING;
+
+                // time needed to unload
                 this.holdTime = 20;
             break;
 
-            case VEHICLE_STATE_ARRIVED:
-                console.log("state: arrived");
-                // TODO: station might be null if schedule was altered
+            case VEHICLE_STATE_UNLOADING:
+                console.log("state: unloading");
+
                 if (this.station != null)
                 {
-                    this.loadUnload();
+                    this.unload();
                 }
-                if (this.loadingDone || this.station == null)
-                {
-                    this.state = VEHICLE_STATE_LEAVING;
-                    this.advanceSchedule();
-                }
-                // time needed to start
-                this.holdTime = 10;
+
+                this.state = VEHICLE_STATE_LOADING;
+
+                // time needed to load
+                this.holdTime = 20;
             break;
 
-            case VEHICLE_STATE_LEAVING:
-                console.log("state: leaving");
-                this.station = null;
-                this.state = VEHICLE_STATE_TRAVELLING;
+            case VEHICLE_STATE_LOADING:
+                console.log("state: loading");
+
+                if (this.station != null)
+                {
+                    this.load();
+                }
+
+                // time needed to start
+                this.holdTime = 10;
+
+                if (this.station.isDepot)
+                {
+                    this.state = VEHICLE_STATE_DEPOT;
+                }
+                else
+                {
+                    this.station = null;
+                    this.advanceSchedule();
+                    this.state = VEHICLE_STATE_TRAVELLING;
+                }
+            break;
+
+            case VEHICLE_STATE_DEPOT:
+                console.log("state: servicing");
+
+                if (this.stayInDepot)
+                {
+                    this.stopped = true;
+                    this.stayInDepot = false;
+                }
+
+                if (!this.stopped)
+                {
+                    this.station = null;
+                    this.advanceSchedule();
+                    this.state = VEHICLE_STATE_TRAVELLING;
+                }
             break;
         }
+
+        this.webglGfxObject.x = this.position[0];
+        this.webglGfxObject.y = this.position[1];
+        this.webglGfxObject.z = this.position[2];
     }
 }
 
