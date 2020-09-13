@@ -24,6 +24,7 @@ let _highlightedObjectType: number;
 const HOT_NONE = 0;
 const HOT_NODE = 1;
 const HOT_STATION = 2;
+const HOT_VEHICLE = 3;
 
 function onTouchStart(event: TouchEvent)
 {
@@ -35,13 +36,27 @@ function highlightClear()
 {
     _highlightedObject = null;
     _highlightedObjectType = HOT_NONE;
+    // objectSetHighlight(false); ?
 }
 
-function highlightThese(networkNode: boolean, station: boolean)
+function highlightThese(networkNode: boolean, station: boolean, vehicle: boolean)
 {
     let x: any;
 
     highlightClear();
+
+    if (vehicle)
+    {
+        for (x of _vehicles)
+        {
+            if (distance3D(x.position, _gfx.cursorWorldPosition) < 5)
+            {
+                _highlightedObject = x;
+                _highlightedObjectType = HOT_VEHICLE;
+                return;
+            }
+        }
+    }
 
     if (networkNode)
     {
@@ -107,15 +122,30 @@ function onMouseMove(event: MouseEvent|TouchEvent)
         _viewY += (event.screenY - _mouseY) * (_gfx.cam.z / 800);
     }
 
-    if (_activeTool == TOOL_DELETE)
-    {
-        highlightThese(true, true);
-    }
+    objectSetHighlight(false);
 
-    if (_activeTool == TOOL_VEHICLE_SCHEDULE_APPEND)
+    if (_activeTool == TOOL_INFO)
     {
-        highlightThese(false, true);
+        highlightThese(false, true, true);
     }
+    else if (_activeTool == TOOL_DELETE)
+    {
+        highlightThese(true, true, false);
+    }
+    else if (_activeTool == TOOL_VEHICLE_SCHEDULE_APPEND)
+    {
+        highlightThese(false, true, false);
+    }
+/*
+    // TODO: highlight is a bit different here, see onMouseClick...
+    else if (_activeTool == TOOL_ROAD_BEGIN || _activeTool == TOOL_ROAD_END)
+    {
+        highlightThese(true, false, false);
+    }
+*/
+
+
+    objectSetHighlight(true);
 
     _mouseX = event.screenX;
     _mouseY = event.screenY;
@@ -125,25 +155,19 @@ function onMouseClick()
 {
     let x: any;
 
+    // TODO: there are several highliht methods, merge them...
+
     switch (_activeTool)
     {
         case TOOL_INFO:
-            for (x of _vehicles)
+            if (_highlightedObjectType == HOT_VEHICLE)
             {
-                if (distance3D(x.position, _gfx.cursorWorldPosition) < 3)
-                {
-                    windowCreate(WINDOW_TYPE_VEHICLE, x.vehicleIndex, 0);
-                    return;
-                }
+                windowCreate(WINDOW_TYPE_VEHICLE, _highlightedObject.vehicleIndex, 0);
             }
 
-            for (x of _stations)
+            if (_highlightedObjectType == HOT_STATION)
             {
-                if (distance3D(x.position, _gfx.cursorWorldPosition) < 1)
-                {
-                    windowCreate(WINDOW_TYPE_STATION, x.stationIndex, 0);
-                    return;
-                }
+                windowCreate(WINDOW_TYPE_STATION, _highlightedObject.stationIndex, 0);
             }
         break;
 

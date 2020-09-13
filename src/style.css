@@ -11,6 +11,11 @@ body
     height: 100vh;
 }
 
+#c1.clickable
+{
+    cursor: pointer;
+}
+
 #c2
 {
     position: absolute;
