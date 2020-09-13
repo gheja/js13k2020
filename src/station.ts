@@ -83,6 +83,7 @@ class Station
 
     destroy()
     {
+        destroyWindow(WINDOW_TYPE_STATION, this.stationIndex, 0);
         this.webglGfxObject.visible = false;
         this.roadParts.forEach(x => _roads.deleteNode(x));
     }

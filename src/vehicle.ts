@@ -360,6 +360,12 @@ class Vehicle
     {
         this.webglGfxObject.highlighted = value;
     }
+
+    destroy()
+    {
+        destroyWindow(WINDOW_TYPE_VEHICLE, this.vehicleIndex, 0);
+        this.webglGfxObject.visible = false;
+    }
 }
 
 // TODO: have "index" instead of "*Index", have one function to search
