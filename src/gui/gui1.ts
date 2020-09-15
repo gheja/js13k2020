@@ -219,7 +219,12 @@ function onMouseClick(event)
 */
                 if (tryToSpend(50, STAT_SPENT_BUILDING))
                 {
-                    _roads.deleteNode(_highlightedObject);
+
+                    if (!_roads.tryToDeleteNode(_highlightedObject))
+                    {
+                        // if could not delete, refund
+                        newIncome(50);
+                    }
                     _roads.rebuildGfx();
                 }
                 return;

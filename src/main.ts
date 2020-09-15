@@ -147,6 +147,7 @@ function tick()
 
     if (_time > 404000 && _gameState == GAME_STATE_RUNNING)
     {
+        _gameState = GAME_STATE_FINISHED;
         checkWin();
     }
 
@@ -198,26 +199,93 @@ function initMap()
 function demoNetwork()
 {
     let f: Factory;
+    let s: Station;
+    let v: Vehicle;
 
-    f = new Factory([ -13, -10, 0 ]);
+    let p1, p2, p3;
+
+    f = new Factory([ -41, -1, 0 ]);
     f.goodProduction[GOOD_PASSENGER] = 5;
-    f.goodCapacity[GOOD_PASSENGER] = 9;
+    f.goodProduction[GOOD_MAIL] = 3;
+    f.goodCapacity[GOOD_PASSENGER] = 14;
+    f.goodCapacity[GOOD_MAIL] = 20;
+    f.goodAccepted[GOOD_PASSENGER] = 1;
     _factories.push(f);
 
-    f = new Factory([ 7, 8, 0 ]);
+    f = new Factory([ -16, -30, 0 ]);
+    f.goodProduction[GOOD_PASSENGER] = 2;
+    f.goodCapacity[GOOD_PASSENGER] = 17;
     f.goodAccepted[GOOD_PASSENGER] = 1;
     f.goodAccepted[GOOD_MAIL] = 1;
+    f.goodAccepted[GOOD_PACKAGE] = 1;
     _factories.push(f);
 
-    f = new Factory([ 13, 8, 0 ]);
+    f = new Factory([ -7, -20, 0 ]);
+    f.goodProduction[GOOD_PASSENGER] = 4;
     f.goodProduction[GOOD_MAIL] = 10;
+    f.goodCapacity[GOOD_PASSENGER] = 20;
     f.goodCapacity[GOOD_MAIL] = 20;
+    f.goodAccepted[GOOD_PASSENGER] = 1;
+    f.goodAccepted[GOOD_MAIL] = 1;
+    f.goodAccepted[GOOD_PACKAGE] = 1;
     _factories.push(f);
 
-    f = new Factory([ 22, -8, 0 ]);
+    f = new Factory([ 40, 7, 0 ]);
     f.goodProduction[GOOD_MAIL] = 90;
-    f.goodCapacity[GOOD_MAIL] = 200;
+    f.goodProduction[GOOD_PACKAGE] = 1;
+    f.goodCapacity[GOOD_MAIL] = 320;
+    f.goodCapacity[GOOD_PACKAGE] = 5;
+    f.goodAccepted[GOOD_MAIL] = 1;
+    f.goodAccepted[GOOD_PACKAGE] = 1;
     _factories.push(f);
+
+    f = new Factory([ 22, 30, 0 ]);
+    f.goodProduction[GOOD_PASSENGER] = 9;
+    f.goodProduction[GOOD_MAIL] = 90;
+    f.goodProduction[GOOD_PACKAGE] = 2;
+    f.goodCapacity[GOOD_PASSENGER] = 21;
+    f.goodCapacity[GOOD_MAIL] = 200;
+    f.goodCapacity[GOOD_PACKAGE] = 6;
+    f.goodAccepted[GOOD_PASSENGER] = 1;
+    f.goodAccepted[GOOD_MAIL] = 1;
+    f.goodAccepted[GOOD_PACKAGE] = 1;
+    _factories.push(f);
+
+    s = new Station([ -36, -3, 0 ], false);
+    s.setAngle(1.2);
+    _stations.push(s);
+
+    s = new Station([ -4, -11, 0 ], false);
+    s.setAngle(-1.8);
+    _stations.push(s);
+
+    s = new Station([ -58, 14, 0 ], true);
+    s.setAngle(1.2);
+    _stations.push(s);
+
+    p1 = _roads.addNode([ -47, 0, 0]);
+    p2 = _roads.addNode([ -27, -5, 0]);
+    p3 = _roads.addNode([ -20, -6, 0]);
+
+    _roads.addEdge(_stations[2].roadParts[2], p1)
+    _roads.addEdge(p1, _stations[0].roadParts[0])
+    _roads.addEdge(_stations[0].roadParts[2], p2)
+    _roads.addEdge(p2, p3)
+    _roads.addEdge(p3, _stations[1].roadParts[2])
+    _roads.rebuildGfx();
+
+    v = new Vehicle(_stations[2]);
+    v.schedule = [
+        { station: _stations[1] },
+        { station: _stations[0] }
+    ];
+    v.goodCapacity = VEHICLE_DEFINITIONS[0][VD_GOODS].slice();
+    v.webglGfxObject.rz = _stations[2].webglGfxObject.rz;
+    v.value = VEHICLE_DEFINITIONS[0][VD_COST] * 0.7;
+
+    window.setTimeout(v.toggleStopped.bind(v), 5000);
+
+    _vehicles.push(v);
 }
 
 function initGfx()
@@ -303,6 +371,15 @@ function init()
     demoNetwork();
 
     setToolInfo();
+
+    windowCreateGeneric("Welcome to Raccoon Transport 404!", `Can you transport 404 people in 404 seconds?<br><br>
+They want to get from one city to another, represented by these red circles.<br><br>
+Buy and sell buses in the <span>Depot</span>, they stop at <span>Stops</span> according to their <span>Schedule</span> accessed by clicking on them.<br><br>
+If you need money, check the <span>Bank</span> but be careful to repay before the timer is up.<br><br>
+Build roads and buildings using the tools above.<br><br>
+Oh, and all the drivers are on vacation. But we have the next best thing: raccoons. They're a bit hectic but we like them anyway.<br><br>
+Good luck! (You'll definitely need it.)`
+    );
 
     tick();
 }

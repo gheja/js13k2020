@@ -85,6 +85,27 @@ class Network
         removeFromArray(this.edges, edge);
     }
 
+    tryToDeleteNode(node: tNetworkNode)
+    {
+        let v:Vehicle;
+
+        if (node)
+        {
+            for (v of _vehicles)
+            {
+                if (v.nextNode == node)
+                {
+                    windowCreateGeneric("Cannot delete this", "A vehicle is heading this way.");
+                    return false;
+                }
+            }
+
+            this.deleteNode(node);
+        }
+
+        return true;
+    }
+
     deleteNode(node: tNetworkNode)
     {
         let i;
@@ -355,7 +376,7 @@ class Network
             edge.node2.neighbours.push({ node: edge.node1, distance: edge.length })
         });
 
-        function find(current: tNetworkNode, target: tNetworkNode)
+        function find(current: tNetworkNode)
         {
             current.visited = true;
             current.neighbours.forEach((a) => {
@@ -367,14 +388,16 @@ class Network
                 
                 if (!a.node.visited)
                 {
-                    find(a.node, target);
+                    find(a.node);
                 }
             });
+
+            current.visited = false;
         }
         
         startNode.totalDistance = 0;
         
-        find(startNode, targetNode);
+        find(startNode);
 
         let path: Array<tNetworkNode>;
         let p: tNetworkNode;

@@ -35,6 +35,7 @@
 - [x] spend checks
 - [x] spend notifications
 - [x] highlight objects instead of cursor
+- [ ] different income for each good type
 
 ## vehicles
 - [x] angle calculation

@@ -20,6 +20,7 @@ class Vehicle
     speed: number;
     webglGfxObject: any;
     nextNode: tNetworkNode;
+    lastNode: tNetworkNode;
     stopped: boolean; // == ordered to halt by the player
     state: number; // VEHICLE_STATE_*
     goodOnboard: tGoodList;
@@ -46,6 +47,8 @@ class Vehicle
         this.stayInDepot = true;
         this.schedule = [];
         this.scheduleIndex = 0;
+        this.nextNode = _roads.getNearestNode(station);
+        this.lastNode = this.nextNode;
     }
 
     toggleStopped()
@@ -104,19 +107,22 @@ class Vehicle
                 {
                     // load all the goods we can from station
                     n = Math.min(this.goodCapacity[i], this.goodOnboard[i] + factory.goodAvailable[i]) - this.goodOnboard[i];
-                    this.goodOnboard[i] = this.goodOnboard[i] + n;
-                    factory.goodAvailable[i] -= n;
-
-                    console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
-                    createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
-
-                    if (i == GOOD_PASSENGER)
+                    if (n > 0)
                     {
-                        increaseStat(STAT_PASSENGER_PICKED_UP, n);
-                    }
-                    else
-                    {
-                        increaseStat(STAT_GOOD_PICKED_UP, n);
+                        this.goodOnboard[i] = this.goodOnboard[i] + n;
+                        factory.goodAvailable[i] -= n;
+
+                        console.log(`loading good #${i}, count: ${n}, on board: ${this.goodOnboard[i]}`);
+                        createBubble(`🔺 ${GOOD_ICONS[i]}x${n}`);
+
+                        if (i == GOOD_PASSENGER)
+                        {
+                            increaseStat(STAT_PASSENGER_PICKED_UP, n);
+                        }
+                        else
+                        {
+                            increaseStat(STAT_GOOD_PICKED_UP, n);
+                        }
                     }
                 }
             });
@@ -142,6 +148,12 @@ class Vehicle
             return;
         }
 
+        if (!this.nextNode)
+        {
+            this.nextNode = this.lastNode;
+        }
+
+
         while (1)
         {
             n = (n + 1) % this.schedule.length;
@@ -154,7 +166,7 @@ class Vehicle
             }
 
             path = _roads.getPath(
-                _roads.getNearestNode(this.schedule[this.scheduleIndex].station),
+                this.nextNode,
                 _roads.getNearestNode(this.schedule[n].station)
             );
 
@@ -168,8 +180,6 @@ class Vehicle
         }
 
         console.log(`... next stop: ${this.schedule[n].station.title}`);
-
-        this.nextNode = this.path.shift();
 
         // TODO: (where?) lock the networkNodes and networkEdges on this path to make sure
         // this does not get invalidated (by deleting). Maybe only lock the current segment?
@@ -186,8 +196,13 @@ class Vehicle
         {
             if (a.isDepot)
             {
+                if (!this.nextNode)
+                {
+                    this.nextNode = this.lastNode;
+                }
+
                 path = _roads.getPath(
-                    _roads.getNearestNode(this.station),
+                    this.nextNode,
                     _roads.getNearestNode(a)
                 );
 
@@ -195,7 +210,6 @@ class Vehicle
                 if (path.length != 0)
                 {
                     this.path = path;
-                    this.nextNode = this.path.shift();
                     this.stayInDepot = true;
                     this.state = VEHICLE_STATE_TRAVELLING;
                     console.log("Going to depot...");
@@ -234,6 +248,7 @@ class Vehicle
             {
                 // arrived at node
                 this.position = F32A(p);
+                this.lastNode = this.nextNode;
 
                 // arrived at destination
                 if (this.path.length == 0)
@@ -457,5 +472,9 @@ function vehicleSell(vehicleIndex: number)
         newIncome(v.value);
         v.destroy();
         removeFromArray(_vehicles, v);
+    }
+    else
+    {
+        windowCreateGeneric("Cannot sell this vehicle", "You need to direct it to a depot first.");
     }
 }
