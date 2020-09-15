@@ -110,7 +110,7 @@ if [ ! -d ./node_modules/typescript-closure-compiler ]; then
 	try npm install google-closure-compiler
 fi
 
-export PATH="${target_dir}/stage1/node_modules/.bin:${PATH}"
+export NODE_BIN_PATH="${target_dir}/stage1/node_modules/.bin"
 
 files_html="index.html"
 files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2`
@@ -130,12 +130,12 @@ size_css=`get_size $files_css`
 
 _title "Compiling TypeScript to JavaScript..."
 
-try tscc $files_typescript
+try node ${NODE_BIN_PATH}/tscc $files_typescript
 
 
 _title "Minimizing JavaScript using Google Closure Compiler - 1/2: pretty print..."
 
-try google-closure-compiler \
+try node ${NODE_BIN_PATH}/google-closure-compiler \
 	--compilation_level ADVANCED \
 	--warning_level VERBOSE \
 	--language_in ECMASCRIPT_2018 \
@@ -148,7 +148,7 @@ try google-closure-compiler \
 
 _title "Minimizing JavaScript using Google Closure Compiler - 2/2: whitespace removal..."
 
-try google-closure-compiler \
+try node ${NODE_BIN_PATH}/google-closure-compiler \
 	--compilation_level WHITESPACE \
 	--language_in ECMASCRIPT_2018 \
 	--language_out ECMASCRIPT_2018 \
