@@ -102,8 +102,11 @@ fi
 
 _title "Checking and installing node packages..."
 
+echo "travis_fold:start:npm"
+
 try npm install typescript-closure-compiler google-closure-compiler
 
+echo "travis_fold:start:npm"
 
 export NODE_BIN_PATH="${target_dir}/stage1/node_modules/.bin"
 
