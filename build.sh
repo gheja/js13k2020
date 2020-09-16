@@ -105,7 +105,7 @@ _title "Checking and installing node packages..."
 try npm install typescript-closure-compiler google-closure-compiler
 
 
-export PATH="${target_dir}/stage1/node_modules/.bin:${PATH}"
+export NODE_BIN_PATH="${target_dir}/stage1/node_modules/.bin"
 
 files_html="index.html"
 files_javascript=`cat index.html | grep -E '<script.* src="([^"]+)"' | grep -Eo 'src=\".*\"' | cut -d \" -f 2`
@@ -127,7 +127,7 @@ _title "Compiling TypeScript to JavaScript..."
 
 echo "travis_fold:start:tscc"
 
-try tscc $files_typescript
+try node ${NODE_BIN_PATH}/tscc $files_typescript
 
 echo "travis_fold:end:tscc"
 
@@ -136,7 +136,7 @@ _title "Minimizing JavaScript using Google Closure Compiler - 1/2: pretty print.
 
 echo "travis_fold:start:closure-compiler-1"
 
-try google-closure-compiler \
+try node ${NODE_BIN_PATH}/google-closure-compiler \
 	--compilation_level ADVANCED \
 	--warning_level VERBOSE \
 	--language_in ECMASCRIPT_2018 \
@@ -153,7 +153,7 @@ _title "Minimizing JavaScript using Google Closure Compiler - 2/2: whitespace re
 
 echo "travis_fold:start:closure-compiler-2"
 
-try google-closure-compiler \
+try node ${NODE_BIN_PATH}/google-closure-compiler \
 	--compilation_level WHITESPACE \
 	--language_in ECMASCRIPT_2018 \
 	--language_out ECMASCRIPT_2018 \
