@@ -106,7 +106,7 @@ if [ ! -d ./node_modules/google-closure-compiler ]; then
 	try npm install typescript-closure-compiler
 fi
 
-if [ ! -d ./node_modules/typescript-closure-compiler ]; then
+if [ ! -d ./node_modules/google-closure-compiler ]; then
 	try npm install google-closure-compiler
 fi
 
