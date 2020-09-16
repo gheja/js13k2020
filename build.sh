@@ -102,13 +102,11 @@ fi
 
 _title "Checking and installing node packages..."
 
-if [ ! -d ./node_modules/google-closure-compiler ]; then
-	try npm install typescript-closure-compiler
-fi
+echo "travis_fold:start:npm"
 
-if [ ! -d ./node_modules/typescript-closure-compiler ]; then
-	try npm install google-closure-compiler
-fi
+try npm install typescript-closure-compiler google-closure-compiler
+
+echo "travis_fold:start:npm"
 
 export PATH="${target_dir}/stage1/node_modules/.bin:${PATH}"
 
@@ -130,10 +128,16 @@ size_css=`get_size $files_css`
 
 _title "Compiling TypeScript to JavaScript..."
 
+echo "travis_fold:start:tscc"
+
 try tscc $files_typescript
+
+echo "travis_fold:end:tscc"
 
 
 _title "Minimizing JavaScript using Google Closure Compiler - 1/2: pretty print..."
+
+echo "travis_fold:start:closure-compiler-1"
 
 try google-closure-compiler \
 	--compilation_level ADVANCED \
@@ -145,8 +149,12 @@ try google-closure-compiler \
 	--js_output_file min_pretty.js \
 	$files_javascript
 
+echo "travis_fold:end:closure-compiler-1"
+
 
 _title "Minimizing JavaScript using Google Closure Compiler - 2/2: whitespace removal..."
+
+echo "travis_fold:start:closure-compiler-2"
 
 try google-closure-compiler \
 	--compilation_level WHITESPACE \
@@ -155,6 +163,8 @@ try google-closure-compiler \
 	--formatting SINGLE_QUOTES \
 	--js_output_file min.js \
 	min_pretty.js
+
+echo "travis_fold:end:closure-compiler-2"
 
 
 _title "Minimizing CSS..."
