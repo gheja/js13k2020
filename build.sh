@@ -256,8 +256,12 @@ percent=$((size2_zip * 100 / size2_limit))
 
 echo ""
 
-if [ ${size2_zip} -le ${size2_limit} ]; then
-	_success "Final ZIP file is ${size2_zip} bytes of ${size2_limit} (${percent}%)!"
-else
+if [ ${size2_zip} -gt ${size2_limit} ]; then
 	_error "Final ZIP is ${size2_zip} bytes, more than ${size2_limit}!"
+	
+	exit 1
 fi
+
+_success "Final ZIP file is ${size2_zip} bytes of ${size2_limit} (${percent}%)!"
+
+exit 0
