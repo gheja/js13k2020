@@ -9,11 +9,13 @@ function tooltipSet(s: string = "-")
 
 function tooltipShow(e)
 {
+    _mouseOverToolbar = true;
     tooltipSet((this.dataset["tooltip"] || "") + (this.classList.contains("button-disabled") ? " (locked)" : ""));
 }
 
 function tooltipHide(e)
 {
+    _mouseOverToolbar = false;
     tooltipSet();
 }
 

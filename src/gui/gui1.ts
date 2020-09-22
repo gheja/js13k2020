@@ -5,6 +5,7 @@ let _mouseY = 0;
 let _mouseDown = false;
 let _mouseDownPosition: tVec3;
 let _mouseDownCameraPosition: tVec3;
+let _mouseOverToolbar = false;
 let _viewX = 0;
 let _viewY = 0;
 let _viewZoom = 5;
