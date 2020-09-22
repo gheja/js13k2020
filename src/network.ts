@@ -13,6 +13,7 @@ type tNetworkNode = {
     station: Station,
     webglGfxObject: any,
     highlight: number,
+    title: string,
 
     // for routing:
     visited: boolean,
@@ -57,6 +58,7 @@ class Network
             visited: false,
             totalDistance: null,
             highlight: NETWORK_NODE_HIGHLIGHT_NONE,
+            title: "Road node"
         };
 
         a.webglGfxObject.x = position[0];
