@@ -4,7 +4,7 @@
 
 let _windowZIndexSequence = 9000;
 
-function windowMouseDown(event: MouseEvent)
+function windowMouseDown()
 {
     // console.log("down");
     (this as HTMLElement).dataset["selected"] = "1";
