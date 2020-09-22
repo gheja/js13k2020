@@ -358,6 +358,6 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
     win.dataset["t"] = "" + windowType;
     win.dataset["i"] = "" + objectIndex;
     win.dataset["u"] = "" + tabIndex;
-    win.style.left = (_mouseX + 30) + "px";
-    win.style.top = (_mouseY - 200) + "px";
+    win.style.left = clamp(_mouseX + 30, 0, document.body.clientWidth - 200) + "px";
+    win.style.top = clamp(_mouseY - 30, 0, document.body.clientHeight - 200) + "px";
 }

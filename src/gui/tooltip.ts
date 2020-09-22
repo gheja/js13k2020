@@ -1,10 +1,20 @@
 "use strict";
 
+let _tooltipDom;
+
 // TODO: google closure compiler renames properties of domobject.dataset, now accessing it as array until fixed
 
-function tooltipSet(s: string = "-")
+function tooltipSet(s: string)
 {
-    document.getElementById("tooltip").innerHTML = s ? s : "-";
+    if (!s)
+    {
+        _tooltipDom.style.display = "none";
+    }
+    else
+    {
+        _tooltipDom.style.display = "block";
+        _tooltipDom.innerHTML = s;
+    }
 }
 
 function tooltipShow(e)
@@ -19,9 +29,17 @@ function tooltipHide(e)
     tooltipSet();
 }
 
+function tooltipUpdate()
+{
+    _tooltipDom.style.left = (_mouseX - 20) + "px";
+    _tooltipDom.style.top = (_mouseY + 40) + "px";
+}
+
 function initTooltip()
 {
     let a: HTMLElement;
+
+    _tooltipDom = document.getElementById("tooltip");
 
     for (a of document.querySelectorAll<HTMLElement>("*"))
     {
