@@ -16,7 +16,6 @@ class WebglGfx
     viewMatrix: tMat4;
     projectionMatrix: tMat4;
     viewProjectionMatrix: tMat4;
-    cursorScreenPosition: Array<number>;
     cursorWorldPosition: tVec3;
     cursorObject: any;
     program: WebGLProgram;
@@ -42,8 +41,6 @@ class WebglGfx
             rz: 0
         };
 
-        this.cursorScreenPosition = [ 0, 0 ];
-
         this.gl.clearColor(0.1, 0.1, 0.1, 1);
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
@@ -68,8 +65,6 @@ class WebglGfx
             this.cursorObject = this.createObject(SHAPE_CURSOR_INDEX);
             this.objects.push(this.cursorObject);
         }
-
-        this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
     }
 
     // Compile a WebGL program from a vertex shader and a fragment shader
@@ -120,10 +115,13 @@ class WebglGfx
     {
         // TODO: rewrite/optimize this
         
-        let a, b, c;
+        let a, b, c, x, y;
 
-        a = this.unproject(F32A([ this.cursorScreenPosition[0], this.cursorScreenPosition[1], 0 ]));
-        b = this.unproject(F32A([ this.cursorScreenPosition[0], this.cursorScreenPosition[1], 1 ]));
+        x = (_mouseX / this.canvas.clientWidth) * 2 - 1;
+        y = - ((_mouseY / this.canvas.clientHeight) * 2 - 1);
+
+        a = this.unproject(F32A([ x, y, 0 ]));
+        b = this.unproject(F32A([ x, y, 1 ]));
 
         if (!a || !b)
         {
@@ -600,13 +598,5 @@ class WebglGfx
         }
 
         return vec3MulScalar(output, 1 / output[3]);
-    }
-
-    onMouseMove(event: MouseEvent)
-    {
-        this.cursorScreenPosition = [
-            (event.clientX / this.canvas.clientWidth) * 2 - 1,
-            - ((event.clientY / this.canvas.clientHeight) * 2 - 1)
-        ];
     }
 }
