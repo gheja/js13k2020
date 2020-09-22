@@ -160,7 +160,7 @@ function windowUpdateContents()
             break;
 
             case WINDOW_TYPE_STATION:
-                obj = getStationByIndex(win.dataset["i"]]);
+                obj = getStationByIndex(win.dataset["i"]);
                 titleText = obj.title;
 
                 bodyText += `Waiting:<br/>`;
