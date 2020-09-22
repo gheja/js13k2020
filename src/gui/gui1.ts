@@ -289,7 +289,7 @@ function onMouseClick(event)
             if (_highlightedObject)
             {
                 _vehicleEdited.schedule.push({station: _highlightedObject});
-                setToolInfo();
+                setTool(TOOL_INFO);
             }
         break;
 
@@ -312,7 +312,7 @@ function onMouseClick(event)
         break;
 
         case TOOL_DIRECTION:
-            setToolInfo();
+            setTool(TOOL_INFO);
         break;
     }
 }

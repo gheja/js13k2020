@@ -443,7 +443,7 @@ function scheduleDelete(vehicleIndex: number, scheduleIndex: number)
 function scheduleAppend(vehicleIndex: number)
 {
     _vehicleEdited = getVehicleByIndex(vehicleIndex);
-    setToolScheduleAppend();
+    setTool(TOOL_VEHICLE_SCHEDULE_APPEND);
 }
 
 function scheduleSkip(vehicleIndex: number)

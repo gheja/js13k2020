@@ -41,13 +41,13 @@ function onDayPassed()
 
 function openBank()
 {
-    setToolInfo();
+    setTool(TOOL_INFO);
     windowCreate(WINDOW_TYPE_BANK, 0, 0);
 }
 
 function openStats()
 {
-    setToolInfo();
+    setTool(TOOL_INFO);
     windowCreate(WINDOW_TYPE_STATS, 0, 0);
 }
 
@@ -67,36 +67,6 @@ function setTool(tool: number)
     }
 
     _gfx.cursorObject.visible = (tool == TOOL_ROAD_DEPOT || tool == TOOL_ROAD_STATION);
-}
-
-function setToolInfo()
-{
-    setTool(TOOL_INFO);
-}
-
-function setToolDelete()
-{
-    setTool(TOOL_DELETE);
-}
-
-function setToolRoad()
-{
-    setTool(TOOL_ROAD_BEGIN);
-}
-
-function setToolScheduleAppend()
-{
-    setTool(TOOL_VEHICLE_SCHEDULE_APPEND);
-}
-
-function setToolDepot()
-{
-    setTool(TOOL_ROAD_DEPOT);
-}
-
-function setToolStation()
-{
-    setTool(TOOL_ROAD_STATION);
 }
 
 function tryToDeleteStation(station: Station)
@@ -326,8 +296,6 @@ function initLoan()
     _creditsLoanMax = 50000;
 }
 
-/*
-// I started to rewrite toolbar construction but meh
 function toolbarAdd(title: string, emoji: string, callback: any)
 {
     let a;
@@ -336,24 +304,26 @@ function toolbarAdd(title: string, emoji: string, callback: any)
     a.className = "button";
     a.dataset["tooltip"] = title;
     a.innerHTML = emoji;
-    a.addEventListener("click", (event) => { event.stopPropagation(); callback; }, true);
+    if (callback)
+    {
+        a.addEventListener("click", callback, true);
+    }
 
     document.getElementById("toolbar").appendChild(a);
 }
 
 function initToolbar()
 {
-    toolbarAdd("Info", "💭", setToolInfo);
-    toolbarAdd("Delete", "", setToolDelete);
-    toolbarAdd("Road construction", "", setToolRoad);
-    toolbarAdd("Depot", "", setToolDepot);
-    toolbarAdd("Station", "🔁", setToolStation);
+    toolbarAdd("Info", "💭", setTool.bind(null, TOOL_INFO));
+    toolbarAdd("Destroy", "🧨", setTool.bind(null, TOOL_DELETE));
+    toolbarAdd("Build road", "🛣", setTool.bind(null, TOOL_ROAD_BEGIN));
+    toolbarAdd("Build a Depot", "⛽️", setTool.bind(null, TOOL_ROAD_DEPOT));
+    toolbarAdd("Build a Station", "🔁", setTool.bind(null, TOOL_ROAD_STATION));
     toolbarAdd("Contracts", "📜", null);
     toolbarAdd("Research", "🧪", null);
     toolbarAdd("Bank", "💵", openBank);
     toolbarAdd("Statistics", "📊", openStats);
 }
-*/
 
 function init()
 {
@@ -365,13 +335,14 @@ function init()
 
     initStats();
     initGui();
+    initToolbar();
     initTooltip();
     initLoan();
     initMap();
 
     demoNetwork();
 
-    setToolInfo();
+    setTool(TOOL_INFO);
 
     windowCreateGeneric("Welcome to Raccoon Transport 404!", `Can you transport 404 people in 404 seconds?<br><br>
 They want to get from one city to another, represented by these red circles.<br><br>

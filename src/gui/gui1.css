@@ -101,8 +101,8 @@ html
     background: rgba(255,255,255,0.3);
 }
 
-.toolbar,
-.toolbar2
+#toolbar,
+#toolbar2
 {
     background: rgba(255,255,255,0.1);
     border-radius: 0.2em;
@@ -114,7 +114,7 @@ html
     overflow: hidden;
 }
 
-.toolbar2
+#toolbar2
 {
     top: 5.2rem;
 }
