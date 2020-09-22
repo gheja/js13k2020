@@ -108,6 +108,7 @@ based on stats
 - [x] add highlight color scheme
 
 ## bugs
+- [ ] preview window is rendering until closed for the first time?
 - [ ] roads are still lame but better
 - [ ] goTowards3D() is buggy
 - [ ] vehicle: when removing the active schedule item schedule gets reset
