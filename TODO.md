@@ -11,9 +11,10 @@
 - [ ] different income for each good type
 - [ ] better navigation
 - [ ] current tool icon highlight
-- [ ] tooltip with mouse
+- [x] tooltip with mouse
+- [x] more helpful tooltips
 - mouse handling
-  - [ ] hover over objects
+  - [x] hover over objects
   - [x] click on objects
   - [x] click and drag land
 - navigation
