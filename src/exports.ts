@@ -1,6 +1,4 @@
 // "exports" so google closure compiler won't break JS access from HTML
-window["openBank"] = openBank;
-window["openStats"] = openStats;
 window["loan1"] = loan1;
 window["loan2"] = loan2;
 window["scheduleDelete"] = scheduleDelete;

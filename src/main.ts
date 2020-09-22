@@ -39,18 +39,6 @@ function onDayPassed()
     // TODO: subtract loan interest
 }
 
-function openBank()
-{
-    setTool(TOOL_INFO);
-    windowCreate(WINDOW_TYPE_BANK, 0, 0);
-}
-
-function openStats()
-{
-    setTool(TOOL_INFO);
-    windowCreate(WINDOW_TYPE_STATS, 0, 0);
-}
-
 function setTool(tool: number)
 {
     highlightClear();
@@ -64,6 +52,20 @@ function setTool(tool: number)
     if (tool == TOOL_DELETE || tool == TOOL_ROAD_BEGIN)
     {
         _roads.editStart();
+    }
+
+    if (tool == TOOL_BANK)
+    {
+        windowCreate(WINDOW_TYPE_BANK, 0, 0);
+        setTool(TOOL_INFO);
+        return;
+    }
+
+    if (tool == TOOL_STATS)
+    {
+        windowCreate(WINDOW_TYPE_STATS, 0, 0);
+        setTool(TOOL_INFO);
+        return;
     }
 
     _gfx.cursorObject.visible = (tool == TOOL_ROAD_DEPOT || tool == TOOL_ROAD_STATION);
@@ -296,7 +298,7 @@ function initLoan()
     _creditsLoanMax = 50000;
 }
 
-function toolbarAdd(title: string, emoji: string, callback: any)
+function toolbarAdd(title: string, emoji: string, tool: number)
 {
     let a;
 
@@ -304,25 +306,22 @@ function toolbarAdd(title: string, emoji: string, callback: any)
     a.className = "button";
     a.dataset["tooltip"] = title;
     a.innerHTML = emoji;
-    if (callback)
-    {
-        a.addEventListener("click", callback, true);
-    }
+    a.addEventListener("click", setTool.bind(null, tool), true);
 
     document.getElementById("toolbar").appendChild(a);
 }
 
 function initToolbar()
 {
-    toolbarAdd("Info", "💭", setTool.bind(null, TOOL_INFO));
-    toolbarAdd("Destroy", "🧨", setTool.bind(null, TOOL_DELETE));
-    toolbarAdd("Build road", "🛣", setTool.bind(null, TOOL_ROAD_BEGIN));
-    toolbarAdd("Build a Depot", "⛽️", setTool.bind(null, TOOL_ROAD_DEPOT));
-    toolbarAdd("Build a Station", "🔁", setTool.bind(null, TOOL_ROAD_STATION));
+    toolbarAdd("Info", "💭", TOOL_INFO);
+    toolbarAdd("Destroy", "🧨", TOOL_DELETE);
+    toolbarAdd("Build road", "🛣", TOOL_ROAD_BEGIN);
+    toolbarAdd("Build a Depot", "⛽️", TOOL_ROAD_DEPOT);
+    toolbarAdd("Build a Station", "🔁", TOOL_ROAD_STATION);
     toolbarAdd("Contracts", "📜", null);
     toolbarAdd("Research", "🧪", null);
-    toolbarAdd("Bank", "💵", openBank);
-    toolbarAdd("Statistics", "📊", openStats);
+    toolbarAdd("Bank", "💵", TOOL_BANK);
+    toolbarAdd("Statistics", "📊", TOOL_STATS);
 }
 
 function init()
