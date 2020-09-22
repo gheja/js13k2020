@@ -181,6 +181,7 @@ function tick()
         _gfx2.render();
     }
 
+    tooltipUpdate();
     updateStatuses();
     windowUpdateContents();
 
