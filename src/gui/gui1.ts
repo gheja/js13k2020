@@ -91,7 +91,7 @@ function highlightThese(networkNode: boolean, station: boolean, vehicle: boolean
     }
 }
 
-function objectSetHighlight(value)
+function objectSetHighlight(value: boolean)
 {
     if (!value || _highlightedObjectType == HOT_NONE)
     {
