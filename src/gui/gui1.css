@@ -87,7 +87,8 @@ html
     filter: grayscale(40%);
 }
 
-.button:hover
+.button:hover,
+.active
 {
     padding: 0.2em 0.3em 0.4em 0.3em;
     background: rgba(255,255,255,0.25);

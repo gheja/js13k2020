@@ -48,27 +48,41 @@ function setTool(tool: number)
     // in case TOOL_ROAD_* was the previous one
     _roads.editCancel();
     _roads.rebuildGfx();
+    _gfx.cursorObject.visible = false;
 
-    if (tool == TOOL_DELETE || tool == TOOL_ROAD_BEGIN)
+    switch (tool)
     {
-        _roads.editStart();
+        case TOOL_DELETE:
+        case TOOL_ROAD_BEGIN:
+            _roads.editStart();
+        break;
+
+        case TOOL_ROAD_DEPOT:
+        case TOOL_ROAD_STATION:
+            _gfx.cursorObject.visible = true;
+        break;
+
+        case TOOL_BANK:
+            windowCreate(WINDOW_TYPE_BANK, 0, 0);
+            setTool(TOOL_INFO);
+            return;
+        break;
+
+        case TOOL_STATS:
+            windowCreate(WINDOW_TYPE_STATS, 0, 0);
+            setTool(TOOL_INFO);
+            return;
+        break;
     }
 
-    if (tool == TOOL_BANK)
-    {
-        windowCreate(WINDOW_TYPE_BANK, 0, 0);
-        setTool(TOOL_INFO);
-        return;
-    }
+    document.querySelectorAll<HTMLDivElement>(".button").forEach(x => {
+        x.classList.remove("active");
 
-    if (tool == TOOL_STATS)
-    {
-        windowCreate(WINDOW_TYPE_STATS, 0, 0);
-        setTool(TOOL_INFO);
-        return;
-    }
-
-    _gfx.cursorObject.visible = (tool == TOOL_ROAD_DEPOT || tool == TOOL_ROAD_STATION);
+        if (parseInt(x.dataset["tool"]) == tool)
+        {
+            x.classList.add("active");
+        }
+    });
 }
 
 function tryToDeleteStation(station: Station)
@@ -305,6 +319,7 @@ function toolbarAdd(title: string, emoji: string, tool: number)
     a = document.createElement("div");
     a.className = "button";
     a.dataset["tooltip"] = title;
+    a.dataset["tool"] = tool;
     a.innerHTML = emoji;
     a.addEventListener("click", setTool.bind(null, tool), true);
 
