@@ -108,43 +108,85 @@ function objectSetHighlight(value: boolean)
     }
 }
 
-function onMouseMove(event: MouseEvent|TouchEvent)
+function onMouseMove(event: MouseEvent)
 {
+    let x: number;
+    let y: number;
+    let tip1: string;
+    let tip2: string;
+
     try
     {
         if (event instanceof TouchEvent)
         {
-            event.screenX = event.touches[0].screenX;
-            event.screenY = event.touches[0].screenY;
+            x = event.touches[0].clientX;
+            y = event.touches[0].clientY;
+        }
+        else
+        {
+            x = event.clientX;
+            y = event.clientY;
         }
     }
     catch (e) {}
 
-
-    windowUpdatePosition(event.screenX - _mouseX, event.screenY - _mouseY)
+    windowUpdatePosition(x - _mouseX, y - _mouseY)
 
     if (_mouseDown && event.target == _gfx.canvas)
     {
-        _viewX += (event.screenX - _mouseX) * (_gfx.cam.z / 800);
-        _viewY += (event.screenY - _mouseY) * (_gfx.cam.z / 800);
+        _viewX += (x - _mouseX) * (_gfx.cam.z / 800);
+        _viewY += (y - _mouseY) * (_gfx.cam.z / 800);
     }
+
+    _mouseX = x;
+    _mouseY = y;
 
     objectSetHighlight(false);
 
+    if (_mouseOverToolbar)
+    {
+        return;
+    }
+
+    tip1 = "";
+    tip2 = "";
+
     if (_activeTool == TOOL_INFO)
     {
+        tip2 = "*";
         highlightThese(false, true, true);
     }
     else if (_activeTool == TOOL_DELETE)
     {
+        tip1 = "Select an object to destroy";
+        tip2 = "Destroy *";
         highlightThese(true, true, false);
     }
     else if (_activeTool == TOOL_VEHICLE_SCHEDULE_APPEND)
     {
+        tip1 = "Select a Station or Depot to add to schedule";
+        tip2 = "Add * to schedule";
         highlightThese(false, true, false);
+    }
+    else if (_activeTool == TOOL_ROAD_BEGIN)
+    {
+        tip1 = "Pick a road node";
+    }
+    else if (_activeTool == TOOL_ROAD_END)
+    {
+        tip1 = "Pick the end of the road";
+    }
+    else if (_activeTool == TOOL_ROAD_STATION)
+    {
+        tip1 = "Build a Station";
+    }
+    else if (_activeTool == TOOL_ROAD_DEPOT)
+    {
+        tip1 = "Build a Depot";
     }
     else if (_activeTool == TOOL_DIRECTION)
     {
+        tip1 = "Select facing";
         _stationBeingPlaced.setAngle(getAngle2D(_stationBeingPlaced.position, _gfx.cursorWorldPosition) + Math.PI / 2);
     }
 /*
@@ -158,8 +200,14 @@ function onMouseMove(event: MouseEvent|TouchEvent)
 
     objectSetHighlight(true);
 
-    _mouseX = event.screenX;
-    _mouseY = event.screenY;
+    if (_highlightedObject && _highlightedObject.title && tip2)
+    {
+        tooltipSet(tip2.replace("*", _highlightedObject.title));
+    }
+    else
+    {
+        tooltipSet(tip1);
+    }
 }
 
 function onMouseClick(event)
