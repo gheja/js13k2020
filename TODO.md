@@ -1,66 +1,69 @@
 # js13k2020
 
 ## general
-- mouse handling
-  - [ ] hover over objects
-  - [x] click on objects
-  - [x] click and drag land
-- [x] popup text status (income, etc)
 - [ ] lock the currently occupied NetworkEdges
-- [x] make NetworkNode clickable
 - [ ] calculate edge of "roads"
-- [x] preview canvas
 - [ ] preview canvas hidden until needed
 - [ ] title screen
 - [ ] cinematic mode
 - [ ] narration
 - [ ] GUI zoom
+- [ ] different income for each good type
+- [ ] better navigation
+- [ ] current tool icon highlight
+- [ ] tooltip with mouse
+- mouse handling
+  - [ ] hover over objects
+  - [x] click on objects
+  - [x] click and drag land
 - navigation
-  - [x] mouse
   - [ ] keys
   - [ ] touch
+  - [x] mouse
+- costs
+  - [ ] vehicle purchase
+  - [ ] vehicle upkeep
+  - [ ] loan interest
+  - [x] building
+  - [x] destroying
+- [x] popup text status (income, etc)
+- [x] make NetworkNode clickable
+- [x] preview canvas
 - [x] clean up unused tool icons
-- [ ] current tool icon highlight
 - [x] build preview
 - [x] update statuses (credits, date, etc.)
 - [x] depot
 - [x] station creation
 - [x] implement destroy tool
-- costs
-  - [x] building
-  - [x] destroying
-  - [ ] vehicle purchase
-  - [ ] vehicle upkeep
-  - [ ] loan interest
 - [x] spend checks
 - [x] spend notifications
 - [x] highlight objects instead of cursor
-- [ ] different income for each good type
 
 ## vehicles
-- [x] angle calculation
-- [x] schedule editor
 - [ ] linked vehicles
 - [ ] trains
 - [ ] ships
 - [ ] upkeep costs
-- [x] make load and unload separate steps
 - [ ] create definitions
 - [ ] buy
 - [ ] sell
+- [x] angle calculation
+- [x] schedule editor
+- [x] make load and unload separate steps
 
 ## windows
+- [ ] icons/profile "photos" for windows
+- [ ] factory?
+- [ ] research
+- [ ] contracts
+- [x] buy
+- [x] depot
 - [x] update an opened window periodically
 - [x] vehicle
 - [x] vehicle schedule
 - [x] station
-- [ ] factory?
-- [ ] depot
 - [x] stats
-- [ ] research
 - [x] loans
-- [ ] contracts
-- [ ] buy
 
 ## contracts
 
@@ -85,27 +88,29 @@ based on stats
 - [ ] demo place initialization
 
 ## network
+- [ ] better road rendering
 - road building
-  - [x] implement
   - [ ] limit angles
-  - [x] highlight correct section
   - [ ] highlight invalid section
+  - [x] implement
+  - [x] highlight correct section
 
 ## build
 - [ ] advzip
 - [ ] further optimization of HTML and CSS
 
 ## webgl
+- [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
 - [x] refer to shapes by index
 - [x] load shapes from an array (from data.ts) instead of hardcoding them
 - [x] support for same model with different colors
-- [ ] use [0,0,0] for coordinates (instead of {x: 0, y:0, z:0})
 - [x] hide cursor in preview window
 - [x] add highlight color scheme
 
 ## bugs
-- [x] roads are lame
 - [ ] roads are still lame but better
 - [ ] goTowards3D() is buggy
 - [ ] vehicle: when removing the active schedule item schedule gets reset
 - [ ] vehicle: when schedule is empty, adding one item
+- [ ] mouse coordinates are wrong when running inside iframe (itch.io, screen vs client coords?)
+- [x] roads are lame
