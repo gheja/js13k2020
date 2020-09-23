@@ -10,7 +10,7 @@
 - [ ] GUI zoom
 - [ ] different income for each good type
 - [ ] better navigation
-- [ ] current tool icon highlight
+- [x] current tool icon highlight
 - [x] tooltip with mouse
 - [x] more helpful tooltips
 - mouse handling
@@ -111,8 +111,8 @@ based on stats
 ## bugs
 - [ ] preview window is rendering until closed for the first time?
 - [ ] roads are still lame but better
-- [ ] goTowards3D() is buggy
 - [ ] vehicle: when removing the active schedule item schedule gets reset
 - [ ] vehicle: when schedule is empty, adding one item
 - [ ] mouse coordinates are wrong when running inside iframe (itch.io, screen vs client coords?)
+- [x] goTowards3D() is buggy
 - [x] roads are lame
