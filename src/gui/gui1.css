@@ -153,3 +153,8 @@ html
     position: absolute;
     z-index: 21000;
 }
+
+#tooltip span
+{
+    color: #ff4;
+}

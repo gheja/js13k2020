@@ -202,7 +202,7 @@ function onMouseMove(event: MouseEvent)
 
     if (_highlightedObject && _highlightedObject.title && tip2)
     {
-        tooltipSet(tip2.replace("*", _highlightedObject.title));
+        tooltipSet(tip2.replace("*", "<span>" + _highlightedObject.title + "</span>"));
     }
     else
     {
