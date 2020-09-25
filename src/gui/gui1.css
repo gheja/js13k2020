@@ -148,13 +148,3 @@ html
     position: absolute;
     z-index: 21000;
 }
-
-.hue1
-{
-    filter: hue-rotate(120deg) !important;
-}
-
-.hue2
-{
-    filter: hue-rotate(180deg) !important;
-}
