@@ -331,6 +331,11 @@ function windowCreateGeneric(title: string, body: string)
     win.appendChild(a);
 
     a = document.createElement("div");
+    a.className = "speaker";
+    updateInnerHTML(a, arrayPick([ "👷🏻", "👷🏻‍♂️", "👷🏻‍♀️"]));
+    win.appendChild(a);
+
+    a = document.createElement("div");
     a.className = "body";
     updateInnerHTML(a, body);
     win.appendChild(a);
