@@ -156,3 +156,8 @@ function newIncome(amount: number)
     increaseStat(STAT_CREDITS, amount);
     createBubble(`💵 ${moneyFormat(amount)}`);
 }
+
+function arrayPick(a: Array<any>)
+{
+    return a[Math.floor(Math.random() * a.length)];
+}
