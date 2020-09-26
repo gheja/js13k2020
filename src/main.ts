@@ -3,6 +3,7 @@ let _timeStarted;
 let _time;
 let _gfx: WebglGfx;
 let _gfx2: WebglGfx;
+let _gfx2Paused: boolean;
 let _roads: Network;
 let _previewObject: any;
 
@@ -161,7 +162,7 @@ function tick()
     _gfx.resize();
     _gfx.render();
 
-    if (_gfx2.canvas.getBoundingClientRect().width != 0)
+    if (!_gfx2Paused)
     {
         _gfx2.resize();
         _gfx2.render();
@@ -304,7 +305,9 @@ function initGfx2()
         }
     }
 
-    _previewObject = _gfx2.createObject(SHAPE_VEHICLE_BUS_YELLOW_INDEX);
+    _previewObject = _gfx2.createObject(SHAPE_VEHICLE_BUS_INDEX);
+
+    _gfx2Paused = true;
 }
 
 function initLoan()

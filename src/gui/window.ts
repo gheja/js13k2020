@@ -296,6 +296,11 @@ function destroyAllWindowsByType(windowType: number)
             destroyDomObject(win);
         }
     }
+
+    if (windowType == WINDOW_TYPE_BUY)
+    {
+        _gfx2Paused = true;
+    }
 }
 
 
@@ -353,6 +358,8 @@ function windowCreate(windowType: number, objectIndex: number, tabIndex: number)
         _vehicleIndexBuy = 0;
         buyShift(0);
         _stations.forEach(x => { if (x.stationIndex == objectIndex) { _buyStation = x; } })
+
+        _gfx2Paused = false;
     }
 
     win.dataset["t"] = "" + windowType;
