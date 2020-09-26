@@ -3,7 +3,7 @@
 ## general
 - [ ] lock the currently occupied NetworkEdges
 - [ ] calculate edge of "roads"
-- [ ] preview canvas hidden until needed
+- [x] preview canvas hidden until needed
 - [ ] title screen
 - [ ] cinematic mode
 - [ ] narration
@@ -45,9 +45,9 @@
 - [ ] trains
 - [ ] ships
 - [ ] upkeep costs
-- [ ] create definitions
-- [ ] buy
-- [ ] sell
+- [x] create definitions
+- [x] buy
+- [x] sell
 - [x] angle calculation
 - [x] schedule editor
 - [x] make load and unload separate steps
@@ -109,10 +109,10 @@ based on stats
 - [x] add highlight color scheme
 
 ## bugs
-- [ ] preview window is rendering until closed for the first time?
+- [x] preview window is rendering until closed for the first time?
 - [ ] roads are still lame but better
 - [ ] vehicle: when removing the active schedule item schedule gets reset
 - [ ] vehicle: when schedule is empty, adding one item
-- [ ] mouse coordinates are wrong when running inside iframe (itch.io, screen vs client coords?)
+- [x] mouse coordinates are wrong when running inside iframe (itch.io, screen vs client coords?)
 - [x] goTowards3D() is buggy
 - [x] roads are lame
