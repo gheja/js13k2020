@@ -3,20 +3,12 @@
 ## general
 - [ ] lock the currently occupied NetworkEdges
 - [ ] calculate edge of "roads"
-- [x] preview canvas hidden until needed
 - [ ] title screen
 - [ ] cinematic mode
 - [ ] narration
 - [ ] GUI zoom
 - [ ] different income for each good type
 - [ ] better navigation
-- [x] current tool icon highlight
-- [x] tooltip with mouse
-- [x] more helpful tooltips
-- mouse handling
-  - [x] hover over objects
-  - [x] click on objects
-  - [x] click and drag land
 - navigation
   - [ ] keys
   - [ ] touch
@@ -27,6 +19,14 @@
   - [ ] loan interest
   - [x] building
   - [x] destroying
+- mouse handling
+  - [x] hover over objects
+  - [x] click on objects
+  - [x] click and drag land
+- [x] preview canvas hidden until needed
+- [x] current tool icon highlight
+- [x] tooltip with mouse
+- [x] more helpful tooltips
 - [x] popup text status (income, etc)
 - [x] make NetworkNode clickable
 - [x] preview canvas
@@ -109,10 +109,10 @@ based on stats
 - [x] add highlight color scheme
 
 ## bugs
-- [x] preview window is rendering until closed for the first time?
 - [ ] roads are still lame but better
 - [ ] vehicle: when removing the active schedule item schedule gets reset
 - [ ] vehicle: when schedule is empty, adding one item
+- [x] preview window is rendering until closed for the first time?
 - [x] mouse coordinates are wrong when running inside iframe (itch.io, screen vs client coords?)
 - [x] goTowards3D() is buggy
 - [x] roads are lame
